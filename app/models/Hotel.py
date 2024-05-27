@@ -21,7 +21,8 @@ class Hotel:
             {
                 "hotel_name": "Hotel A",
                 "hotel_address": "Jalan A",
-                "hotel_price": "Rp. 100.000"
+                "hotel_price": "Rp. 100.000",
+                'asdfasd':'asdfsd'
             },
             {
                 "hotel_name": "Hotel B",
