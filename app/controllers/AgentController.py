@@ -11,7 +11,7 @@ class AgentController:
     def view(self):
         data = self.get_agent()
         data = self.get_package()
-        data = self.get_detail_package()
+        data = self.get_all_detail_package()
         return render_template('agent.php', data=data)
     
     def get_agent(self):
@@ -23,7 +23,7 @@ class AgentController:
         allPackage = self.package.get_all_package()
         return allPackage
     
-    def get_detail_package(self):
+    def get_all_detail_package(self):
         allDetail = self.detail.get_all_detail_package()
         return allDetail
     

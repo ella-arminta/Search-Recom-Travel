@@ -20,6 +20,7 @@ class Attraction:
         #     return jsonify({"error": str(e)}), 500
         return [
             {
+                "atraksi_id"    : "001",
                 "attraction_name": "Taman Safari Prigen",
                 "attraction_address": "Jl. RT.12/RW.06, Gn. Princi, Jatiarjo, Kec. Prigen, Pasuruan",
                 "attraction_price": "Rp. 200.000",
@@ -27,12 +28,14 @@ class Attraction:
                                     ,
             },
             {
+                "atraksi_id"    : "002",
                 "attraction_name": "Jatim Park 2",
                 "attraction_address": "Jl. Raya Oro-Oro Ombo No.9, Temas, Kec. Batu, Kota Batu",
                 "attraction_price": "Rp. 125.000",
                 "highlights"      : " - Nikmati hari yang penuh keceriaan bersama lebih dari 200 hewan memukau di Batu Secret Zoo",
             },
             {
+                "atraksi_id"    : "003",
                 "attraction_name": "Batu Night Spectacular",
                 "attraction_address": "Jl. Hayam Wuruk No.1, Oro-Oro Ombo, Kec. Batu, Kota Batu",
                 "attraction_price": "Rp. 125.000",
@@ -40,3 +43,49 @@ class Attraction:
             }
         ]
 
+    def get_all_photos(self):
+        return [
+            {
+                "id_photos" : "001",
+                "atraksi_id"    : "001",
+                "image" :"PIC1",
+                "placeholder" : "Foto1",
+            },
+            {
+                "id_photos" : "002",
+                "atraksi_id"    : "002",
+                "image" :"PIC2",
+                "placeholder" : "Foto2",
+            },
+            {
+                "id_photos" : "003",
+                "atraksi_id"    : "003",
+                "image" :"PIC3",
+                "placeholder" : "Foto3",
+            }
+        ]
+    
+    def get_jam_buka(self):
+        return [
+            {
+                "id_jam_buka" : "001",
+                "atraksi_id" : "001",
+                "hari" : "Senin-Minggu",
+                "waktu" : "09:00 - 18:00",
+                "is_active" : "True",
+            },
+            {
+                "id_jam_buka" : "002",
+                "atraksi_id" : "002",
+                "hari" : "Senin-Minggu",
+                "waktu" : "10:00 - 17:00",
+                "is_active" : "True",
+            },
+            {
+                "id_jam_buka" : "003",
+                "atraksi_id" : "003",
+                "hari" : "Senin-Minggu",
+                "waktu" : "09:30 - 16:30",
+                "is_active" : "True",
+            }
+        ]
