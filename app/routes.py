@@ -31,6 +31,16 @@ def hotel():
 # routes Insurance - Yu
 
 # routes travel agent - MAP
+#VIEWS
+@app.route('/agentview', methods=['GET'])
+def viewAgent():
+    return agent_controller.view()
+
+@app.route('/agentcontroller', methods=['GET'])
+def viewAgentController():
+    return agent_controller.test_controller()
+
+#Routes Agent
 @app.route('/agent', methods=['GET'])
 def agent():
     agent_name = request.args.get('agent_name')
