@@ -19,19 +19,19 @@ class Insurance:
         #     return jsonify({"error": str(e)}), 500
         return [
             {
-                "id_user":"user1",
+                "id_user":"001",
                 "nama_user": "Ella Arminta",
                 "nomor_telepon": "1234567890",
                 "alamat": "Bumi"
             },
             {
-                "id_user":"user2",
+                "id_user":"002",
                 "nama_user": "Michael Adi",
                 "nomor_telepon": "1234567890",
                 "alamat": "Bumi"
             },
             {
-                "id_user":"user3",
+                "id_user":"003",
                 "nama_user": "Yuandi Vick",
                 "nomor_telepon": "1234567890",
                 "alamat": "Bumi"
@@ -41,36 +41,36 @@ class Insurance:
     def get_all_booking(self):
         return [
             {
-                "id_booking":"123",
-                "id_pembelian":"12345"
+                "id_booking":"001",
+                "id_pembelian":"001"
             },
             {
-                "id_booking":"456",
-                "id_pembelian":"12345"
+                "id_booking":"002",
+                "id_pembelian":"0002"
             },
             {
-                "id_booking":"789",
-                "id_pembelian":"12345"
+                "id_booking":"003",
+                "id_pembelian":"003"
             }
         ]
     
     def get_all_tipe_asuransi(self):
         return [
             {
-                "id_tipe_asuransi":"tipeasuransi1",
-                "id_kategori":"kategori1",
+                "id_tipe_asuransi":"001",
+                "id_kategori":"001",
                 "nama_tipe":"Perusahan",
                 "premi_asuransi":"100000"
             },
             {
-                "id_tipe_asuransi":"tipeasuransi2",
-                "id_kategori":"kategori2",
+                "id_tipe_asuransi":"002",
+                "id_kategori":"002",
                 "nama_tipe":"Perusahaan",
                 "premi_asuransi":"50000"
             },
             {
-                "id_tipe_asuransi":"tipeasuransi3",
-                "id_kategori":"kategori3",
+                "id_tipe_asuransi":"003",
+                "id_kategori":"003",
                 "nama_tipe":"Perusahaan",
                 "premi_asuransi":"20000"
             }
@@ -79,16 +79,16 @@ class Insurance:
     def get_all_kategori_asuransi(self):
         return [
             {
-                "id_kategori":"kategori1",
+                "id_kategori":"001",
                 "nama_kategori":"Asuransi kelas A"
                 
             },
             {
-                "id_kategori":"kategori2",
+                "id_kategori":"002",
                 "nama_kategori":"Asuransi kelas B"
             },
             {
-                "id_kategori":"kategori3",
+                "id_kategori":"003",
                 "nama_kategori":"Asuransi kelas C"
             }
         ]
@@ -96,23 +96,23 @@ class Insurance:
     def get_all_pembelian_asuransi(self):
         return [
             {
-                "id_pembelian":"0001",
-                "id_user":"user1",
-                "id_tipe_asuransi":"tipeasuransi1",
+                "id_pembelian":"001",
+                "id_user":"001",
+                "id_tipe_asuransi":"001",
                 "date_time":"01-01-2001 10:10:10",
                 "status_pembayaran":"1"
             },
             {
-                "id_pembelian":"0002",
-                "id_user":"user2",
-                "id_tipe_asuransi":"tipeasuransi2",
+                "id_pembelian":"002",
+                "id_user":"002",
+                "id_tipe_asuransi":"002",
                 "date_time":"02-02-2002 10:10:10",
                 "status_pembayaran":"1"
             },
             {
-                "id_pembelian":"0003",
-                "id_user":"user3",
-                "id_tipe_asuransi":"tipeasuransi3",
+                "id_pembelian":"003",
+                "id_user":"003",
+                "id_tipe_asuransi":"003",
                 "date_time":"03-03-2003 10:10:10",
                 "status_pembayaran":"1"
             }
