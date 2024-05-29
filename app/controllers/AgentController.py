@@ -1,7 +1,7 @@
 from flask import jsonify, render_template
 from app.models.Agent import Agent
 
-# Attraction
+# Agent
 class AgentController:
     def __init__(self):
         self.agent = Agent()
@@ -12,7 +12,7 @@ class AgentController:
     
     def get_agent(self):
         allAgent = self.agent.get_all_agent()
-        # pemfilteran attraction
+        # pemfilteran agent
         return allAgent
     
     def test_controller(self):

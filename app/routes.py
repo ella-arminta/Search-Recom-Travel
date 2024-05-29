@@ -48,6 +48,16 @@ def agent():
     return response
 
 # routes Atraksi - MAP
+#VIEWS
+@app.route('/attractionview', methods=['GET'])
+def viewAttraction():
+    return attraction_controller.view()
+
+@app.route('/attractioncontroller', methods=['GET'])
+def viewAttractionController():
+    return attraction_controller.test_controller()
+
+#Routes Attraction
 @app.route('/attraction', methods=['GET'])
 def attraction():
     attraction_name = request.args.get('attraction_name')
