@@ -7,7 +7,8 @@
 </head>
 <body>
     <h1>Travel agent traveloka This Is Travel Agent Search</h1>
-    {% for agent in data %}
+
+     {% for agent in data %}
         <li>
             <strong>Travel Agent Name:</strong> {{ agent['agent_name'] }} <br>
             <strong>Travel Agent Address:</strong> {{ agent['agent_address'] }} <br>
@@ -16,5 +17,13 @@
             <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
         </li>
     {% endfor %}
+
+    <!-- {% for agent in data2 %}
+    <li>
+            <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
+            <strong>Ticket ID:</strong>{{ agent['ticket_id']}}<br>
+            <strong>Hotel Reservation:</strong>{{ agent['hotel_reservation_id']}}<br>
+    </li>
+    {% endfor %} -->
 </body>
 </html>

@@ -43,27 +43,27 @@ class Agent:
 
     def get_all_package(self):
         return  [
-                {
-                    "id_package" : "001",
-                    "ticket_id"  : "001",
-                    "hotel_reservation_id" : "001",
-                    "eticket_id" : "001",
-                    "price"      : "Rp 500000",
-                },
-                {
-                    "id_package" : "002",
-                    "ticket_id"  : "002",
-                    "hotel_reservation_id" : "002",
-                    "eticket_id" : "002",
-                    "price"      : "Rp 300000",
-                },
-                {
-                    "id_package" : "003",
-                    "ticket_id"  : "003",
-                    "hotel_reservation_id" : "003",
-                    "eticket_id" : "003",
-                    "price"      : "Rp 200000",
-                }
+            {
+                "id_package" : "001",
+                "ticket_id"  : "001",
+                "hotel_reservation_id" : "001",
+                "eticket_id" : "001",
+                "price"      : "Rp 500000",
+            },
+            {
+                "id_package" : "002",
+                "ticket_id"  : "002",
+                "hotel_reservation_id" : "002",
+                "eticket_id" : "002",
+                "price"      : "Rp 300000",
+            },
+            {
+                "id_package" : "003",
+                "ticket_id"  : "003",
+                "hotel_reservation_id" : "003",
+                "eticket_id" : "003",
+                "price"      : "Rp 200000",
+            }
         ]
     
     def get_all_detail_package(self):

@@ -36,6 +36,10 @@ def hotel():
 def viewAgent():
     return agent_controller.view()
 
+@app.route('/agentview', methods=['GET'])
+def viewAgent2():
+    return agent_controller.view2()
+
 @app.route('/agentcontroller', methods=['GET'])
 def viewAgentController():
     return agent_controller.test_controller()
