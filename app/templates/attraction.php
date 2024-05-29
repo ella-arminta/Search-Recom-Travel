@@ -11,7 +11,8 @@
         <li>
             <strong>Name:</strong> {{ attraction['attraction_name'] }} <br>
             <strong>Address:</strong> {{ attraction['attraction_address'] }} <br>
-            <strong>Price:</strong> {{ attraction['attraction_price'] }}
+            <strong>Price:</strong> {{ attraction['attraction_price'] }} <br>
+            <strong>Highlights:</strong> {{ highlights['highlights'] }} <br>
         </li>
     {% endfor %}
 </body>

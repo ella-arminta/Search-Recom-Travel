@@ -1,10 +1,11 @@
 from app import app
 from app.controllers.HotelController import HotelController
 from app.controllers.AttractionController import AttractionController
+from app.controllers.AgentController import AgentController
 from flask import request
 
 hotel_controller = HotelController()
-
+agent_controller = AgentController()
 attraction_controller = AttractionController()
 ### VIEWS ###
 @app.route('/')
@@ -30,6 +31,11 @@ def hotel():
 # routes Insurance - Yu
 
 # routes travel agent - MAP
+@app.route('/agent', methods=['GET'])
+def agent():
+    agent_name = request.args.get('agent_name')
+    response = agent_controller.get_agent(agent_name)
+    return response
 
 # routes Atraksi - MAP
 @app.route('/attraction', methods=['GET'])
