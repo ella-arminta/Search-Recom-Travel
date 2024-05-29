@@ -13,6 +13,7 @@
             <strong>Travel Agent Address:</strong> {{ agent['agent_address'] }} <br>
             <strong>Travel Agent Phone:</strong> {{ agent['agent_phone'] }} <br>
             <strong>Travel Agent City:</strong> {{ agent['agent_city'] }} <br>
+            <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
         </li>
     {% endfor %}
 </body>

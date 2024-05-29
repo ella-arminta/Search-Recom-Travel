@@ -44,7 +44,8 @@ def viewAgentController():
 @app.route('/agent', methods=['GET'])
 def agent():
     agent_name = request.args.get('agent_name')
-    response = agent_controller.get_agent(agent_name)
+    agent_price = request.args.get('price')
+    response = agent_controller.get_agent(agent_name,agent_price)
     return response
 
 # routes Atraksi - MAP

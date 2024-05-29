@@ -69,12 +69,33 @@ class Agent:
     def get_all_detail_package(self):
         return [
             {
-                
+                "id_detail" : "001",
+                "id_package": "001",
+                "description": "Halo ini package termurah!",
+                "origin_city": "Surabaya",
+                "destination_city": "Jakarta",
+                "departure_date" : "29/05/2024",
+                "return_date" : "01/06/2024",
+                "number_of_people" : "4", 
             },
             {
-
+                "id_detail" : "002",
+                "id_package": "002",
+                "description": "Halo ini package terjauh!",
+                "origin_city": "Denpasar",
+                "destination_city": "Surabaya",
+                "departure_date" : "24/05/2024",
+                "return_date" : "30/05/2024",
+                "number_of_people" : "4", 
             },
             {
-
+                "id_detail" : "003",
+                "id_package": "003",
+                "description": "Halo ini package termahal!",
+                "origin_city": "Jakarta",
+                "destination_city": "Medan",
+                "departure_date" : "31/05/2024",
+                "return_date" : "04/06/2024",
+                "number_of_people" : "6", 
             }
         ]
