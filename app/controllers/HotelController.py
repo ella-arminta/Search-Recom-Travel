@@ -21,13 +21,23 @@ class HotelController:
         return jsonify({'message':'Hello World'}),200
     
     # testing 
-    def create_users_controller():
+    def create_users_controller(self):
         user = User(name="sample user",age=10, address="test address")
         db.session.add(user)
         db.session.commit()
 
         return jsonify({'message':'User created'}),200
     
-    def get_users_controller():
-
-        return jsonify({'message':'User created'}),200
+    def get_users_controller(self):
+        users = db.session.query(User).all()
+        return jsonify({
+            'data': [
+                {
+                    'name': user.name,
+                    'age': user.age,
+                    'address': user.address
+                } for user in users
+            ],
+            'message':'Success',
+            'code': 200
+        }),200

@@ -5,6 +5,8 @@ Transportasi - Ella
 Atraksi - MAP
 INsurance - Yu
 
+pip install pymysql
+
 TUTOR Migration 
 1. Tambah di models
 2. flask db migrate
