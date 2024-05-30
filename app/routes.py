@@ -2,11 +2,13 @@ from app import app
 from app.controllers.HotelController import HotelController
 from app.controllers.AttractionController import AttractionController
 from app.controllers.AgentController import AgentController
+from app.controllers.InsuranceController import InsuranceController
 from flask import request
 
 hotel_controller = HotelController()
 agent_controller = AgentController()
 attraction_controller = AttractionController()
+insurance_controller = InsuranceController()
 ### VIEWS ###
 @app.route('/')
 def index():
@@ -39,6 +41,23 @@ def user():
 # routes Airlines - Yu
 
 # routes Insurance - Yu
+
+#VIEWS 
+@app.route('/insuranceview', methods=['GET'])
+def viewInsuranceUser(): #user
+    return insurance_controller.view()
+
+#API
+@app.route('/insurancecontroller', methods=['GET'])
+def viewInsuranceController():
+    return insurance_controller.test_controller()
+
+#Routes Insurance
+@app.route('/insurance', methods=['GET'])
+def insurance():
+    insurance_name = request.args.get('insurance_name')
+    response = insurance_controller.get_insurance(insurance_name)
+    return response
 
 # routes travel agent - MAP
 #VIEWS
