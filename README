@@ -4,3 +4,9 @@ travel agent - MAP
 Transportasi - Ella
 Atraksi - MAP
 INsurance - Yu
+
+TUTOR Migration 
+1. Tambah di models
+2. flask db migrate
+3. flask db upgrade 
+4. selesai telah ke import

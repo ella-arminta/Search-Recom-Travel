@@ -24,6 +24,16 @@ def hotel():
     response = hotel_controller.get_hotel(hotel_name)
     return response
 
+@app.route('/user', methods=['POST','GET'])
+def user():
+    if request.method == 'POST':
+        response = hotel_controller.create_users_controller()
+        return response
+    else:
+        response = hotel_controller.get_users_controller()
+        return response
+    return response
+
 # routes transportasi - Ella
 
 # routes Airlines - Yu
