@@ -5,9 +5,7 @@ from app.models.Agent import Agent
 class AgentController:
     def __init__(self):
         self.agent = Agent()
-        # self.package = Agent()
-        # self.detail = Agent()
-
+        self.detail = Agent()
     def view(self):
         data = self.get_agent()
         # data = self.get_package()
@@ -15,8 +13,8 @@ class AgentController:
         return render_template('agent.php', data=data)
     
     def view2(self):
-        data = self.get_package()
-        return render_template('agent.php',data=data)
+        data2 = self.get_package()
+        return render_template('agent.php',data=data2)
     
     def get_agent(self):
         allAgent = self.agent.get_all_agent()
@@ -27,9 +25,9 @@ class AgentController:
         allPackage = self.agent.get_all_package()
         return allPackage
     
-    # def get_all_detail_package(self):
-    #     allDetail = self.detail.get_all_detail_package()
-    #     return allDetail
+    def get_all_detail_package(self):
+        allDetail = self.detail.get_all_detail_package()
+        return allDetail
     
     def test_controller(self):
         return jsonify({'message':'Ini Travel AGENT! :) '}),200

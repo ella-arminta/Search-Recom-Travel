@@ -15,15 +15,18 @@
             <strong>Travel Agent Phone:</strong> {{ agent['agent_phone'] }} <br>
             <strong>Travel Agent City:</strong> {{ agent['agent_city'] }} <br>
             <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
+            <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
+            <strong>Ticket ID:</strong>{{ agent['ticket_id']}}<br>
+            <strong>Hotel Reservation:</strong>{{ agent['hotel_reservation_id']}}<br>
         </li>
     {% endfor %}
 
-    <!-- {% for agent in data2 %}
+    {% for agent in data %}
     <li>
             <strong>Travel Agent Price:</strong>{{ agent['price']}}<br>
             <strong>Ticket ID:</strong>{{ agent['ticket_id']}}<br>
             <strong>Hotel Reservation:</strong>{{ agent['hotel_reservation_id']}}<br>
     </li>
-    {% endfor %} -->
+    {% endfor %}
 </body>
 </html>
