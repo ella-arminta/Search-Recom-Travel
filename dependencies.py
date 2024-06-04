@@ -23,7 +23,7 @@ class Database(DependencyProvider):
                 pool_size=10,
                 pool_reset_session=True,
                 host='localhost',
-                database='hotel',# nama database nya diganti sesuai dengan services
+                database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
                 password=''
             )
