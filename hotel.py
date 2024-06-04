@@ -20,3 +20,8 @@ class HotelService:
             'code' : 200,
             'data' : rooms
         }
+    
+    @rpc
+    def get_all_hotel(self):
+        hotels = self.database.get_all_hotel()
+        return hotels
