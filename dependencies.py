@@ -33,6 +33,13 @@ class DatabaseWrapper:
         cursor.close()
         return result
     
+    def get_service_by_type(self, type_id):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM services WHERE id_service_type = %s", (type_id,))
+        result = cursor.fetchall()
+        cursor.close()
+        return result
+
     def add_service(self, nama, id_lokasi, api_get_all, id_service_type):
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute("INSERT INTO services (nama, id_lokasi, api_get_all, id_service_type) VALUES (%s, %s, %s, %s)", (nama, id_lokasi, api_get_all, id_service_type))

@@ -7,6 +7,7 @@ from nameko.web.handlers import http
 class GatewayService:
     name = 'gateway'
     service_rpc = RpcProxy('service_list')
+    hotel_rpc = RpcProxy('hotel_service')
 
 # SERVICE_LIST
     @http('POST', '/service')
@@ -68,8 +69,8 @@ class GatewayService:
 # HOTEL
     @http('GET', '/hotel')
     def get_all_hotel(self, request):
-        # 
-        return 
+        all_hotel = self.hotel_rpc.get_all_hotel()
+        return 200, json.dumps(all_hotel)
 
 # TRANSPORTASI
 # TRAVEL AGENT
