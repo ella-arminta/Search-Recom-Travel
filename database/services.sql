@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 02:04 PM
+-- Generation Time: Jun 04, 2024 at 02:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.21
 
@@ -24,42 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lokasi`
+-- Table structure for table `services`
 --
 
-CREATE TABLE `lokasi` (
+CREATE TABLE `services` (
   `id` int(11) NOT NULL,
-  `nama_kota` varchar(255) NOT NULL
+  `nama` varchar(255) NOT NULL,
+  `id_lokasi` int(11) NOT NULL,
+  `api_get_all` text NOT NULL,
+  `id_service_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `lokasi`
---
-
-INSERT INTO `lokasi` (`id`, `nama_kota`) VALUES
-(1, 'Jakarta'),
-(2, 'Jogja'),
-(3, 'Bali');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `lokasi`
+-- Indexes for table `services`
 --
-ALTER TABLE `lokasi`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_service_type` (`id_service_type`),
+  ADD KEY `fk_id_lokasi` (`id_lokasi`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `lokasi`
+-- AUTO_INCREMENT for table `services`
 --
-ALTER TABLE `lokasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `services`
+--
+ALTER TABLE `services`
+  ADD CONSTRAINT `fk_id_lokasi` FOREIGN KEY (`id_lokasi`) REFERENCES `lokasi` (`id`),
+  ADD CONSTRAINT `fk_id_service_type` FOREIGN KEY (`id_service_type`) REFERENCES `service_type` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

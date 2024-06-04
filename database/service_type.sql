@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 11:56 AM
+-- Generation Time: Jun 04, 2024 at 02:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.21
 
@@ -24,24 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hotel`
+-- Table structure for table `service_type`
 --
 
-CREATE TABLE `hotel` (
+CREATE TABLE `service_type` (
   `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `id_lokasi` int(11) NOT NULL,
-  `api_get_all` text NOT NULL
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `service_type`
+--
+
+INSERT INTO `service_type` (`id`, `name`) VALUES
+(1, 'hotel'),
+(2, 'airlines'),
+(3, 'travel_agent'),
+(4, 'transportasi'),
+(5, 'atraksi'),
+(6, 'insurance');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `hotel`
+-- Indexes for table `service_type`
 --
-ALTER TABLE `hotel`
+ALTER TABLE `service_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -49,10 +59,10 @@ ALTER TABLE `hotel`
 --
 
 --
--- AUTO_INCREMENT for table `hotel`
+-- AUTO_INCREMENT for table `service_type`
 --
-ALTER TABLE `hotel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `service_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
