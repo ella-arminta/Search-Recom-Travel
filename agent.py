@@ -10,5 +10,5 @@ class TravelAgentService:
 
     @rpc
     def get_all_agent(self):
-        agent_services = self.database.get_service_by_type(1)
+        agent_services = self.database.get_service_by_type(3)
         return agent_services
