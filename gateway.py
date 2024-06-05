@@ -79,12 +79,12 @@ class GatewayService:
 # TRAVEL AGENT
     @http('GET', '/agent')
     def get_all_agent(self,request):
-        all_agent = self.hotel_rpc.get_all_agent()
+        all_agent = self.agent_rpc.get_all_agent()
         return 200, json.dumps(all_agent)
 # ATRAKSI
     @http('GET', '/atraksi')
     def get_all_atraksi(self,request):
-        all_atraksi = self.hotel_rpc.get_all_atraksi()
+        all_atraksi = self.atraksi_rpc.get_all_atraksi()
         return 200, json.dumps(all_atraksi)
 # AIRLINES
     @http('GET', '/airlines')
