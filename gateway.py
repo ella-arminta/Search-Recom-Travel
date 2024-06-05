@@ -10,6 +10,8 @@ class GatewayService:
     hotel_rpc = RpcProxy('hotel_service')
     agent_rpc = RpcProxy('travel_agent_service')
     atraksi_rpc = RpcProxy('atraksi_service')
+    airlines_rpc = RpcProxy('airlines_service')
+    insurance_rpc = RpcProxy('insurance_service')
 # SERVICE_LIST
     @http('POST', '/service')
     def add_service(self, request):
@@ -85,4 +87,12 @@ class GatewayService:
         all_atraksi = self.hotel_rpc.get_all_atraksi()
         return 200, json.dumps(all_atraksi)
 # AIRLINES
+    @http('GET', '/airlines')
+        def get_all_airlines(self,request):
+            all_airlines = self.airlines_rpc.get_all_airlines()
+            return 200, json.dumps(all_airlines)
 # INSURANCE
+    @http('GET', '/insurance')
+        def get_all_insurance(self,request):
+            all_insurance = self.insurance_rpc.get_all_insurance()
+            return 200, json.dumps(all_insurance)
