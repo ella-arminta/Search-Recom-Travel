@@ -88,11 +88,11 @@ class GatewayService:
         return 200, json.dumps(all_atraksi)
 # AIRLINES
     @http('GET', '/airlines')
-        def get_all_airlines(self,request):
+    def get_all_airlines(self,request):
             all_airlines = self.airlines_rpc.get_all_airlines()
             return 200, json.dumps(all_airlines)
 # INSURANCE
     @http('GET', '/insurance')
-        def get_all_insurance(self,request):
+    def get_all_insurance(self,request):
             all_insurance = self.insurance_rpc.get_all_insurance()
             return 200, json.dumps(all_insurance)
