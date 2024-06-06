@@ -39,6 +39,13 @@ class DatabaseWrapper:
         result = cursor.fetchall()
         cursor.close()
         return result
+    
+    def get_service_by_type_lokasi(self, type_id, lokasi_id):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM services WHERE id_service_type = %s and lokasi_id = %s", (type_id, lokasi_id))
+        result = cursor.fetchall()
+        cursor.close()
+        return result
 
     def add_service(self, nama, id_lokasi, api_get_all, id_service_type):
         cursor = self.connection.cursor(dictionary=True)

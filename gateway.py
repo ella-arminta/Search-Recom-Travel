@@ -70,10 +70,12 @@ class GatewayService:
         return 200,json.dumps(result)
 
 # HOTEL
-    @http('GET', '/hotel')
-    def get_all_hotel(self, request):
-        all_hotel = self.hotel_rpc.get_all_hotel()
-        return 200, json.dumps(all_hotel)
+    @http('GET', '/hotel/city/<int:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<int:people>/minprice/<int:minprice>/maxprice/<int:maxprice>/rating/<int:rating>')
+    def get_all_hotel(self, request, id_lokasi, checkin, checkout, people, minprice, maxprice, rating):
+        # min price -> room start from
+        # max price -> room start from
+        all_hotel = self.hotel_rpc.get_all_hotel(id_lokasi, checkin,checkout,people)
+        return all_hotel['code'], json.dumps(all_hotel)
 
 # TRANSPORTASI
 # TRAVEL AGENT
