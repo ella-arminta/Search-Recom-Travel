@@ -19,25 +19,25 @@ class GatewayService:
         data = request.get_data(as_text=True)
         if data == '':
             return 400,json.dumps({
-                "data": "Invalid form data, empty data required. nama (string), id_lokasi (int), api_get_all (string) and id_service_type (int) is required"
+                "data": "Invalid form data, empty data required. nama (string), id_lokasi (int), url (string) and id_service_type (int) is required"
                 })
         
         data = json.loads(data)
         nama = data.get('nama', None)
         id_lokasi = data.get('id_lokasi', None)
-        api_get_all = data.get('api_get_all', None)
+        url = data.get('url', None)
         id_service_type =  data.get('id_service_type', None)
 
         # Postman form-data
         # nama = request.form.get('nama')
         # id_lokasi = request.form.get('id_lokasi')
-        # api_get_all = request.form.get('api_get_all')
+        # url = request.form.get('url')
         # id_service_type =  request.form.get('id_service_type')
 
         # cek wajib ada
-        if nama is None or id_lokasi is None or api_get_all is None or id_service_type is None:
+        if nama is None or id_lokasi is None or url is None or id_service_type is None:
             return 400,json.dumps({
-                "data": "Invalid form data, empty data required. nama (string), id_lokasi (int), api_get_all (string) and id_service_type (int) is required"
+                "data": "Invalid form data, empty data required. nama (string), id_lokasi (int), url (string) and id_service_type (int) is required"
                 })
         
         # cek tipe data
@@ -48,10 +48,10 @@ class GatewayService:
                 id_service_type = int(id_service_type)
             except:
                 return 400,json.dumps({
-                    "data": "Invalid form data type. nama (string), id_lokasi (int), api_get_all (string) and id_service_type (int) is required"
+                    "data": "Invalid form data type. nama (string), id_lokasi (int), url (string) and id_service_type (int) is required"
                     })
 
-        result = self.service_rpc.add_service(nama, id_lokasi, api_get_all, id_service_type)
+        result = self.service_rpc.add_service(nama, id_lokasi, url, id_service_type)
         return result['code'],json.dumps(result) 
     
     @http('GET', '/service')

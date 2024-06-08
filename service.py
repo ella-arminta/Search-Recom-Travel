@@ -39,7 +39,7 @@ class ServiceService:
             }
     
     @rpc
-    def add_service(self, nama, id_lokasi, api_get_all, id_service_type):
+    def add_service(self, nama, id_lokasi, url, id_service_type):
         check_lokasi = self.database.get_lokasi_by_id(id_lokasi)
         check_service_type = self.database.get_service_type_by_id(id_service_type)
         all_lokasi = self.database.get_all_lokasi()
@@ -55,5 +55,5 @@ class ServiceService:
                 'code' : 400,
                 'data' : "Service Type not found. Available Service Type : " + str(all_service_type)
             }
-        result = self.database.add_service(nama, id_lokasi, api_get_all, id_service_type)
+        result = self.database.add_service(nama, id_lokasi, url, id_service_type)
         return result

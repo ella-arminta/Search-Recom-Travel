@@ -47,9 +47,9 @@ class DatabaseWrapper:
         cursor.close()
         return result
 
-    def add_service(self, nama, id_lokasi, api_get_all, id_service_type):
+    def add_service(self, nama, id_lokasi, url, id_service_type):
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute("INSERT INTO services (nama, id_lokasi, api_get_all, id_service_type) VALUES (%s, %s, %s, %s)", (nama, id_lokasi, api_get_all, id_service_type))
+        cursor.execute("INSERT INTO services (nama, id_lokasi, url, id_service_type) VALUES (%s, %s, %s, %s)", (nama, id_lokasi, url, id_service_type))
         self.connection.commit()
         id = cursor.lastrowid
         cursor.close()
@@ -60,7 +60,7 @@ class DatabaseWrapper:
                 'id' : id,
                 'nama' : nama,
                 'id_lokasi' : id_lokasi,
-                'api_get_all' : api_get_all,
+                'url' : url,
                 'id_service_type' : id_service_type
             }
         }

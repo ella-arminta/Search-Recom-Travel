@@ -6,9 +6,4 @@ Atraksi - MAP
 INsurance - Yu
 
 pip install pymysql
-
-TUTOR Migration 
-1. Tambah di models
-2. flask db migrate
-3. flask db upgrade 
-4. selesai telah ke import
+https://dbdiagram.io/d/searchRecom-66614bce9713410b05e3ef7a

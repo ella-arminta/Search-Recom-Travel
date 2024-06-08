@@ -15,7 +15,7 @@ class HotelService:
         hotels = []
         for hotel_service in hotel_services:
             hotel_service['lokasi'] = self.database.get_lokasi_by_id(hotel_service['id_lokasi'])
-            endpoint_url = hotel_service['api_get_all']
+            endpoint_url = hotel_service['url']
             try: 
                 # /rooms
                 response = requests.get(endpoint_url)

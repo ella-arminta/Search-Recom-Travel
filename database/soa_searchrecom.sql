@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2024 at 02:05 PM
+-- Generation Time: Jun 08, 2024 at 06:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.21
 
@@ -24,6 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `id` int(11) NOT NULL,
+  `nama_kota` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`id`, `nama_kota`) VALUES
+(1, 'Jakarta'),
+(2, 'Jogja'),
+(3, 'Bali');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `services`
 --
 
@@ -35,9 +55,38 @@ CREATE TABLE `services` (
   `id_service_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service_type`
+--
+
+CREATE TABLE `service_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `service_type`
+--
+
+INSERT INTO `service_type` (`id`, `name`) VALUES
+(1, 'hotel'),
+(2, 'airlines'),
+(3, 'travel_agent'),
+(4, 'transportasi'),
+(5, 'atraksi'),
+(6, 'insurance');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `services`
@@ -48,14 +97,32 @@ ALTER TABLE `services`
   ADD KEY `fk_id_lokasi` (`id_lokasi`);
 
 --
+-- Indexes for table `service_type`
+--
+ALTER TABLE `service_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `service_type`
+--
+ALTER TABLE `service_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
