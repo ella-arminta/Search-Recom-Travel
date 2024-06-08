@@ -84,10 +84,10 @@ class GatewayService:
         all_agent = self.agent_rpc.get_all_agent()
         return 200, json.dumps(all_agent)
 # ATRAKSI
-    @http('GET', '/atraksi')
-    def get_all_atraksi(self,request):
-        all_atraksi = self.atraksi_rpc.get_all_atraksi()
-        return 200, json.dumps(all_atraksi)
+    @http('GET', '/atraksi/city/<int:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/hari/<string:hari>/waktu/<string:waktu>/minprice/<int:minprice>/maxprice/<int:maxprice>/rating/<int:rating>')
+    def get_all_atraksi(self,request,id_lokasi,attractioname,tanggal,hari,waktu,minprice,maxprice,rating):
+        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,hari,waktu)
+        return all_atraksi['code'], json.dumps(all_atraksi)
 # AIRLINES
     @http('GET', '/airlines')
     def get_all_airlines(self,request):
