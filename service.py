@@ -22,6 +22,19 @@ class ServiceService:
             'data' : services
         }
 
+    @rpc 
+    def get_service(self, name):
+        service = self.database.get_service_by_name(name)
+        if service is None:
+            return {
+                'code' : 404,
+                'data' : "Service not found"
+            }
+        return {
+            'code' : 200,
+            'data' : service
+        }
+    
     @rpc
     def get_all_service_type(self):
         service_type = self.database.get_all_service_type()

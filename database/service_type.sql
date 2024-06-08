@@ -42,7 +42,8 @@ INSERT INTO `service_type` (`id`, `name`) VALUES
 (3, 'travel_agent'),
 (4, 'transportasi'),
 (5, 'atraksi'),
-(6, 'insurance');
+(6, 'insurance'),
+(7, 'booking');
 
 --
 -- Indexes for dumped tables

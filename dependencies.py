@@ -109,6 +109,13 @@ class DatabaseWrapper:
         cursor.close()
         return result
     
+    def get_service_by_name(self, name):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM services WHERE lower(nama) = lower(%s)", (name))
+        result = cursor.fetchone()
+        cursor.close()
+        return result
+    
     def get_service_type_by_id(self, id):
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM service_type WHERE id = %s", (id,))
