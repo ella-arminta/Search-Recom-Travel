@@ -15,7 +15,7 @@ class AirlinesService:
     @rpc
     def get_all_airlines(self):
         flights_services = self.database.get_service_by_type(2)
-        data=[]
+        flights=[]
         
         for flights_service in flights_services:
             endpoint_url = flights_service['url']
@@ -53,12 +53,15 @@ class AirlinesService:
                         'status':True
                     },
                 ]
+                for datas in data:
+                    flights.append(datas)
                 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
                 # TODO add error to database
                 continue
+            
         return{
             'code':200,
-            'data':data
+            'data':flights
         }
