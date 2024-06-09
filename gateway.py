@@ -43,20 +43,27 @@ class GatewayService:
             id_service_type =  request.form.get('id_service_type')
 
             # cek wajib ada
-            if nama is None or id_lokasi is None or url is None or id_service_type is None:
+            if nama is None or url is None or id_service_type is None:
                 return 400,json.dumps({
                     "data": "Invalid form data, empty data required. nama (string), id_lokasi (int), url (string) and id_service_type (int) is required"
                     })
             
             # cek tipe data
-            if type(id_lokasi) != int or type(id_service_type) != int:
+            if (id_lokasi != '' and type(id_lokasi) != int) or type(id_service_type) != int:
                 # convert to int from strimng
                 try:
-                    id_lokasi = int(id_lokasi)
+                    if id_lokasi != '':
+                        id_lokasi = int(id_lokasi)
                     id_service_type = int(id_service_type)
                 except:
+                    error = []
+                    if type(id_lokasi) != int:
+                        error.append('id_lokasi (int)')
+                    if type(id_service_type) != int:
+                        error.append('id_service_type (int)')
+                    
                     return 400,json.dumps({
-                        "data": "Invalid form data type. nama (string), id_lokasi (int), url (string) and id_service_type (int) is required"
+                        "data": "Invalid form data type. " + ', '.join(error)
                         })
 
             result = self.service_rpc.add_service(nama, id_lokasi, url, id_service_type)
@@ -73,15 +80,39 @@ class GatewayService:
         return 200,json.dumps(result)
 
 # HOTEL
-    @http('GET', '/hotel/city/<int:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<int:people>/minprice/<int:minprice>/maxprice/<int:maxprice>/rating/<string:rating>')
-    def get_all_hotel(self, request, id_lokasi = '-', checkin = '-', checkout = '-', people = '-', minprice = '-', maxprice = '-', rating = '-'):
+# TODO Sort by
+    @http('GET', '/hotel/city/<string:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
+    def get_all_hotel(self, request, id_lokasi = '-', checkin = '-', checkout = '-', people = '-', minprice = '-', maxprice = '-', rating = '-', sort='-'):
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
         # min price -> room start from
         # max price -> room start from
-        all_hotel = self.hotel_rpc.get_all_hotel(id_lokasi, checkin,checkout,people)
+        sort = sort.lower()
+        allowed_sort = ['lowestprice', 'highestprice', 'highestpopularity','reviewscore','-']
+        # cek id_lokasi angka atau bukan
+        try:
+            if id_lokasi != '-':
+              id_lokasi = int(id_lokasi)
+            if people != '-':
+              people = int(people)
+            if minprice != '-':
+              minprice = int(minprice)
+            if maxprice != '-':
+              maxprice = int(maxprice)
+        except:
+            return 400, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi/people/minprice/maxprice parameter. must be integer'
+            })
+        if sort not in allowed_sort:
+            return 400, json.dumps({
+                'code': 400,
+                'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
+            })
+        all_hotel = self.hotel_rpc.get_all_hotel(id_lokasi, checkin, checkout,people, minprice, maxprice, rating, sort)
         return all_hotel['code'], json.dumps(all_hotel)
 
 # TRANSPORTASI
+
 # TRAVEL AGENT
     @http('GET', '/agent')
     def get_all_agent(self,request):

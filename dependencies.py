@@ -42,7 +42,7 @@ class DatabaseWrapper:
     
     def get_service_by_type_lokasi(self, type_id, lokasi_id):
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM services WHERE id_service_type = %s and lokasi_id = %s", (type_id, lokasi_id))
+        cursor.execute("SELECT * FROM services WHERE id_service_type = %s and id_lokasi = %s", (type_id, lokasi_id))
         result = cursor.fetchall()
         cursor.close()
         return result
@@ -67,7 +67,7 @@ class DatabaseWrapper:
     
     def add_service_type(self, nama):
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute("INSERT INTO service_type (nama) VALUES (%s)", (nama))
+        cursor.execute("INSERT INTO service_type (nama) VALUES (%s)", (nama,))
         self.connection.commit()
         id = cursor.lastrowid
         cursor.close()
@@ -82,7 +82,7 @@ class DatabaseWrapper:
     
     def add_lokasi(self, nama):
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute("INSERT INTO lokasi (nama) VALUES (%s)", (nama))
+        cursor.execute("INSERT INTO lokasi (nama) VALUES (%s)", (nama,))
         self.connection.commit()
         id = cursor.lastrowid
         cursor.close()
@@ -111,7 +111,7 @@ class DatabaseWrapper:
     
     def get_service_by_name(self, name):
         cursor = self.connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM services WHERE lower(nama) = lower(%s)", (name))
+        cursor.execute("SELECT * FROM services WHERE lower(nama) = lower(%s)", (name,))
         result = cursor.fetchone()
         cursor.close()
         return result

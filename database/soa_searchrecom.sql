@@ -50,7 +50,7 @@ INSERT INTO `lokasi` (`id`, `nama_kota`) VALUES
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `id_lokasi` int(11) NOT NULL,
+  `id_lokasi` int(11) DEFAULT NULL,
   `url` text NOT NULL,
   `id_service_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -76,7 +76,8 @@ INSERT INTO `service_type` (`id`, `name`) VALUES
 (3, 'travel_agent'),
 (4, 'transportasi'),
 (5, 'atraksi'),
-(6, 'insurance');
+(6, 'insurance'),
+(7, 'booking');
 
 --
 -- Indexes for dumped tables
@@ -122,7 +123,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `service_type`
 --
 ALTER TABLE `service_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -132,7 +133,7 @@ ALTER TABLE `service_type`
 -- Constraints for table `services`
 --
 ALTER TABLE `services`
-  ADD CONSTRAINT `fk_id_lokasi` FOREIGN KEY (`id_lokasi`) REFERENCES `lokasi` (`id`),
+  ADD CONSTRAINT `fk_id_lokasi` FOREIGN KEY (`id_lokasi`) REFERENCES `lokasi` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `fk_id_service_type` FOREIGN KEY (`id_service_type`) REFERENCES `service_type` (`id`);
 COMMIT;
 

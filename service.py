@@ -53,17 +53,21 @@ class ServiceService:
     
     @rpc
     def add_service(self, nama, id_lokasi, url, id_service_type):
-        check_lokasi = self.database.get_lokasi_by_id(id_lokasi)
+        check_lokasi = None
+        if id_lokasi != '':
+            check_lokasi = self.database.get_lokasi_by_id(id_lokasi)
+        else: 
+            id_lokasi = None
         check_service_type = self.database.get_service_type_by_id(id_service_type)
         all_lokasi = self.database.get_all_lokasi()
         all_service_type = self.database.get_all_service_type()
 
-        if check_lokasi is None:
+        if id_lokasi is not None and check_lokasi is None:
             return {
                 'code' : 400,
                 'data' : "Lokasi not found. Available Lokasi : " + str(all_lokasi)
             }
-        if check_service_type is None:
+        if check_service_type is None or check_service_type == '':
             return {
                 'code' : 400,
                 'data' : "Service Type not found. Available Service Type : " + str(all_service_type)
