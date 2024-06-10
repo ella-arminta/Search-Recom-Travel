@@ -1,0 +1,174 @@
+/* styles.css */
+
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set background color and font styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.wrap {
+    max-width: 80%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #029bf2;
+    padding-top: 24px;
+    z-index: 2;
+    position: relative;
+    transition: all 0.5s ease; /* Corrected here */
+    background-image: url(https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/1/19d70f54525b8bd167113e49116b5c7d.png);
+}
+
+.wrap.highlighted {
+    background-color: rgba(255,255,255,1);
+}
+
+
+
+/* Style the header */
+.headbar {
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.right-button {
+    color: #0194f3;
+    background-color: #ffffff;
+    font-weight: 600;
+}
+
+/* Default button styling */
+.left-button {
+    margin-right: 10px; 
+    color: #ffffff; /* White text color */
+    background-color: transparent; /* No background color */
+    border: none; 
+    font-weight: 600;
+}
+
+/* Styling for when the button is active (pressed) or has the active class */
+.left-button:active, .left-button.active,
+.right-button:active, .right-button.active {
+    border: 1px solid white; /* White border */
+    background-color: #eaeaea69; /* Light gray background */
+    font-weight: 600;
+}
+
+.right-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+button {
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+}
+
+.content {
+    padding: 12px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 60% 40%; /* Creates 2 columns */
+    grid-template-rows: 1fr 1fr; /* Creates 2 rows */
+    gap: 10px; /* Space between grid items */
+}
+
+.grid-sub-container-1 {
+    display: grid;
+    grid-template-columns: 47.5% 5% 47.5%;
+}
+
+.grid-sub-input-1 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.grid-sub-container-3 {
+    display: grid;
+    grid-template-columns: 47.5% 5% 47.5%;
+}
+
+.grid-sub-title {
+    padding-top: 28px;
+}
+
+.overlay {
+    position: fixed; /* Position it at the top left corner of the page */
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire page */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 1; /* Display it above other elements */
+    display: none; /* Hide it by default */
+}
+
+.overlay.visible {
+    display: block; /* Show it when it has the 'visible' class */
+}
+
+/* Add other styles as needed */
+
+/* Responsive styles */
+@media screen and (max-width: 480px) {
+    .wrap {
+        padding: 10px;
+    }
+}
