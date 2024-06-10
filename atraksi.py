@@ -10,6 +10,8 @@ class AtraksiService:
 
     @rpc
     def get_all_atraksi(self,id_lokasi,attractioname,tanggal,hari,waktu):
+        # ngecek apakah id_lokasi integern dan udh ada di db
+        
         atraksi_services = self.database.get_service_by_type_lokasi(5,id_lokasi)
         atraksi = []
 
