@@ -156,13 +156,18 @@ class GatewayService:
     def get_all_atraksi(self,request,id_lokasi,attractioname,tanggal,hari,waktu,minprice,maxprice,rating):
         all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,hari,waktu)
         return all_atraksi['code'], json.dumps(all_atraksi)
+    
 # AIRLINES
-    @http('GET', '/airlines')
-    def get_all_airlines(self,request):
-            all_airlines = self.airlines_rpc.get_all_airlines()
-            return 200, json.dumps(all_airlines)
+    @http('GET', '/airlines/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/minprice/<string:minprice>/maxprice/<string:maxprice>/date/<string:date>/start_time/<string:start_time>/end_time/<string:end_time>')
+    def get_all_airlines(self,request,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time):
+        if minprice != '-':
+            minprice = int(minprice)
+        if maxprice != '-':
+            maxprice = int(maxprice)
+        all_airlines = self.airlines_rpc.get_all_airlines(airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time)
+        return 200, json.dumps(all_airlines)
 # INSURANCE
     @http('GET', '/insurance')
     def get_all_insurance(self,request):
-            all_insurance = self.insurance_rpc.get_all_insurance()
-            return 200, json.dumps(all_insurance)
+        all_insurance = self.insurance_rpc.get_all_insurance()
+        return 200, json.dumps(all_insurance)
