@@ -40,7 +40,7 @@ INSERT INTO `service_type` (`id`, `name`) VALUES
 (1, 'hotel'),
 (2, 'airlines'),
 (3, 'travel_agent'),
-(4, 'transportasi'),
+(4, 'carrental'),
 (5, 'atraksi'),
 (6, 'insurance'),
 (7, 'booking');
