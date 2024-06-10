@@ -27,15 +27,16 @@ class HotelService:
             for i in range(5):
                 if rating[i] == '1':
                     ratings_allowed.append(i + 1)
+            endpoint_booking = self.database.get_service_by_name('booking')['url']
             try: 
                 # TODO testing review service
-                endpoint_booking = self.database.get_service_by_name('booking')['url']
                 response = requests.get(endpoint_booking + '/review/hotel')
                 response.raise_for_status()
                 review = response.json()
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
-                # TODO add error to database
+                self.database.add_request_error(endpoint_booking + '/review/hotel', str(e), self.database.get_service_by_name('booking')['id'] , 1)
+
                 pass
                 # return {
                 #     'code': 500,
@@ -209,7 +210,8 @@ class HotelService:
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
-                # TODO add error to database
+                self.database.add_request_error(endpoint_booking+'/rooms/checkin/'+checkin+'/checkout'+checkout, str(e), endpoint_url, 1)
+
                 continue
 
         return {
