@@ -120,15 +120,14 @@ class CarRentalService:
 
         # GET REVIEWS and PROVIDER RATING
         review = {}
+        endpoint_booking = self.database.get_service_by_name('booking')['url']
         try: 
             # TODO testing review service
-            endpoint_booking = self.database.get_service_by_name('booking')['url']
             response = requests.get(endpoint_booking + '/review/carrental')
             response.raise_for_status()
             review = response.json()
         except requests.exceptions.RequestException as e:
-            # Handle any exceptions that occur during the request
-            # TODO add error to database
+            self.database.add_request_error(endpoint_booking + '/review/carrental', str(e), self.database.get_service_by_name('booking')['id'], 7)
             pass
             # return {
             #     'code': 500,
@@ -226,9 +225,9 @@ class CarRentalService:
                                 'review_score': review[cr['nama']] if cr['nama'] in review else 0,
                             })
                     except requests.exceptions.RequestException as e:
+                        self.database.add_request_error(endpoint_url +'/car/<id>', str(e), cr['id'] , 4)
                         continue
                         # Handle any exceptions that occur during the request
-                        # TODO add error to database
                         pass
                         # return {
                         #     'code': 500,
@@ -237,7 +236,7 @@ class CarRentalService:
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
-                # TODO add error to database
+                self.database.add_request_error(endpoint_url +'/available_cars', str(e), cr['id'] , 4)
                 continue
                 pass
                 # return {
@@ -276,7 +275,7 @@ class CarRentalService:
                     else:
                         cartype[c['car_type']].append(cr['id'])
             except requests.exceptions.RequestException as e:
-                # TODO add error to database
+                self.database.add_request_error(endpoint_url + '/car', str(e), cr['id'] , 4)
                 pass
 
         return {
@@ -290,15 +289,14 @@ class CarRentalService:
         
         # get provider rating
         review = {}
+        endpoint_booking = self.database.get_service_by_name('booking')['url']
         try: 
             # TODO testing review service
-            endpoint_booking = self.database.get_service_by_name('booking')['url']
             response = requests.get(endpoint_booking + '/review/carrental')
             response.raise_for_status()
             review = response.json()
         except requests.exceptions.RequestException as e:
-            # Handle any exceptions that occur during the request
-            # TODO add error to database
+            self.database.add_request_error(endpoint_booking + '/review/carrental', str(e), self.database.get_service_by_name('booking')['id'] , 4)
             pass
             # return {
             #     'code': 500,

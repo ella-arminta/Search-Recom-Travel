@@ -122,7 +122,23 @@ class DatabaseWrapper:
         result = cursor.fetchone()
         cursor.close()
         return result
-
+    
+    def add_request_error(self, path, error_message, service_id=None, service_type_id=None):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("INSERT INTO requests_error (id_service, path, error_message, id_service_type ) VALUES (%s, %s, %s, %s)", (service_id, path, error_message, service_type_id))
+        self.connection.commit()
+        id = cursor.lastrowid
+        cursor.close()
+        return {
+            'code' : 200,
+            'message' : "Success",
+            'data' : {
+                'id' : id,
+                'service_id' : service_id,
+                'error_message' : error_message
+            }
+        }
+    
 class Database(DependencyProvider):
 
     connection_pool = None
