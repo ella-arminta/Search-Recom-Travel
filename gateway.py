@@ -152,11 +152,49 @@ class GatewayService:
         all_agent = self.agent_rpc.get_all_agent()
         return 200, json.dumps(all_agent)
 # ATRAKSI
-    @http('GET', '/atraksi/city/<string:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/hari/<string:hari>/waktu/<string:waktu>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>')
-    def get_all_atraksi(self,request,id_lokasi,attractioname,tanggal,hari,waktu,minprice,maxprice,rating):
-        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,hari,waktu)
+
+    # GET ALL ATRAKSI
+    @http('GET', '/atraksi/city/<string:id_lokasi>/attractioname/<string:attractioname>/tanggal/<date:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
+    def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', rating = '-', sort = '-'):
+        
+        # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
+        # min price -> room start from
+        # max price -> room start from
+        
+        sort = sort.lower()
+        allowed_sort = ['lowestprice', 'highestprice', 'highestpopularity','reviewscore','-']
+        if sort not in allowed_sort:
+            return 400, json.dumps({
+                'code': 400,
+                'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
+            })
+        
+        # cek id_lokasi angka atau bukan
+        try:
+            if id_lokasi != '-':
+              id_lokasi = int(id_lokasi)
+            if minprice != '-':
+              minprice = int(minprice)
+            if maxprice != '-':
+              maxprice = int(maxprice)
+        except:
+            return 400, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi/minprice/maxprice parameter. must be integer'
+            })
+
+        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,minprice,maxprice,rating,sort)
         return all_atraksi['code'], json.dumps(all_atraksi)
     
+    # GET ALL ATRAKSI SORT
+    @http('GET', '/atraksi/sort')
+    def get_all_atraksi_sort(self,request):
+        result = {
+            'code': 200,
+            'data': ['lowestprice', 'highestprice', 'highestpopularity','reviewscore','-']
+        }
+        return result['code'], json.dumps(result)
+
 # AIRLINES
     @http('GET', '/airlines/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/minprice/<string:minprice>/maxprice/<string:maxprice>/date/<string:date>/start_time/<string:start_time>/end_time/<string:end_time>')
     def get_all_airlines(self,request,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time):
