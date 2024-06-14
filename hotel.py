@@ -12,7 +12,7 @@ class HotelService:
     database = dependencies.Database()
     
     @rpc
-    def get_all_hotel(self, id_lokasi, checkin, checkout,people, minprice, maxprice, rating, sort):
+    def get_all_hotel(self, id_lokasi, checkin, checkout,people, minprice, maxprice, rating, sort, room):
         # get all service that is hotel and in a location
         if id_lokasi != '-':
             hotel_services = self.database.get_service_by_type_lokasi(1, id_lokasi)
@@ -110,7 +110,11 @@ class HotelService:
                     else: 
                         if d['price'] < hotel_start_price:
                             hotel_start_price = d['price']
-
+                    
+                    if room != '-':
+                        minpeople = int(people / room)
+                    else:
+                        minpeople = people
                     # if people != '-': #Bakal di functionnya yul pengecekannya
                     #     if d['room_type']['capacity'] < people:
                     #         continue

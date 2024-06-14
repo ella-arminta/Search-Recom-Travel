@@ -82,8 +82,8 @@ class GatewayService:
         return 200,json.dumps(result)
 
 # HOTEL
-    @http('GET', '/hotel/city/<string:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
-    def get_all_hotel(self, request, id_lokasi = '-', checkin = '-', checkout = '-', people = '-', minprice = '-', maxprice = '-', rating = '-', sort='-'):
+    @http('GET', '/hotel/city/<string:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
+    def get_all_hotel(self, request, id_lokasi = '-', checkin = '-', checkout = '-', people = '-', minprice = '-', maxprice = '-', rating = '-', sort='-', room="-"):
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
         # min price -> room start from
         # max price -> room start from
@@ -98,20 +98,22 @@ class GatewayService:
         # cek id_lokasi angka atau bukan
         try:
             if id_lokasi != '-':
-              id_lokasi = int(id_lokasi)
+                id_lokasi = int(id_lokasi)
             if people != '-':
-              people = int(people)
+                people = int(people)
             if minprice != '-':
-              minprice = int(minprice)
+                minprice = int(minprice)
             if maxprice != '-':
-              maxprice = int(maxprice)
+                maxprice = int(maxprice)
+            if room != '-':
+                room = int(room)
         except:
             return 400, json.dumps({
                 'code': 400,
-                'data': 'Invalid id_lokasi/people/minprice/maxprice parameter. must be integer'
+                'data': 'Invalid id_lokasi/people/minprice/maxprice/room parameter must be integer'
             })
         
-        all_hotel = self.hotel_rpc.get_all_hotel(id_lokasi, checkin, checkout,people, minprice, maxprice, rating, sort)
+        all_hotel = self.hotel_rpc.get_all_hotel(id_lokasi, checkin, checkout,people, minprice, maxprice, rating, sort, room)
         return all_hotel['code'], json.dumps(all_hotel)
     
     @http('GET', '/hotel/sort')
