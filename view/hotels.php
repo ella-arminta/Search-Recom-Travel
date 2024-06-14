@@ -141,7 +141,7 @@
                             <input type="radio" id="reviewscore" name="sort" value="reviewscore">
                             <label for="reviewscore">Review Score</label><br>
                         </li>
-                        </select>
+                    </form>
                 </ul>
             </div>
         </div>
