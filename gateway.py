@@ -158,7 +158,7 @@ class GatewayService:
 # ATRAKSI
 
     # GET ALL ATRAKSI
-    @http('GET', '/atraksi/city/<string:id_lokasi>/attractioname/<string:attractioname>/tanggal/<date:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
+    @http('GET', '/atraksi/city/<string:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
     def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', rating = '-', sort = '-'):
         
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
