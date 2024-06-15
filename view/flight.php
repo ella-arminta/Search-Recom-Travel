@@ -21,6 +21,29 @@
     .custom-shadow-card {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
+    .line-container {
+        display: flex;
+        align-items: center;
+    }
+    .circle {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #00aaff;
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .circle.filled {
+        background-color: #00aaff;
+    }
+    .line {
+        width: 200px;
+        height: 2px;
+        background-color: lightgray;
+        display: inline-block;
+    }
 </style>
 <body>
     <div class="m-5">
@@ -117,22 +140,38 @@
                             <div class="flex flex-row place-items-center p-2">
                                 <img alt="Qatar Airways" class="w-10 h-10" src="data:image/png;base64,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" style="opacity: 1; transform-origin: 0% 50% 0px; transform: none;" />
                                 <div class="flex flex-col ml-2">
-                                    <p class="text-xs text-gray-500 font-bold" name="flightname" id="flightname">Qatar Airways</p>
-                                    <p class="text-xs text-gray-500" name="flightcode" id="flightcode">QR1456</p>
-                                    <div class="text-xs text-gray-500" name="flightcapacity" id="flightcapacity">
-                                        2*23kg
+                                    <p class="text-sm text-gray-500 font-bold" name="flightname" id="flightname">Qatar Airways</p>
+                                    <p class="text-sm text-gray-500" name="flightcode" id="flightcode">QR1456</p>
+                                    <div class="flex flex-row ">
+                                        <svg class="h-5 w-5"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                            viewBox="0 0 224.039 224.039" xml:space="preserve">
+                                        <path d="M216.539,52.26h-64.434V27.599c0-4.142-3.357-7.5-7.5-7.5H75.631c-4.143,0-7.5,3.358-7.5,7.5V52.26H7.5
+                                            c-4.143,0-7.5,3.358-7.5,7.5v136.68c0,4.142,3.357,7.5,7.5,7.5h209.039c4.143,0,7.5-3.358,7.5-7.5V59.76
+                                            C224.039,55.618,220.682,52.26,216.539,52.26z M75.631,67.26h68.975h21.852v121.68H57.582V67.26H75.631z M83.131,35.099h53.975
+                                            V52.26H83.131V35.099z M15,67.26h27.582v121.68H15V67.26z M209.039,188.94h-27.582V67.26h27.582V188.94z"/>
+                                        </svg>
+                                        <div class="pl-1 text-sm text-gray-500" name="flightcapacity" id="flightcapacity">
+                                            30kg
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col p-2">
-                                <p class="font-bold" name="starttime" id="starttime">18:25</p>
-                                <p class="text-gray-500"><span class="font-bold" name="originlocationcode" id="originlocationcode">HRE</span></p>
-                                <p class="text-gray-500" name="origincityname" id="origincityname">Zimbabwe</p>
-                            </div>
-                            <div class="flex flex-col flex-wrap p-2">
-                                <p class="font-bold"name="endtime" id="endtime">19:25</p>
-                                <p class="text-gray-500"><span class="font-bold" name="destinationlocationcode" id="destinationlocationcode">LUN</span></p>
-                                <p class="text-gray-500"name="destinationcityname" id="destinationcityname">Zambia</p>
+                            <div class="w-3/4 flex flex-row">
+                                <div class="flex flex-col p-2">
+                                    <p class="font-bold" name="starttime" id="starttime">18:25</p>
+                                    <p class="text-gray-500"><span class="font-bold" name="originlocationcode" id="originlocationcode">HRE</span></p>
+                                    <p class="text-gray-500" name="origincityname" id="origincityname">Zimbabwe</p>
+                                </div>
+                                <div class="line-container">
+                                    <div class="circle"></div>
+                                    <div class="line"></div>
+                                    <div class="circle filled"></div>
+                                </div>
+                                <div class="flex flex-col flex-wrap p-2">
+                                    <p class="font-bold"name="endtime" id="endtime">19:25</p>
+                                    <p class="text-gray-500"><span class="font-bold" name="destinationlocationcode" id="destinationlocationcode">LUN</span></p>
+                                    <p class="text-gray-500"name="destinationcityname" id="destinationcityname">Zambia</p>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-4 flex flex-row flex-wrap md:flex-nowrap justify-end items-baseline">
@@ -140,7 +179,9 @@
                                 <div class="text-md mx-2 flex flex-row items-center justify-center font-bold  text-orange-400">
                                     <p name="flightprice" id="flightprice">Rp3.000.000</p><span>/pax</span>
                                 </div>
-                                <button id="btnbook" class="w-32 h-11 rounded flex border-solid border text-white bg-sky-400 mx-2 justify-center place-items-center">Book</button>
+                                <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
+                                <span class="relative z-10">Choose</span>
+                                </button>
                             </div>
                         </div>
                     </div>
