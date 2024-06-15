@@ -208,6 +208,8 @@ class GatewayService:
             maxprice = int(maxprice)
         all_airlines = self.airlines_rpc.get_all_airlines(airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time)
         return 200, json.dumps(all_airlines)
+    
+    
 # INSURANCE
     @http('GET', '/insurance')
     def get_all_insurance(self,request):

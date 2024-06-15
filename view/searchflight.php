@@ -33,7 +33,7 @@
             <!-- origin & destination place -->
             <div class="flex w-full relative gap-4">
                 <div class="w-1/2 relative">
-                    <label for="fromplace">From</label>
+                    <label for="originplace">From</label>
                     <div class="relative mt-2">
                         <select name="originplace" id="originplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
@@ -52,16 +52,15 @@
                     </div>
                 </div>
                 <div class="w-1/2 relative">
-                    <label for="fromplace">From</label>
+                    <label for="destinationplace">To</label>
                     <div class="relative mt-2">
-                        <select name="originplace" id="originplace"
+                        <select name="destinationplace" id="destinationplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
                             <option selected>Choose City</option>
                             <option value="JKTA">Jakarta</option>
                             <option value="DPS">Bali</option>
                             <option value="SUB">Surabaya</option>
                             <option value="BTH">Batam</option>
-
                         </select>
                         <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                         <svg class="absolute top-2.5 left-2 w-6 h-6 text-gray-400" fill="#000000" viewBox="0 0 256 256"
@@ -94,10 +93,11 @@
             </div>
             <div class="flex justify-end">
                 <a href="flight.php" class="w-1/2">
-                <button class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
+                <button id="btnsearch"class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
                 </a>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </body>
 </html>
