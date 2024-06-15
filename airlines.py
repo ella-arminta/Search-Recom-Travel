@@ -64,6 +64,24 @@ class AirlinesService:
                         'weight':50,
                         'delay':0,
                     },
+                    
+                    {   
+                        'flight_code':'GA 208',
+                        'airport_origin_name':'Soekarno-Hatta Intl',
+                        'airport_origin_location_code':'CGK',
+                        'airport_origin_city_name':'Jakarta',
+                        'airport_destination_name':'New Yogyakarta Int.',
+                        'airport_destination_location_code':'YIA',
+                        'airport_destination_city_name':'Yogyakarta',
+                        'start_time':'11:30:00',
+                        'end_time':'12:50:00',
+                        'class_name':'Business Class',
+                        'capacity':50,
+                        'price':3500000,
+                        'date':'2024-06-12',
+                        'weight':30,
+                        'delay':0,
+                    },
                 ]
                 
                 for d in data:
