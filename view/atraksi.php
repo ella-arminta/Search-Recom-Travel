@@ -101,15 +101,15 @@
             <div class="flex gap-3 items-center">
                 <!-- Price -->
                 <div class="text-blue-500 justify-center gap-3 items-center flex drop-shadow-lg select-none rounded-full bg-white py-1 px-6 text-center align-middle font-sans text-sm font-bold shadow-md transition-all focus:opacity-[0.85] active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                    <div class="text-md">Price</div>
+                    
                     <!-- Minprice -->
                     <div class="flex  justify-center items-center gap-1">
-                        <p class="text-xs">Min</p>
+                        <p class="text-md">Min</p>
                         <input name="minprice" id="minprice" type="number" class="text-gray-500 border w-32 p-1 rounded" min="0" placeholder="min price">
                     </div>
                     <!-- maxprice -->
                     <div class="flex justify-center items-center gap-1">
-                        <p class="text-xs">Max</p>
+                        <p class="text-md">Max</p>
                         <input name="maxprice" id="maxprice" type="number" class="text-gray-500 border w-32 p-1 rounded" placeholder="max price">
                     </div>
                 </div>
