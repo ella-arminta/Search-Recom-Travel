@@ -14,8 +14,7 @@ class TravelAgentService:
     def get_all_agent(self, id_lokasi, startdate, enddate, people, minprice, maxprice, sort):
         data_error = []
         error = False
-        package = []
-        
+
         # lokasi
         if id_lokasi != '-': 
             try:
@@ -56,14 +55,25 @@ class TravelAgentService:
         # GET ALL SERVICE THAT IS travel agent and in a location
         package_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
 
-        endpoint_booking = self.database.get_service_by_name('booking')['url']
+        package = []
+        endpoint_booking = None
+        booking_service = self.database.get_service_by_name('booking')
+        if booking_service:
+            endpoint_booking = booking_service['url']
         
-        try:
-            response = requests.get(endpoint_booking + '/review/atraksi')
-            response.raise_for_status()
-            review = response.json()
+        if not endpoint_booking:
+            error = True
+            data_error.append('Booking service URL not found')
+
+        try: 
+            # TODO testing review service
+            if endpoint_booking:
+                response = requests.get(endpoint_booking + '/review/package')
+                response.raise_for_status()
+                review = response.json()
         except requests.exceptions.RequestException as e:
-            self.database.add_request_error(endpoint_booking + '/review/atraksi', str(e), self.database.get_service_by_name('booking')['id'], 5)
+            if endpoint_booking:
+                self.database.add_request_error(endpoint_booking + '/review/package', str(e), booking_service['id'], 3)
             pass
 
         for package_service in package_services:
@@ -145,40 +155,38 @@ class TravelAgentService:
                 
                 if temp_package != {}:
                     temp_package['package_start_price'] = package_start_price
-                    package.append(temp_package)
-
-
-                # # ADD PACKAGE TOUR and SORT BY
-                # if temp_package != {}:
-                #     if sort == 'lowestprice':
-                #         if len(package) == 0:
-                #             package.append(temp_package)
-                #         else:
-                #             index = 0
-                #             for p in package:
-                #                 if temp_package['package_start_price'] <= p['package_start_price']:
-                #                     package.insert(index, temp_package)
-                #                     break
-                #                 elif index == len(package) - 1:
-                #                     package.append(temp_package)
-                #                     break
-                #                 index += 1
-                #     elif sort == 'highestprice':
-                #         if len(package) == 0:
-                #             package.append(temp_package)
-                #         else:
-                #             index = 0
-                #             for p in package:
-                #                 if temp_package['package_start_price'] >= p['package_start_price']:
-                #                     package.insert(index, temp_package)
-                #                     break
-                #                 elif index == len(package) - 1:
-                #                     package.append(temp_package)
-                #                     break
-                #                 index += 1
+                
+                # ADD PACKAGE TOUR and SORT BY
+                if temp_package != {}:
+                    if sort == 'lowestprice':
+                        if len(package) == 0:
+                            package.append(temp_package)
+                        else:
+                            index = 0
+                            for p in package:
+                                if temp_package['package_start_price'] <= p['package_start_price']:
+                                    package.insert(index, temp_package)
+                                    break
+                                elif index == len(package) - 1:
+                                    package.append(temp_package)
+                                    break
+                                index += 1
+                    elif sort == 'highestprice':
+                        if len(package) == 0:
+                            package.append(temp_package)
+                        else:
+                            index = 0
+                            for p in package:
+                                if temp_package['package_start_price'] >= p['package_start_price']:
+                                    package.insert(index, temp_package)
+                                    break
+                                elif index == len(package) - 1:
+                                    package.append(temp_package)
+                                    break
+                                index += 1
                     
-                #     else:
-                #         package.append(temp_package)
+                    else:
+                        package.append(temp_package)
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
