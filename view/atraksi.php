@@ -119,7 +119,7 @@
                     <!-- rating -->
                     <div>
                         <button data-ripple-light="true" data-popover-target="ratingmenu" class="justify-center items-center text-blue-500 flex drop-shadow-lg select-none rounded-full bg-white py-2 px-6 text-center align-middle font-sans text-sm font-bold shadow-md transition-all focus:opacity-[0.85] active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            <div>Rating</div>
+                            <div>Rating Score</div>
                             <div dir="auto" aria-hidden="true" class="css-901oao r-1awozwy r-6koalj r-13hce6t" style="color: rgb(1, 148, 243);"><svg width="24" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSystemChevronDown">
                                     <path d="M6 9L12 15L18 9" stroke="#0194f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                 </svg></div>
@@ -127,17 +127,19 @@
                         <ul role="menu" data-popover="ratingmenu" data-popover-placement="bottom" class="absolute z-10 min-w-[180px] overflow-auto rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none transition-opacity duration-300 pointer-events-none opacity-0">
                             <form name="rating" id="ratingForm">
                                 <?php
-                                for ($i = 15; $i >= 11; $i--) {
+                                for ($i = 5; $i >= 1; $i--) {
                                     $stars = '';
-                                    for ($j = 5; $j < $i; $j++) {
-                                        $stars .= '<img class="mr-2" src="https://i.pinimg.com/originals/d5/da/ee/d5daeeaca986fb2655a4965884c0d6ea.png" width="16" height="16">';
+                                    $num = 5.0;
+                                    for ($j = 0; $j < $i; $j++) {
+                                        $num = $num + 1;
                                     }
+                                    $stars .= '<img class="mr-2" src="https://i.pinimg.com/originals/d5/da/ee/d5daeeaca986fb2655a4965884c0d6ea.png" width="16" height="16">';
                                 ?>
-                                    <li role="menuitem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                        <input type="checkbox" id="star<?= '-' . $i ?>" name="rating[]" value="<?= $i ?>">
-                                        <label for="star<?= '-' . $i ?>">
+                                    <li role="menuitem" class=" font-semibold text-blue-500 flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                                        <input type="checkbox" id="star<?= '-' .  $i ?>" name="rating[]" value="<?= $i ?>">
+                                        <label for="star<?= '-'  .$i ?>">
                                             <div class="flex">
-                                                <?= $stars ?>
+                                                <?= $num . $stars ?>
                                             </div>
                                         </label><br>
                                     </li>
@@ -167,14 +169,6 @@
                         <li role="menuitem" class="block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                             <input type="radio" id="lowestprice" name="sort" value="highestprice">
                             <label for="lowestprice">Highest Price</label><br>
-                        </li>
-                        <li role="menuitem" class="block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                            <input type="radio" id="lowestprice" name="sort" value="highestpopularity">
-                            <label for="lowestprice">Highest Popularity</label><br>
-                        </li>
-                        <li role="menuitem" class="block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                            <input type="radio" id="reviewscore" name="sort" value="reviewscore">
-                            <label for="reviewscore">Review Score</label><br>
                         </li>
                     </form>
                 </ul>
