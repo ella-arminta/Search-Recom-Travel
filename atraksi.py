@@ -3,6 +3,7 @@ from decimal import Decimal
 import dependencies
 import requests
 import random
+from datetime import datetime
 
 class AtraksiService:
 
@@ -12,6 +13,9 @@ class AtraksiService:
 
     @rpc
     def get_all_atraksi(self,id_lokasi,attractioname,tanggal,minprice,maxprice,rating,sort):
+        data_error = []
+        error = False
+
          # get all service that is attraction and in a location
         if id_lokasi != '-':
             atraksi_services = self.database.get_service_by_type_lokasi(5,id_lokasi)
@@ -19,6 +23,36 @@ class AtraksiService:
         else:
             atraksi_services = self.database.get_service_by_type(5)
 
+        # verify attraction name:
+        if attractioname != '-':
+            atraksi_services = self.database.get_service_by_type_lokasi(5,id_lokasi)
+        
+        else:
+            atraksi_services = self.database.get_service_by_type(5)
+
+        # date
+        def validate_date_format(date_str):
+            try:
+                datetime.strptime(date_str, '%Y-%m-%d')
+                return True
+            except ValueError:
+                return False
+        # Date
+        if validate_date_format(tanggal) == False:
+            error = True
+            data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
+        if validate_date_format(tanggal) and datetime.strptime(tanggal, '%Y-%m-%d') < datetime.now():
+            error = True
+            data_error.append('Invalid startdate parameter. must be after today')
+
+        if error:
+            return {
+                'code': 400,
+                'data': data_error
+            }
+        
+        # GET ALL SERVICE THAT IS carrental and in a location
+        atraksi_services = self.database.get_service_by_type_lokasi(5, id_lokasi)
         # get attraction ratings and popularity from review (for sort by reviewscore/countBooked and popularity)
         review = {}
         ratings_allowed = []
