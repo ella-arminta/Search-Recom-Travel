@@ -200,16 +200,23 @@ class GatewayService:
         return result['code'], json.dumps(result)
 
 # AIRLINES
-    @http('GET', '/airlines/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/minprice/<string:minprice>/maxprice/<string:maxprice>/date/<string:date>/start_time/<string:start_time>/end_time/<string:end_time>')
-    def get_all_airlines(self,request,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time):
+    @http('GET', '/airlines/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/minprice/<string:minprice>/maxprice/<string:maxprice>/date/<string:date>/start_time/<string:start_time>/end_time/<string:end_time>/sort/<string:sort>')
+    def get_all_airlines(self,request,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
         if minprice != '-':
             minprice = int(minprice)
         if maxprice != '-':
             maxprice = int(maxprice)
-        all_airlines = self.airlines_rpc.get_all_airlines(airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time)
+        all_airlines = self.airlines_rpc.get_all_airlines(airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort)
         return 200, json.dumps(all_airlines)
     
-    
+    #GET ALL AIRLINES SORT
+    @http('GET', '/airlines/sort')
+    def get_all_airlines_sort(self,request):
+        result = {
+            'code': 200,
+            'data':['lowestprice','earlydeparture','-']
+        }
+        return result['code'], json.dumps(result)
 # INSURANCE
     @http('GET', '/insurance')
     def get_all_insurance(self,request):
