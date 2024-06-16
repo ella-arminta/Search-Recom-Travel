@@ -11,21 +11,17 @@ class TravelAgentService:
     database = dependencies.Database()
 
     @rpc
-    def get_all_agent(self, id_lokasi, startdate, enddate, people, minprice, maxprice, sort):
+    def get_all_agent(self, id_lokasi, startdate, people, enddate, minprice, maxprice, sort):
         data_error = []
         error = False
-
+        package = []
+        
         # lokasi
-        if id_lokasi != '-': 
-            try:
-                id_lokasi = int(id_lokasi)
-                check_lokasi = self.database.get_lokasi_by_id(id_lokasi)
-                if not check_lokasi:
-                    error = True
-                    data_error.append('Invalid id_lokasi parameter. lokasi not found')
-            except ValueError:
-                error = True
-                data_error.append('Invalid id_lokasi parameter. must be integer')
+        if id_lokasi != '-':
+            package_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
+        else:
+            package_services = self.database.get_service_by_type(3)
+
 
         def validate_date_format(date_str):
             if date_str == '-':
@@ -39,9 +35,11 @@ class TravelAgentService:
         if startdate != '-' and not validate_date_format(startdate):
             error = True
             data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
+            
         elif enddate != '-' and not validate_date_format(enddate):
             error = True
             data_error.append('Invalid enddate parameter. must be in format YYYY-MM-DD')
+
         elif startdate != '-' and enddate != '-':
             # Pengecekan tanggal berlaku
             now = datetime.now()
@@ -52,38 +50,22 @@ class TravelAgentService:
                 error = True
                 data_error.append('Invalid startdate parameter. must be before enddate')
 
-        # GET ALL SERVICE THAT IS travel agent and in a location
-        package_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
+        # Ensure minprice and maxprice are properly handled
+        try:
+            minprice = int(minprice) if minprice != '-' else 0
+        except ValueError:
+            minprice = 0
 
-        package = []
-        endpoint_booking = None
-        booking_service = self.database.get_service_by_name('booking')
-        if booking_service:
-            endpoint_booking = booking_service['url']
-        
-        if not endpoint_booking:
-            error = True
-            data_error.append('Booking service URL not found')
-
-        try: 
-            # TODO testing review service
-            if endpoint_booking:
-                response = requests.get(endpoint_booking + '/review/package')
-                response.raise_for_status()
-                review = response.json()
-        except requests.exceptions.RequestException as e:
-            if endpoint_booking:
-                self.database.add_request_error(endpoint_booking + '/review/package', str(e), booking_service['id'], 3)
-            pass
+        try:
+            maxprice = int(maxprice) if maxprice != '-' else float('inf')
+        except ValueError:
+            maxprice = float('inf')
 
         for package_service in package_services:
             package_service['lokasi'] = self.database.get_lokasi_by_id(package_service['id_lokasi'])
             endpoint_url = package_service['url']
             temp_package = {}
 
-            # Get Package Tour start from (for sort by price)
-            package_start_price = None
-            
             # Get Package Tour
             try: 
                 data = [
@@ -118,87 +100,23 @@ class TravelAgentService:
 
                 # Filter Package Tour
                 for d in data:
-                    if minprice != '-' and d['price'] < int(minprice): 
+                    if d['price'] < minprice: 
                         continue
-                    if maxprice != '-' and d['price'] > int(maxprice):
+                    if d['price'] > maxprice:
                         continue
 
-                    # set package tour start price
-                    if package_start_price is None:
-                        package_start_price = d['price']
-                    else: 
-                        if d['price'] < package_start_price:
-                            package_start_price = d['price']
-
-                    available = True  # Simulate availability check
-                    if not available:
-                        continue
+                    package.append(d)
                     
-                    if temp_package == {}:
-                        temp_package = {
-                            'package_id': package_service['id'],
-                            'package_name': package_service['nama'],
-                            'package_location': package_service['lokasi']['nama_kota'],
-                            'package_url': package_service['url'],
-                            'details': []
-                        }
-                    
-                    temp_package['details'].append({
-                        'tour_id': d['package_id'],
-                        'tour_name': d['package_name'],
-                        'tour_price': d['price'],
-                        'tour_date_start': d['tgl_awal'],
-                        'tour_date_end' : d['tgl_akhir'],
-                        'tour_capacity': d['people'],
-                        'tour_detail': d['detail']
-                    })
-                
-                if temp_package != {}:
-                    temp_package['package_start_price'] = package_start_price
-                
-                # ADD PACKAGE TOUR and SORT BY
-                if temp_package != {}:
-                    if sort == 'lowestprice':
-                        if len(package) == 0:
-                            package.append(temp_package)
-                        else:
-                            index = 0
-                            for p in package:
-                                if temp_package['package_start_price'] <= p['package_start_price']:
-                                    package.insert(index, temp_package)
-                                    break
-                                elif index == len(package) - 1:
-                                    package.append(temp_package)
-                                    break
-                                index += 1
-                    elif sort == 'highestprice':
-                        if len(package) == 0:
-                            package.append(temp_package)
-                        else:
-                            index = 0
-                            for p in package:
-                                if temp_package['package_start_price'] >= p['package_start_price']:
-                                    package.insert(index, temp_package)
-                                    break
-                                elif index == len(package) - 1:
-                                    package.append(temp_package)
-                                    break
-                                index += 1
-                    
-                    else:
-                        package.append(temp_package)
+                # Sorting based on sort parameter
+                if sort == 'lowestprice':
+                    package = sorted(package, key=lambda x: x['price'])
+                elif sort == 'highestprice':
+                    package = sorted(package, key=lambda x: x['price'], reverse=True)
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
-                if endpoint_booking:
-                    self.database.add_request_error(endpoint_booking+'/package/startdate/'+startdate+'/enddate'+enddate, str(e), endpoint_url, 3)
+                self.database.add_request_error(endpoint_url+'/package/startdate/'+startdate+'/enddate'+enddate, str(e), package_service['id'], 3)
                 continue
-
-        # SORT
-        if sort == 'lowestprice':
-            package = sorted(package, key=lambda x: x['package_start_price'])
-        elif sort == 'highestprice':
-            package = sorted(package, key=lambda x: x['package_start_price'], reverse=True)
 
         return {
             'code': 200,
