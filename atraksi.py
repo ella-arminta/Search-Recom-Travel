@@ -13,8 +13,8 @@ class AtraksiService:
 
     @rpc
     def get_all_atraksi(self,id_lokasi,attractioname,tanggal,minprice,maxprice,rating,sort):
-        data_error = []
-        error = False
+        # data_error = []
+        # error = False
 
          # get all service that is attraction and in a location
         if id_lokasi != '-':
@@ -23,36 +23,39 @@ class AtraksiService:
         else:
             atraksi_services = self.database.get_service_by_type(5)
 
-        # verify attraction name:
-        if attractioname != '-':
-            atraksi_services = self.database.get_service_by_type_lokasi(5,id_lokasi)
+        # # verify attraction name:
+        # if attractioname != '-':
+        #     atraksi_services = self.database.get_service_by_type_lokasi(5,id_lokasi)
         
-        else:
-            atraksi_services = self.database.get_service_by_type(5)
+        # else:
+        #     atraksi_services = self.database.get_service_by_type(5)
 
-        # date
-        def validate_date_format(date_str):
-            try:
-                datetime.strptime(date_str, '%Y-%m-%d')
-                return True
-            except ValueError:
-                return False
-        # Date
-        if validate_date_format(tanggal) == False:
-            error = True
-            data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
-        if validate_date_format(tanggal) and datetime.strptime(tanggal, '%Y-%m-%d') < datetime.now():
-            error = True
-            data_error.append('Invalid startdate parameter. must be after today')
+        # # date
+        # def validate_date_format(date_str):
+        #     try:
+        #         datetime.strptime(date_str, '%Y-%m-%d')
+        #         return True
+        #     except ValueError:
+        #         return False
+        # # Date
+        # if validate_date_format(tanggal) == False:
+        #     error = True
+        #     data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
+        # if validate_date_format(tanggal) and datetime.strptime(tanggal, '%Y-%m-%d') < datetime.now():
+        #     error = True
+        #     data_error.append('Invalid startdate parameter. must be after today')
 
-        if error:
-            return {
-                'code': 400,
-                'data': data_error
-            }
+        # if error:
+        #     return {
+        #         'code': 400,
+        #         'data': data_error
+        #     }
         
         # GET ALL SERVICE THAT IS carrental and in a location
         atraksi_services = self.database.get_service_by_type_lokasi(5, id_lokasi)
+
+        # Tambahkan log untuk debugging
+        print("Atraksi Services Initial Data:", atraksi_services)
         # get attraction ratings and popularity from review (for sort by reviewscore/countBooked and popularity)
         review = {}
         ratings_allowed = []
@@ -96,9 +99,12 @@ class AtraksiService:
             #         continue
             try: 
                 # /atraksi
-                response = requests.get(endpoint_url)
-                response.raise_for_status()
-                data = response.json()
+                # response = requests.get(endpoint_url)
+                # response.raise_for_status()
+                # data = response.json()
+
+                # Tambahkan log untuk debugging
+                # print("Received Data from Endpoint:", data)
                 # data yang diterima bentuknya : DUMMY
                 # PERTANYAAN apakah atraksi masih menyimpan atraksi detail
                 # yang ngecek apakah atraksi avail atau gk itu dari function atraksi, atau function search&Recom
@@ -250,6 +256,9 @@ class AtraksiService:
 
                 continue
 
+
+        # Tambahkan log untuk debugging
+        print("Filtered Atraksi Data:", atraksi)
 
         return {
             'code': 200,

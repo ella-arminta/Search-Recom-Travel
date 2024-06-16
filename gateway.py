@@ -205,6 +205,8 @@ class GatewayService:
             })
 
         all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,minprice,maxprice,rating,sort)
+
+        print("All Atraksi Response:", all_atraksi)
         return all_atraksi['code'], json.dumps(all_atraksi)
     
     # GET ALL ATRAKSI SORT
