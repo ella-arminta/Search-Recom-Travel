@@ -127,10 +127,10 @@
                         <ul role="menu" data-popover="ratingmenu" data-popover-placement="bottom" class="absolute z-10 min-w-[180px] overflow-auto rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none transition-opacity duration-300 pointer-events-none opacity-0">
                             <form name="rating" id="ratingForm">
                                 <?php
-                                for ($i = 5; $i >= 1; $i--) {
+                                for ($i = 15; $i >= 11; $i--) {
                                     $stars = '';
-                                    for ($j = 0; $j < $i; $j++) {
-                                        $stars .= '<img class="mr-2" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/e/e4cb5ddfa3d1399bc496ee6b6539a5a7.svg" width="16" height="16">';
+                                    for ($j = 5; $j < $i; $j++) {
+                                        $stars .= '<img class="mr-2" src="https://i.pinimg.com/originals/d5/da/ee/d5daeeaca986fb2655a4965884c0d6ea.png" width="16" height="16">';
                                     }
                                 ?>
                                     <li role="menuitem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
@@ -217,7 +217,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="font-semibold text-blue-500">9.2</p>
+                                <p class="font-semibold text-blue-500">8.0</p>
                             </div>
                         </div>
                         
@@ -266,7 +266,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="font-semibold text-blue-500">9.3</p>
+                                <p class="font-semibold text-blue-500">9.0</p>
                             </div>
                         </div>
                         
@@ -315,7 +315,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="font-semibold text-blue-500">8.8</p>
+                                <p class="font-semibold text-blue-500">10.0</p>
                             </div>
                         </div>
                         
@@ -364,7 +364,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="font-semibold text-blue-500">9.0</p>
+                                <p class="font-semibold text-blue-500">7.0</p>
                             </div>
                         </div>
                         
