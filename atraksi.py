@@ -103,17 +103,11 @@ class AtraksiService:
                 # response.raise_for_status()
                 # data = response.json()
 
-                # Tambahkan log untuk debugging
-                # print("Received Data from Endpoint:", data)
-                # data yang diterima bentuknya : DUMMY
-                # PERTANYAAN apakah atraksi masih menyimpan atraksi detail
-                # yang ngecek apakah atraksi avail atau gk itu dari function atraksi, atau function search&Recom
                 data = [
                     {   
                         'id' : 1,
                         'nama' : 'Jatim Park 1',
                         'tanggal' : '01/01/2024',
-                        #'waktu'   : '10:00 - 16:30',
                         'price'   : '130000',
                         'city'    : 'Batu, Malang',
                     },
@@ -121,7 +115,6 @@ class AtraksiService:
                         'id' : 2,
                         'nama' : 'Jatim Park 2',
                         'tanggal'  : '02/01/2024',
-                        #'waktu'    : '09:00 - 17:30',
                         'price'    : '125000',
                         'city'     : 'Batu, Malang',
                     },
@@ -129,7 +122,6 @@ class AtraksiService:
                         'id' : 3,
                         'nama' : 'Taman Safari Indonesia II',
                         'tanggal'  : '03/02/2024',
-                        #'waktu'    : '10:00 - 18:00',
                         'price'    : '150000',
                         'city'     : 'Prigen, Pasuruan',
                     },

@@ -152,7 +152,7 @@ class GatewayService:
 
     # GET ALL PACKAGE + SORT BY PRICE
     @http('GET', '/agent/city/<string:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
-    def get_all_agent(self,request,id_lokasi,startdate,enddate,people,minprice, maxprice,sort):
+    def get_all_agent(self,request,id_lokasi='-',startdate='-',enddate = '-',people ='-',minprice ='-', maxprice = '-',sort = '-'):
         # all_agent = self.agent_rpc.get_all_agent()
         # return 200, json.dumps(all_agent)
     
