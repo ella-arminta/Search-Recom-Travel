@@ -150,11 +150,28 @@ class GatewayService:
     
 # TRAVEL AGENT
 
-    # GET ALL TRAVEL AGENT
-    @http('GET', '/agentcity/<string:id_lokasi>/packagename/<string:packagename>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
-    def get_all_agent(self,request,id_lokasi,packagename,startdate,enddate,people,minprice,maxprice,sort):
-        all_agent = self.agent_rpc.get_all_agent()
-        return 200, json.dumps(all_agent)
+    # GET ALL PACKAGE + SORT BY PRICE
+    @http('GET', '/agent/city/<string:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/sort/<string:sort>')
+    def get_all_agent(self,request,id_lokasi,startdate,enddate,people,sort):
+        # all_agent = self.agent_rpc.get_all_agent()
+        # return 200, json.dumps(all_agent)
+    
+        # Sorting Option
+        sort = sort.lower()
+        allowed_sort = ['lowestprice', 'highestprice','-']
+        if sort not in allowed_sort:
+            return 400, json.dumps({
+                'code': 400,
+                'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
+            })
+        result = self.agent_rpc.get_all_agent(id_lokasi, startdate, enddate, people, sort)
+        return result['code'], json.dumps(result)
+    
+    # GET ALL PACKAGE TOUR BY LOCATION
+    @http('GET', '/agent/city/<string:id_lokasi>')
+    def get_all_agent_by_location (self,request,id_lokasi):
+        result = self.agent_rpc.get_all_by_location(id_lokasi)
+        return result['code'], json.dumps(result)
 # ATRAKSI
 
     # GET ALL ATRAKSI

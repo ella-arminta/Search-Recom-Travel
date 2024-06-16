@@ -12,7 +12,7 @@ class TravelAgentService:
     database = dependencies.Database()
 
     @rpc
-    def get_all_agent(self, id_lokasi,packagename,startdate,enddate,people,minprice, maxprice, sort):
+    def get_all_agent(self, id_lokasi,startdate,enddate,people,minprice, maxprice, sort):
         
         # VERIFY INPUT
         data_error = []
@@ -216,4 +216,25 @@ class TravelAgentService:
             'data': package
         }
     
-    
+    def get_all_agent_by_location(self, id_lokasi):
+        package_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
+        tourlist = {}
+        for paket in package_services:
+            endpoint_url = paket['url']
+            try:
+                response = requests.get(endpoint_url + '/package')
+                response.raise_for_status()
+                tour = response.json()
+                for t in tour:
+                    if t['package_name'] not in tourlist:
+                        tourlist[t['package_id']] = [paket['id']]
+                    else:
+                        tourlist[t['package_id']].append(paket['id'])
+            except requests.exceptions.RequestException as e:
+                self.database.add_request_error(endpoint_url + '/package', str(e), paket['id'] , 4)
+                pass
+
+        return {
+            'code':200,
+            'data': tourlist
+        }
