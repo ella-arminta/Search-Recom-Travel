@@ -13,7 +13,7 @@ class AirlinesService:
     #     airlines_service = self.database.get_service_by_type(2)
     #     return airlines_service
     @rpc
-    def get_all_airlines(self,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time):
+    def get_all_airlines(self,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
         flights_services = self.database.get_service_by_type(2)
         flights=[]
         
@@ -38,8 +38,8 @@ class AirlinesService:
                         'airport_destination_name':'New Yogyakarta Int.',
                         'airport_destination_location_code':'YIA',
                         'airport_destination_city_name':'Yogyakarta',
-                        'start_time':'11:30:00',
-                        'end_time':'12:50:00',
+                        'start_time':'17:30:00',
+                        'end_time':'18:50:00',
                         'class_name':'Business Class',
                         'capacity':50,
                         'price':3000000,
@@ -62,6 +62,24 @@ class AirlinesService:
                         'price':1000000,
                         'date':'2024-08-12',
                         'weight':50,
+                        'delay':0,
+                    },
+                    
+                    {   
+                        'flight_code':'QR 1456',
+                        'airport_origin_name':'New Yogyakarta Int.',
+                        'airport_origin_location_code':'YIA',
+                        'airport_origin_city_name':'Yogyakarta',
+                        'airport_destination_name':'Bandung Airport',
+                        'airport_destination_location_code':'BDO',
+                        'airport_destination_city_name':'Bandung',
+                        'start_time':'14:30:00',
+                        'end_time':'15:50:00',
+                        'class_name':'Economy',
+                        'capacity':50,
+                        'price':5000000,
+                        'date':'2024-06-12',
+                        'weight':30,
                         'delay':0,
                     },
                 ]
@@ -90,6 +108,7 @@ class AirlinesService:
                     if end_time != '-' and d['end_time'] != end_time:
                         continue
                     # sort
+                    
                     flights.append(d)
                 
                 unique_flights = []
@@ -99,6 +118,14 @@ class AirlinesService:
                     if flight_tuple not in seen:
                         seen.add(flight_tuple)
                         unique_flights.append(flight)
+                
+                if sort!='-':
+                    if sort== 'lowestprice':
+                        unique_flights.sort(key=lambda x: x['price'])
+                    elif sort == 'earlydeparture':
+                        unique_flights.sort(key=lambda x: x['start_time'])   
+               
+                    
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
                 # TODO add error to database

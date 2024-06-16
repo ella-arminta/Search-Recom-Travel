@@ -169,7 +169,7 @@ class GatewayService:
     
     # GET ALL PACKAGE TOUR BY LOCATION
     @http('GET', '/agent/city/<string:id_lokasi>')
-    def get_all_agent_by_location (self,request,id_lokasi):
+    def get_all_agent_by_location (self,request,id_lokasi='-'):
         result = self.agent_rpc.get_all_by_location(id_lokasi)
         return result['code'], json.dumps(result)
 # ATRAKSI
