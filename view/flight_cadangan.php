@@ -103,12 +103,6 @@
                 this.classList.add('highlighted'); // Add the highlighted class
             }
         });
-
-
-
-
-
-
     </script>
 </body>
 
