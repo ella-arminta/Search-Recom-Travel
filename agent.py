@@ -3,6 +3,7 @@ from decimal import Decimal
 import dependencies
 import requests
 import random
+from datetime import datetime
 
 class TravelAgentService:
 
@@ -11,12 +12,208 @@ class TravelAgentService:
     database = dependencies.Database()
 
     @rpc
-    def get_all_agent(self, id_lokasi,packagename,startdate,enddate,people,minprice, maxprice, rating, sort):
+    def get_all_agent(self, id_lokasi,packagename,startdate,enddate,people,minprice, maxprice, sort):
         
-        # get all service that is hotel and in a location
-        if id_lokasi != '-':
-            agent_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
-        else:
-            agent_services = self.database.get_service_by_type(3)
-        
-        return agent_services
+        # VERIFY INPUT
+        data_error = []
+        error = False
+
+        # lokasi
+        if id_lokasi != '-': 
+            try :
+                id_lokasi = int(id_lokasi)
+                check_lokasi = self.database.get_lokasi_by_id(id_lokasi)
+                if not check_lokasi:
+                    error = True
+                    data_error.append('Invalid id_lokasi parameter. lokasi not found')
+            except:
+                error = True
+                data_error.append('Invalid id_lokasi parameter. must be integer')
+        # date
+        def validate_date_format(date_str):
+            try:
+                datetime.strptime(date_str, '%Y-%m-%d')
+                return True
+            except ValueError:
+                return False
+        # startdate & enddate
+        if validate_date_format(startdate) == False:
+            error = True
+            data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
+        if validate_date_format(enddate) == False:
+            error = True
+            data_error.append('Invalid enddate parameter. must be in format YYYY-MM-DD')
+        if validate_date_format(startdate) and datetime.strptime(startdate, '%Y-%m-%d') < datetime.now():
+            error = True
+            data_error.append('Invalid startdate parameter. must be after today')
+        if validate_date_format(startdate) and validate_date_format(enddate) and datetime.strptime(startdate, '%Y-%m-%d') > datetime.strptime(enddate, '%Y-%m-%d'):
+            error = True
+            data_error.append('Invalid startdate parameter. must be before enddate')
+
+        if error:
+                return {
+                    'code': 400,
+                    'data': data_error
+                }
+
+        # GET ALL SERVICE THAT IS travel agent and in a location
+        package_services = self.database.get_service_by_type_lokasi(3, id_lokasi)
+
+        package =  [
+                # examples:
+                # 'Bromo Tour': {
+                #         'package_name' : 'Bromo Mountain Tour',
+                #         'detail' : 'asdfdaasd',
+                #         'people' : 2,
+                #         'start_price' : 0,
+                #         'location' : 'Denpasar' 
+                # }
+        ]
+
+        # try & catch error:
+        endpoint_booking = self.database.get_service_by_name('booking')['url']
+        try: 
+            # TODO testing review service
+            response = requests.get(endpoint_booking + '/review/package')
+            response.raise_for_status()
+            review = response.json()
+        except requests.exceptions.RequestException as e:
+            self.database.add_request_error(endpoint_booking + '/review/package', str(e), self.database.get_service_by_name('booking')['id'], 3)
+            pass
+            # return {
+            #     'code': 500,
+            #     'data': 'Error fetching rating'
+            # }
+
+        for package_service in package_services:
+            package_service['lokasi'] = self.database.get_lokasi_by_id(package_service['id_lokasi'])
+            endpoint_url = package_service['url']
+            temp_package = {}
+
+            # Get Package Tour start from (for sort by price)
+            package_start_price = None
+            
+            # Get Package Tour
+            try: 
+                # /package
+                # response = requests.get(endpoint_url + '/package/startdate/'+startdate+'/enddate'+enddate)
+                # response.raise_for_status()
+                # data = response.json()
+                # availability dicek kel hotel
+                data = [
+                    {   
+                        'package_id' : 1,
+                        'package_name' : 'Bromo & Semeru Mountain',
+                        'detail' : 'asdfasdf',
+                        'people': 2,
+                        'price' : random.randint(1, 10)
+                    },
+                    {   
+                        'package_id' : 2,
+                        'package_name' : 'Nusa Lembongan Bali',
+                        'detail' : 'asdfasdf',
+                        'people': 4,
+                        'price' : random.randint(1, 10)
+                    },
+                    {   
+                        'package_id' : 3,
+                        'package_name' : 'Gili Trawangan Lombok',
+                        'detail' : 'asdfasdf',
+                        'people': 3,
+                        'price' : random.randint(1, 10)
+                    },
+                ]
+
+                # Filter Package Tour
+                for d in data:
+
+                    if minprice != '-': 
+                        if d['price'] < minprice:
+                            continue
+                    if maxprice != '-':
+                        if d['price'] > maxprice:
+                            continue
+
+                    # set package tour start price
+                    if package_start_price is None:
+                        package_start_price = d['price']
+                    else: 
+                        if d['price'] < package_start_price:
+                            package_start_price = d['price']
+                    
+
+                    available = True
+                    if not available:
+                        continue
+                    
+                    if temp_package == {}:
+                        temp_package = {
+                            'package_id': package_service['id'],
+                            'package_name': package_service['nama'],
+                            'package_location': package_service['lokasi']['nama_kota'],
+                            'package_url': package_service['url'],
+                            'tour': []
+                        }
+                    
+                    temp_package['tour'].append({
+                        'tour_id': d['package_id'],
+                        'tour_name': d['package_name'],
+                        'tour_price': d['price'],
+                        'tour_capacity': d['people'],
+                        'tour_detail': d['detail']
+                    })
+                
+                if temp_package != {}:
+                    temp_package['package_start_price'] = package_start_price
+                
+                # ADD PACKAGE TOUR and SORT BY
+                if temp_package != {}:
+                    if sort == 'lowestprice':
+                        if len(package) == 0:
+                            package.append(temp_package)
+                            continue
+                        else:
+                            index = 0
+                            for p in package:
+                                if package_start_price <= p['package_start_price'] :
+                                    package.insert(index, temp_package)
+                                    break
+                                elif index == len(package) - 1:
+                                    package.append(temp_package)
+                                    break
+                                index += 1
+                    elif sort == 'highestprice':
+                        if len(package) == 0:
+                            package.append(temp_package)
+                            continue
+                        else:
+                            index = 0
+                            for p in package:
+                                if package_start_price >= p['package_start_price'] :
+                                    package.insert(index, temp_package)
+                                    break
+                                elif index == len(package) - 1:
+                                    package.append(temp_package)
+                                    break
+                                index += 1
+                    
+                    else:
+                        package.append(temp_package)
+
+            except requests.exceptions.RequestException as e:
+                # Handle any exceptions that occur during the request
+                self.database.add_request_error(endpoint_booking+'/package/startdate/'+startdate+'/enddate'+enddate, str(e), endpoint_url, 3)
+
+                continue
+
+        # SORT
+        if sort == 'lowestprice':
+            package = sorted(package.values(), key=lambda x: x['start_price'])
+        elif sort == 'highestprice':
+            package = sorted(package.values(), key=lambda x: x['start_price'], reverse=True)
+        return {
+            'code': 200,
+            'data': package
+        }
+    
+    

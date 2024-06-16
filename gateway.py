@@ -151,8 +151,8 @@ class GatewayService:
 # TRAVEL AGENT
 
     # GET ALL TRAVEL AGENT
-    @http('GET', '/agentcity/<string:id_lokasi>/packagename/<string:packagename>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
-    def get_all_agent(self,request,id_lokasi,packagename,startdate,enddate,people,minprice,maxprice,rating,sort):
+    @http('GET', '/agentcity/<string:id_lokasi>/packagename/<string:packagename>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
+    def get_all_agent(self,request,id_lokasi,packagename,startdate,enddate,people,minprice,maxprice,sort):
         all_agent = self.agent_rpc.get_all_agent()
         return 200, json.dumps(all_agent)
 # ATRAKSI
