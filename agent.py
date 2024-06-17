@@ -11,7 +11,7 @@ class TravelAgentService:
     database = dependencies.Database()
 
     @rpc
-    def get_all_agent(self, id_lokasi, startdate, people, enddate, minprice, maxprice, sort):
+    def get_all_agent(self, id_lokasi, startdate, enddate, people, minprice, maxprice, sort):
         data_error = []
         error = False
         package = []
@@ -73,37 +73,53 @@ class TravelAgentService:
                         'package_id' : 1,
                         'package_name' : 'Bromo & Semeru Mountain',
                         'detail' : 'asdfasdf',
+                        'city' : 'Probolinggo',
                         'tgl_awal' : '2024-09-09',
                         'tgl_akhir' : '2024-09-14',
                         'people': 2,
+                        'quota' : 10,
                         'price' : random.randint(1, 10)
                     },
                     {   
                         'package_id' : 2,
                         'package_name' : 'Nusa Lembongan Bali',
                         'detail' : 'asdfasdf',
+                        'city' : 'Nusa Dua, Bali',
                         'tgl_awal' : '2024-10-10',
                         'tgl_akhir' : '2024-10-16',
                         'people': 4,
+                        'quota' : 5,
                         'price' : random.randint(1, 10)
                     },
                     {   
                         'package_id' : 3,
                         'package_name' : 'Gili Trawangan Lombok',
                         'detail' : 'asdfasdf',
+                        'city' : 'Lombok',
                         'tgl_awal' : '2024-11-03',
                         'tgl_akhir' : '2024-11-09',
                         'people': 3,
+                        'quota' : 6,
                         'price' : random.randint(1, 10)
                     },
                 ]
-
+                
                 # Filter Package Tour
                 for d in data:
+                    packagename = d['package_name']
+
+                    # cek nama atraksi
+                    if packagename != '-' and d['package_name'] != packagename:
+                        continue
+
                     if d['price'] < minprice: 
                         continue
                     if d['price'] > maxprice:
                         continue
+
+                    if people != '-' and int(people) > d['quota']:
+                        continue
+
 
                     package.append(d)
                     
@@ -112,6 +128,12 @@ class TravelAgentService:
                     package = sorted(package, key=lambda x: x['price'])
                 elif sort == 'highestprice':
                     package = sorted(package, key=lambda x: x['price'], reverse=True)
+                elif sort == 'city':
+                    package = sorted(package, key=lambda x: x['city'])
+                elif sort == 'quota' :
+                    package = sorted(package,  key=lambda x: x['quota'], reverse=True)
+                elif sort == 'startdate' :
+                    package = sorted(package,  key=lambda x: x['tgl_awal'])
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request

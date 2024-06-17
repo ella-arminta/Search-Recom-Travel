@@ -158,7 +158,7 @@ class GatewayService:
     
         # Sorting Option
         sort = sort.lower()
-        allowed_sort = ['lowestprice', 'highestprice','-']
+        allowed_sort = ['lowestprice', 'highestprice','quota','city','startdate','-']
         if sort not in allowed_sort:
             return 400, json.dumps({
                 'code': 400,
