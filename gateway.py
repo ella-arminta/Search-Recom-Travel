@@ -81,6 +81,11 @@ class GatewayService:
         result = self.service_rpc.get_all_lokasi()
         return 200,json.dumps(result)
 
+    @http('GET','/service/<string:id_service>')
+    def get_service_by_id(self,request,id_service):
+        result = self.service_rpc.get_service_by_id(id_service)
+        return result['code'],json.dumps(result)
+
 # HOTEL
     @http('GET', '/hotel/city/<string:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
     def get_all_hotel(self, request, id_lokasi = '-', checkin = '-', checkout = '-', people = '-', minprice = '-', maxprice = '-', rating = '-', sort='-', room="-"):
