@@ -7,7 +7,6 @@ class AirlinesService:
     name = 'airlines_service'
 
     database = dependencies.Database()
-
     # @rpc
     # def get_all_airline(self,nama_maskapai):
     #     airlines_service = self.database.get_service_by_type(2)
@@ -16,6 +15,7 @@ class AirlinesService:
     def get_all_airlines(self,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
         flights_services = self.database.get_service_by_type(2)
         flights=[]
+        unique_flights = []
         
         for flights_service in flights_services:
             endpoint_url = flights_service['url']
