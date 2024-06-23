@@ -151,13 +151,13 @@ class Database(DependencyProvider):
                 pool_name="database_pool",
                 pool_size=10,
                 pool_reset_session=True,
-                # host='nameko-example-mysql',
-                # port='3306',
-                host='localhost',
+                host='nameko-example-mysql',
+                port='3306',
+                # host='localhost',
                 database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
-                # password='password'
-                password=''
+                password='password'
+                # password=''
             )
         except Error as e :
                     self.log.error(f"Error while connecting to MySQL using Connection pool: {e}")
