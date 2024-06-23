@@ -1,6 +1,6 @@
 from nameko.rpc import rpc
 
-import dependencies
+import dependencies as dependencies
 
 class ServiceService:
 

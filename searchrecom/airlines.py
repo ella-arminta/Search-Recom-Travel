@@ -1,6 +1,6 @@
 from nameko.rpc import rpc
 import requests
-import dependencies
+import dependencies as dependencies
 
 class AirlinesService:
 

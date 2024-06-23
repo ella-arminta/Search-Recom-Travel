@@ -6,6 +6,12 @@ from nameko.web.handlers import http
 
 class GatewayService:
     name = 'gateway'
+    header = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, PUT, DELETE",
+        "Access-Control-Allow-Headers": "*",
+        "Content-type": "application/json"
+    }
     service_rpc = RpcProxy('service_list')
     hotel_rpc = RpcProxy('hotel_service')
     agent_rpc = RpcProxy('travel_agent_service')
