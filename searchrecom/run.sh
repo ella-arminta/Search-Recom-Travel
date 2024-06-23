@@ -8,5 +8,6 @@ until nc -z ${RABBIT_HOST} ${RABBIT_PORT}; do
 done
 
 # Run the service
+export PYTHONPATH=$(pwd)
 
-nameko run --config config.yml agent airlines atraksi carrental hotel insurance servicelist --backdoor 3000
+nameko run --config config.yml searchrecom.agent searchrecom.airlines searchrecom.atraksi searchrecom.carrental searchrecom.hotel searchrecom.insurance searchrecom.servicelist --backdoor 3000
