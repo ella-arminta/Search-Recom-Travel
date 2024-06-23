@@ -40,26 +40,26 @@ services:
   #     RABBIT_USER: "guest"
   #     RABBIT_PASSWORD: "guest"
   #     RABBIT_MANAGEMENT_PORT: "15672"
-    searchrecom:
-      build: ./searchrecom
-      container_name: nameko-searchrecom
-      depends_on:
-        - rabbit
-        - mysql
-      ports:
-        - "8002:8000"
-      links:
-        - "rabbit:nameko-example-rabbitmq"
-        - "mysql:nameko-example-mysql"
-      environment:
-        MYSQL_PASSWORD: "password"
-        MYSQL_HOST: "mysql"
-        MYSQL_DB: "soa_searchrecom"
-        RABBIT_HOST: "rabbit"
-        RABBIT_PORT: "5672"
-        RABBIT_USER: "guest"
-        RABBIT_PASSWORD: "guest"
-        RABBIT_MANAGEMENT_PORT: "15672"
+  searchrecom:
+    build: ./searchrecom
+    container_name: nameko-example-searchrecom
+    depends_on:
+      - rabbit
+      - mysql
+    ports:
+      - "8002:8000"
+    links:
+      - "rabbit:nameko-example-rabbitmq"
+      - "mysql:nameko-example-mysql"
+    environment:
+      MYSQL_PASSWORD: "password"
+      MYSQL_HOST: "mysql"
+      MYSQL_DB: "soa_searchrecom"
+      RABBIT_HOST: "rabbit"
+      RABBIT_PORT: "5672"
+      RABBIT_USER: "guest"
+      RABBIT_PASSWORD: "guest"
+      RABBIT_MANAGEMENT_PORT: "15672"
     
 
   gateway:

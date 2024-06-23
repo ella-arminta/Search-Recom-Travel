@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='nameko-searchrecom',
+    name='nameko-example-searchrecom',
     version='0.0.1',
     description='Search and Recommendation service with Nameko',
     author='nameko',

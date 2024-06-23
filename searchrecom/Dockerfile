@@ -48,7 +48,7 @@ FROM nameko-example-base as install
 COPY --from=builder /application/wheelhouse /wheelhouse
 
 # Install user service dependencies
-RUN pip install --no-index -f /wheelhouse nameko_searchrecom
+RUN pip install --no-index -f /wheelhouse nameko_example_searchrecom
 
 # Stage 4: Final Service Image
 FROM base as service
