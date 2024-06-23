@@ -1,6 +1,6 @@
 from nameko.rpc import rpc
 from decimal import Decimal
-import dependencies as dependencies
+import searchrecom.dependencies as dependencies
 import requests
 import random
 from datetime import datetime

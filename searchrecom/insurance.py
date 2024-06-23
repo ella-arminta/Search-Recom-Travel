@@ -1,6 +1,6 @@
 from nameko.rpc import rpc
 
-import dependencies as dependencies
+import searchrecom.dependencies as dependencies
 
 class InsuranceService:
 
