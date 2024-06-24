@@ -144,8 +144,8 @@ class AtraksiService:
                     atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
                 elif sort == 'highestpopularity':
                     atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
-                elif sort == 'reviewscore':
-                    atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
+                # elif sort == 'reviewscore':
+                #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
 
             except requests.exceptions.RequestException as e:
                 self.database.add_request_error(endpoint_booking + '/atraksi/tanggal/' + tanggal, str(e), endpoint_url, 5)

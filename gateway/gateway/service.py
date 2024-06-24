@@ -194,7 +194,7 @@ class GatewayService:
         # max price -> room start from
         
         sort = sort.lower()
-        allowed_sort = ['lowestprice', 'highestprice', 'highestpopularity','reviewscore','-']
+        allowed_sort = ['lowestprice', 'highestprice', 'highestpopularity','-']
         if sort not in allowed_sort:
             return 400, json.dumps({
                 'code': 400,
