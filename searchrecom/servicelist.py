@@ -66,6 +66,19 @@ class ServiceService:
             }
     
     @rpc
+    def get_lokasi_by_name(self,nama):
+        lokasi = self.database.get_lokasi_by_name(nama)
+        if lokasi is None:
+            return {
+                'code' : 404,
+                'data' : "Lokasi not found"
+            }
+        return {
+            'code' : 200,
+            'data' : lokasi
+        }
+    
+    @rpc
     def add_service(self, nama, id_lokasi, url, id_service_type):
         check_lokasi = None
         if id_lokasi != '':

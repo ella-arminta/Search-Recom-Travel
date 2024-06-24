@@ -104,6 +104,13 @@ class DatabaseWrapper:
         cursor.close()
         return result
     
+    def get_lokasi_by_name(self,nama):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM lokasi WHERE lower(nama_kota) LIKE lower(%s)", ('%' + nama + '%',))
+        result = cursor.fetchall()
+        cursor.close()
+        return result
+    
     def get_service_by_id(self, id):
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute("SELECT * FROM services WHERE id = %s", (id,))
