@@ -115,16 +115,18 @@
         $('#city_id').on('input', function(){
             var search = $(this).val();
             if(search != ''){
-                // $.ajax({
-                //     url: 'search.php',
-                //     type: 'POST',
-                //     data: {search:search},
-                //     success: function(response){
-                //         $('#cityList').html(response);
+                $.ajax({
+                    // TODO Change URL 
+                    url: 'http://107.20.145.163:8003/lokasi/'+ search,
+                    type: 'GET',
+                    success: function(response){
+                        var response = JSON.parse(response);
+                        response = response.data;
+                        $('#cityList').html(response);
                         $('#cityList').removeClass('hidden')
                         console.log('searching...');
-                //     }
-                // });
+                    }
+                });
             }
         });
         $(document).on('click', 'li', function(){
