@@ -156,7 +156,7 @@ class Database(DependencyProvider):
         try:
             self.connection_pool = mysql.connector.pooling.MySQLConnectionPool(
                 pool_name="database_pool",
-                pool_size=20,
+                pool_size=10,
                 pool_reset_session=True,
                 host='nameko-example-mysql',
                 port='3306',
