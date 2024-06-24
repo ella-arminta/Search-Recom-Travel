@@ -84,7 +84,7 @@
                 <div class="w-1/3">
                     <label for="people" class="pb-3 text-gray-500">Guests</label>
                     <div class="relative w-full mt-2">
-                        <input name="people" name="people" type="number" value="1" min="1" max="20"  class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
+                        <input id="people" name="people" type="number" value="1" min="1" max="20"  class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
                         <img class="absolute top-2 left-2"  src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/4/4c4f475da027590bc183e3debcba1a91.svg" style="margin-right: 12px;">
                         <!-- room text place right -->
                         <div class="absolute bottom-2 left-16">People</div>
@@ -102,9 +102,9 @@
                 </div>
                 <div class="w-1/3 flex items-end">
                     <!-- Button search -->
-                     <a href="hotels.php" class="w-full">
-                         <button class="w-full text-white p-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Hotels</div></button>
-                     </a>
+                     <!-- <a href="hotels.php" class="w-full"> -->
+                         <button id="gosearchhotel" class="w-full text-white p-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Hotels</div></button>
+                     <!-- </a> -->
                 </div>
             </div>
         </div>
@@ -112,17 +112,24 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function(){
+        var city_ids = {};
         $('#city_id').on('input', function(){
             var search = $(this).val();
             if(search != ''){
                 $.ajax({
-                    // TODO Change URL 
                     url: 'http://107.20.145.163:8003/lokasi/'+ search,
                     type: 'GET',
                     success: function(response){
-                        var response = JSON.parse(response);
-                        response = response.data;
-                        $('#cityList').html(response);
+                        hasil = ''
+                        for (var i = 0; i < response.data.length; i++) {
+                            city_ids[response.data[i].nama_kota] = response.data[i].id;
+                            console.log(response.data[i].nama_kota)
+                            hasil+= `<li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
+                                `+response.data[i].nama_kota+`
+                            </li>`
+                            
+                        }
+                        $('#cityList').html(hasil);
                         $('#cityList').removeClass('hidden')
                         console.log('searching...');
                     }
@@ -171,7 +178,16 @@
                 $('#checkout').val(checkout);
             }
         });
-
+        // go to search hotel
+        $('#gosearchhotel').on('click', function(){
+            var city = $('#city_id').val();
+            city = city_ids[city];
+            var checkin = $('#checkin').val();
+            var checkout = $('#checkout').val();
+            var people = $('#people').val();
+            var room = $('#room').val();
+            window.location.href = `hotels.php?city=${city}&checkin=${checkin}&checkout=${checkout}&people=${people}&room=${room}`;
+        });
     })
 </script>
 </body>
