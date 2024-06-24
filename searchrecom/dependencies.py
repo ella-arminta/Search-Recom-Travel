@@ -132,6 +132,17 @@ class DatabaseWrapper:
         cursor.close()
         return result
     
+    # delete service by id
+    def delete_service(self, id):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("DELETE FROM services WHERE id = %s", (id,))
+        self.connection.commit()
+        cursor.close()
+        return {
+            'code' : 200,
+            'message' : "Success"
+        }
+    
     def add_request_error(self, path, error_message, service_id=None, service_type_id=None):
         cursor = self.connection.cursor(dictionary=True)
         cursor.execute("INSERT INTO requests_error (id_service, path, error_message, id_service_type ) VALUES (%s, %s, %s, %s)", (service_id, path, error_message, service_type_id))

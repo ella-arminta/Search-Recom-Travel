@@ -101,3 +101,15 @@ class ServiceService:
             }
         result = self.database.add_service(nama, id_lokasi, url, id_service_type)
         return result
+    
+    # delete service by id
+    @rpc
+    def delete_service(self, id_service):
+        service = self.database.get_service_by_id(id_service)
+        if service is None:
+            return {
+                'code' : 404,
+                'data' : "Service not found"
+            }
+        result = self.database.delete_service(id_service)
+        return result

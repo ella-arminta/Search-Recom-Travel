@@ -77,6 +77,12 @@ class GatewayService:
             result = self.service_rpc.add_service(nama, id_lokasi, url, id_service_type)
             return result['code'],self.header,json.dumps(result) 
     
+    # delete service by id
+    @http('DELETE','/service/<int:id_service>')
+    def delete_service(self,request,id_service):
+        result = self.service_rpc.delete_service(id_service)
+        return result['code'],self.header,json.dumps(result)
+
     @http('GET', '/service_type')
     def get_all_service_type(self, request):
         result = self.service_rpc.get_all_service_type()
