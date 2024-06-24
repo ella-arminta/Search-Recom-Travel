@@ -145,6 +145,26 @@ class GatewayService:
             'data': ['lowestprice', 'highestprice', 'highestpopularity','reviewscore','-']
         }
         return result['code'],self.header, json.dumps(result)
+    # get hotel by id
+    @http('GET','/hotel/<int:id_hotel>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_hotel_by_id(self,request,id_hotel, people='-', room='-', minprice='-', maxprice='-'):
+        try:
+            if people != '-':
+                people = int(people)
+            if minprice != '-':
+                minprice = int(minprice)
+            if maxprice != '-':
+                maxprice = int(maxprice)
+            if room != '-':
+                room = int(room)
+        except:
+            return 400,self.header, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi/people/minprice/maxprice/room parameter must be integer'
+            })
+        
+        result = self.hotel_rpc.get_hotel_by_id(id_hotel, people, minprice, maxprice, room)
+        return result['code'],self.header,json.dumps(result)
 
 # TRANSPORTASI
     @http('GET','/carrental/driver/<int:driver>/city/<int:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/capacity/<string:capacity>/cartype/<string:cartype>/provider/<string:provider>/transmission/<string:transmission>/sort/<string:sort>')
