@@ -66,56 +66,34 @@ class AtraksiService:
                 review = response.json()
             except requests.exceptions.RequestException as e:
                 self.database.add_request_error(endpoint_booking + '/review/atraksi', str(e), self.database.get_service_by_name('booking')['id'], 5)
-                pass
 
         atraksi = []
 
         for atraksi_service in atraksi_services:
             atraksi_service['lokasi'] = self.database.get_lokasi_by_id(atraksi_service['id_lokasi'])
             endpoint_url = atraksi_service['url']
-            temp_atraksi = {}
+            temp_atraksi = []
 
             # TODO uncomment
             # get atraksi detail
             atraksi_detail = {}
-            #  dummy
+            # Dummy data for testing
             atraksi_detail = {
                 'id': 1,
                 'image': 'https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg'
             }
-            #     # cth atraksi detail
-            #     # {
-            #     # "id": 1,
-            #     # "title": "Dufan",
-            #     # "slug" : "Dufan",
-            #     # "image": "https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg",
-            #     # "deskripsi": "Dufan",
-            #     # "alamat": "Jl. Lodan Timur No.7, Ancol, Kec. Pademangan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14430",
-            #     # "info_penting": "<ul>\n <li>Tidak termasuk tiket masuk Pintu Gerbang Utama Ancol. Beli tiket Pintu Gerbang Utama Ancol di sini untuk pengalaman liburan yang tak terlupakan.</li>\n                                <li>Pengunjung dilarang membawa makanan dan minuman ke dalam area Dufan.</li>\n                                <li>Loket Dufan dan Pintu Gerbang Dunia Fantasi ditutup 1 jam lebih awal dari jam operasional yang berlaku.</li>\n                            </ul>",
-            #     # "highlight" : "<ul>\n <li>Dufan adalah wahana yang menghadirkan tempat bermain asyik yang terbagi menjadi empat kategori, yakni Children Rides, Family Ride, Water Ride, dan Thrill Ride.</li>\n                                <li>Bawa anak-anakmu ke wahana Dufan khusus anak, seperti Ontang-Anting yang riuh dan Istana Boneka yang penuh pesona.</li>\n                                <li>Sekaranglah waktunya untuk membuat kenangan berharga bersama keluarga dan teman-teman. Cek harga tiket Dufan 2024 di bawah, pilih tiketnya, dan nikmati petualangan yang seru!</li>\n                                <li>Cocok untuk: Keluarga Asyik, Bersama Pasangan, dan Geng Asyik.</li>\n                            </ul>",
-            #     # "negara": "Indonesia",
-            #     # "kota": "Dufan",
-            #     # }
             # try:
-            #     #cth endpoint_url:  http://localhost:8000/merlynn_park_hotel/
             #     response = requests.get(endpoint_url)
             #     response.raise_for_status()
             #     atraksi_detail = response.json()
             # except requests.exceptions.RequestException as e:
-            #     # Handle any exceptions that occur during the request
             #     self.database.add_request_error(endpoint_url, str(e), atraksi_service['id'], 5)
             #     continue
 
             atraksi_start_price = None
 
             try:
-                # TODO uncomment
-                # /atraksi
-                # cth path : http://localhost:8000/dufan/atraksi/tanggal/"2024-06-24"
-                # response = requests.get(endpoint_url + '/atraksi/tanggal/' + tanggal)
-                # response.raise_for_status()
-                # data = response.json()
-                # availability dicek kel hotel
+                # Dummy data for testing
                 data = [
                     {
                         'id': 1,
@@ -144,53 +122,41 @@ class AtraksiService:
                 ]
 
                 for d in data:
-
-                    # cek nama atraksi
+                    # Check nama atraksi
                     if attractioname != '-' and d['nama'] != attractioname:
                         continue
                     
-                    # cek harga:
+                    # Check harga
                     if minprice != '-' and d['price'] < int(minprice):
                         continue
                     if maxprice != '-' and d['price'] > int(maxprice):
                         continue
 
-                    if atraksi_start_price is None:
+                    if atraksi_start_price is None or d['price'] < atraksi_start_price:
                         atraksi_start_price = d['price']
-                    else: 
-                        if d['price'] < atraksi_start_price:
-                            atraksi_start_price = d['price']
-              
-                    if temp_atraksi == {} :
-                        temp_atraksi = {
-                            'service_id': atraksi_service['id'],
-                            'atraksi_name': atraksi_service['nama'],
-                            'atraksi_tanggal': atraksi_service['tanggal'],
-                            'atraksi_city': atraksi_service['city'],
-                            'atraksi_price': atraksi_service['price'],
-                            'atraksi_url': atraksi_service['url'],
-                            'atraksi_popularity': random.randint(1, 10),
-                        }
 
+                    d['service_id'] = atraksi_service['id']
+                    d['atraksi_url'] = atraksi_service['url']
+                    d['atraksi_popularity'] = random.randint(1, 10)
+                    d['atraksi_city'] = atraksi_service['lokasi']['nama_kota']
                     temp_atraksi.append(d)
                 
-                atraksi.append(temp_atraksi)
-                # Sorting based on sort parameter
-                if sort == 'lowestprice':
-                    atraksi = sorted(atraksi, key=lambda x: x['price'])
-                elif sort == 'highestprice':
-                    atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
-                elif sort == 'highestpopularity':
-                    atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
-                # elif sort == 'reviewscore':
-                #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
+                atraksi.extend(temp_atraksi)
 
             except requests.exceptions.RequestException as e:
                 self.database.add_request_error(endpoint_booking + '/atraksi/tanggal/' + tanggal, str(e), endpoint_url, 5)
                 continue
 
+        # Sorting based on sort parameter
+        if sort == 'lowestprice':
+            atraksi = sorted(atraksi, key=lambda x: x['price'])
+        elif sort == 'highestprice':
+            atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
+        elif sort == 'highestpopularity':
+            atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
+        # elif sort == 'reviewscore':
+        #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
 
-        
         return {
             'code': 200,
             'data': atraksi
