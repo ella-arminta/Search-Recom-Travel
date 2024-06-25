@@ -260,6 +260,23 @@ class GatewayService:
         }
         return result['code'],self.header, json.dumps(result)
 
+    # get atraksi by id
+    @http('GET','/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_atraksi_by_id(self,request,id_atraksi, attractioname='-', minprice='-', maxprice='-'):
+        try:
+            if minprice != '-':
+                minprice = int(minprice)
+            if maxprice != '-':
+                maxprice = int(maxprice)
+        except:
+            return 400,self.header, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi/minprice/maxprice parameter must be integer'
+            })
+        
+        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname, minprice, maxprice)
+        return result['code'],self.header,json.dumps(result)
+    
 # AIRLINES
     @http('GET', '/airlines/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/minprice/<string:minprice>/maxprice/<string:maxprice>/date/<string:date>/start_time/<string:start_time>/end_time/<string:end_time>/sort/<string:sort>')
     def get_all_airlines(self,request,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
