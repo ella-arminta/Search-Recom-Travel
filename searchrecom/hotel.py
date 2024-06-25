@@ -104,12 +104,14 @@ class HotelService:
                 data = [
                     {   
                         'total_room' : 2,
+                        'id': 1,
                         'type' : 'Suite',
                         'detail' : 'asdfasdf',
                         'capacity': 3,
                         'price' : random.randint(1, 10)
                     },
                     {   
+                        'id' : 2, 
                         'total_room' : 3,
                         'type' : 'Master',
                         'detail' : 'asdfasdf',
@@ -117,6 +119,7 @@ class HotelService:
                         'price' : random.randint(1, 10)
                     },
                     {   
+                        'id' : 3,
                         'total_room' : 3,
                         'type' : 'Master',
                         'detail' : 'asdfasdf',

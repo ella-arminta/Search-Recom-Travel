@@ -38,6 +38,8 @@ class ServiceService:
     @rpc 
     def get_service_by_id(self, id_service):
         service = self.database.get_service_by_id(id_service)
+        service['lokasi'] = self.database.get_lokasi_by_id(service['id_lokasi'])
+        service['service_type'] = self.database.get_service_type_by_id(service['id_service_type'])
         if service is None:
             return {
                 'code' : 404,
