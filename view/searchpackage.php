@@ -94,7 +94,7 @@
                 <div class="w- flex items-end">
                     <!-- Button search -->
                      <a href="agent.php" class="w-full">
-                         <button class="w-full text-white p-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Package Tour</div></button>
+                         <button id="gosearchpackage" class="w-full text-white p-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Package Tour</div></button>
                     </a>
                 </div>
             </div>
@@ -103,19 +103,28 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     $(document).ready(function(){
+        var city_ids = {};
         $('#city_id').on('input', function(){
             var search = $(this).val();
             if(search != ''){
-                // $.ajax({
-                //     url: 'search.php',
-                //     type: 'POST',
-                //     data: {search:search},
-                //     success: function(response){
-                //         $('#cityList').html(response);
+                $.ajax({
+                    url: 'http://107.20.145.163:8003/lokasi/'+ search,
+                    type: 'GET',
+                    success: function(response){
+                        hasil = ''
+                        for (var i = 0; i < response.data.length; i++) {
+                            city_ids[response.data[i].nama_kota] = response.data[i].id;
+                            console.log(response.data[i].nama_kota)
+                            hasil+= `<li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
+                                `+response.data[i].nama_kota+`
+                            </li>`
+                            
+                        }
+                        $('#cityList').html(hasil);
                         $('#cityList').removeClass('hidden')
                         console.log('searching...');
-                //     }
-                // });
+                    }
+                });
             }
         });
         $(document).on('click', 'li', function(){
@@ -141,6 +150,15 @@
             if (checkout != 'NaN-NaN-NaN'){
                 $('#checkout').val(checkout);
             }
+        });
+        // go to search package
+        $('#gosearchpackage').on('click', function(){
+            var city = $('#city_id').val();
+            city = city_ids[city];
+            var checkin = $('#checkin').val();
+            var checkout = $('#checkout').val();
+            var people = $('#people').val();
+            window.location.href = `hotels.php?city=${city}&checkin=${checkin}&checkout=${checkout}&people=${people}`;
         });
 
     })

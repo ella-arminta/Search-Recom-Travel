@@ -81,11 +81,11 @@
                 </div>
                 <div class="w-1/3 flex items-end">
                     <!-- Button search -->
-                    <a href="atraksi.php" class="w-full">
+                    <!-- <a href="atraksi.php" class="w-full"> -->
                         <button id="gosearchatraksi" class="w-full text-white p-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg">
                             <div>Search Attractions</div>
                         </button>
-                    </a>
+                    <!-- </a> -->
                 </div>
             </div>
                 
