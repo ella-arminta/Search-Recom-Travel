@@ -187,57 +187,6 @@
                         </button>
                         <ul role="menu" data-popover="providermenu" data-popover-placement="bottom" class="absolute z-10 min-w-[180px] overflow-auto rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none transition-opacity duration-300 pointer-events-none opacity-0">
                             <form name="provider" id="providerForm">
-                                <?php
-                                    // Send to API get all car type
-                                    // $ch = curl_init();
-                                    // $url = "https://domain/carrental/provider/lokasi/<int:id_lokasi>";
-                                    // curl_setopt($ch, CURLOPT_URL, $url);
-                                    // // Set options to return the response as a string
-                                    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                                    // $response = curl_exec($ch);
-                                    // // Check for errors
-                                    // if (curl_errno($ch)) {
-                                    //     echo 'Error:' . curl_error($ch);
-                                    // } else {
-                                    //     // Parse the JSON response
-                                    //     $data = json_decode($response, true);
-                                    //     // Check if the JSON was parsed correctly
-                                    //     if (json_last_error() === JSON_ERROR_NONE) {
-                                    //         // Print the parsed data
-                                    //         print_r($data);
-                                    //     } else {
-                                    //         echo 'Error parsing JSON: ' . json_last_error_msg();
-                                    //     }
-                                    // }
-                                    // curl_close($ch);
-                                    // foreach ($data as $d) {
-                                ?>
-                                <!-- <li role="provideritem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                    <input type="checkbox" id="<?='' //$d['provider_id'] ?>" name="provider[]" value="<?='' //$d['provider_id'] ?>">
-                                    <label for="<?='' //$d['provider_id'] ?>" class="w-full">
-                                        <div class="flex gap-1 items-center justify-between">
-                                            <div>
-                                                <?='' //$d['provider_name'] ?>
-                                            </div>
-                                            <div class="flex">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcBrandTraveloka">
-                                                    <g clip-path="url(#clip0_5387_0)">
-                                                        <path d="M15.9886 16.0268C15.9886 14.0528 18.3724 11.6204 19.4865 10.1939C21.5632 7.53787 24 5.00369 24 5.00369C24 5.00369 21.2666 5.31206 18.465 6.21272C16.7087 6.77652 15.0488 7.59063 13.3958 8.3995C13.3073 6.27545 13.4489 4.12079 13.5969 2C13.5969 2 9.56369 3.00599 8.26139 5.90024C7.5257 7.53724 8.72553 9.70817 9.01454 11.3204C9.14141 12.0365 8.74246 14.1024 7.52665 13.4945C7.0365 13.2401 6.22054 12.8296 5.52132 12.8223C5.03946 12.8223 4.69858 12.9923 4.41455 13.1339C4.16528 13.2582 3.90097 13.3748 3.61625 13.3698L0 12.6424C0 12.6424 2.36095 13.5555 4.25 14.5C5.22762 14.9888 5.75278 15.4971 6.25943 15.9874C6.78926 16.5002 7.29886 16.9934 8.28455 17.4243C10.2083 18.2631 13.0065 18.7688 15.5 19.5C18.0862 20.2674 20.0568 21.0384 20.6976 21.3836C20.4968 21.2735 20.4721 21.0343 20.5 21C20.553 20.9223 21.1995 21.1212 21.1995 21.1212C19.2753 20.2945 15.9478 18.5279 15.9886 16.0268Z" fill="#1BA0E2"></path>
-                                                        <path d="M15.9887 16.0043C15.9886 16.0118 15.9886 16.0193 15.9886 16.0268C15.9783 16.6591 16.1833 17.2445 16.5265 17.7797C14.8854 15.6821 13.3292 9.05031 13.3973 8.3987L13.4263 8.3845C14.0737 8.0677 14.7223 7.75033 15.3774 7.44775C15.358 7.97928 15.2069 12.824 15.9887 16.0043Z" fill="#0F7EA6"></path>
-                                                    </g>
-                                                    <defs>
-                                                        <clipPath id="clip0_5387_0">
-                                                            <rect width="24" height="24" fill="white"></rect>
-                                                        </clipPath>
-                                                    </defs>
-                                                </svg>
-                                                <p class="font-semibold text-blue-500">
-                                                    <?='' //$d['rating'] ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </label><br>
-                                </li> -->
                                 <li role="provideritem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                     <input type="checkbox" id="Provider 1" name="provider[]" value="Provider 1">
                                     <label for="Provider 1" class="w-full">
@@ -263,9 +212,6 @@
                                         </div>
                                     </label><br>
                                 </li>
-                                <?php
-                                    //}
-                                ?>
                             </form>
                         </ul>
                     </div>
@@ -352,7 +298,97 @@
     <!-- Tailwind Materials -->
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/script-name.js"></script>
     <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
+    <script>
+        $(document).ready(function() {
+            // get providers
+            function providerItemCard(provider_id, provider_name, rating ) {
+                return  `<li role="provideritem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                        <input type="checkbox" id="`+provider_id+`" name="provider[]" value="`+provider_id+`">
+                        <label for="`+provider_id+`" class="w-full">
+                            <div class="flex gap-1 items-center justify-between">
+                                <div>
+                                    `+provider_name+`
+                                </div>
+                                <div class="flex">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcBrandTraveloka">
+                                        <g clip-path="url(#clip0_5387_0)">
+                                            <path d="M15.9886 16.0268C15.9886 14.0528 18.3724 11.6204 19.4865 10.1939C21.5632 7.53787 24 5.00369 24 5.00369C24 5.00369 21.2666 5.31206 18.465 6.21272C16.7087 6.77652 15.0488 7.59063 13.3958 8.3995C13.3073 6.27545 13.4489 4.12079 13.5969 2C13.5969 2 9.56369 3.00599 8.26139 5.90024C7.5257 7.53724 8.72553 9.70817 9.01454 11.3204C9.14141 12.0365 8.74246 14.1024 7.52665 13.4945C7.0365 13.2401 6.22054 12.8296 5.52132 12.8223C5.03946 12.8223 4.69858 12.9923 4.41455 13.1339C4.16528 13.2582 3.90097 13.3748 3.61625 13.3698L0 12.6424C0 12.6424 2.36095 13.5555 4.25 14.5C5.22762 14.9888 5.75278 15.4971 6.25943 15.9874C6.78926 16.5002 7.29886 16.9934 8.28455 17.4243C10.2083 18.2631 13.0065 18.7688 15.5 19.5C18.0862 20.2674 20.0568 21.0384 20.6976 21.3836C20.4968 21.2735 20.4721 21.0343 20.5 21C20.553 20.9223 21.1995 21.1212 21.1995 21.1212C19.2753 20.2945 15.9478 18.5279 15.9886 16.0268Z" fill="#1BA0E2"></path>
+                                            <path d="M15.9887 16.0043C15.9886 16.0118 15.9886 16.0193 15.9886 16.0268C15.9783 16.6591 16.1833 17.2445 16.5265 17.7797C14.8854 15.6821 13.3292 9.05031 13.3973 8.3987L13.4263 8.3845C14.0737 8.0677 14.7223 7.75033 15.3774 7.44775C15.358 7.97928 15.2069 12.824 15.9887 16.0043Z" fill="#0F7EA6"></path>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_5387_0">
+                                                <rect width="24" height="24" fill="white"></rect>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <p class="font-semibold text-blue-500">
+                                        `+rating+`
+                                    </p>
+                                </div>
+                            </div>
+                        </label><br>
+                    </li>`
+            }
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8000/",
+                data: "data",
+                dataType: "dataType",
+                success: function (response) {
+                    
+                }
+            });
+            $('#providerForm').html()
+            var city_id = <?= $_GET['city'] ?>;
+            var checkin = "<?= $_GET['checkin'] ?>";
+            var checkout = "<?= $_GET['checkout'] ?>";
+            var withDriver = <?= $_GET['withDriver'] ?>;
+            
+            var capacity = '-';
+            $('input[name="capacity[]"]').change(function() {
+                let caps = [];
+                $('input[name="capacity[]"]:checked').each(function() {
+                    caps.push($(this).val());
+                });
+                if (caps.length > 0) {
+                    capacity = caps.join('&');
+                } else {
+                    capacity = '-';
+                }
+            });
 
+            var transmission = '-';
+            $('input[name="transmission[]"]').change(function() {
+                let trans = []
+                $('input[name="transmission[]"]:checked').each(function() {
+                    trans.push($(this).val());
+                });
+                if (trans.length > 0){
+                    transmission = trans.join('&');
+                }else {
+                    transmission = '-'
+                }
+                console.log(transmission)
+            });
+
+            var provider = '-'
+
+
+            // /carrental/driver/<int:driver>/city/<int:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/capacity/<string:capacity>/cartype/<string:cartype>/provider/<string:provider>/transmission/<string:transmission>/sort/<string:sort>
+            function searchCar(driver, id_lokasi, startdate, enddate, capacity, cartype, provider, transmission, sort) {
+                $.ajax({
+                    url: "http://localhost:8000/carrental/driver/" + driver + "/city/" + id_lokasi + "/startdate/" + startdate + "/enddate/" + enddate + "/capacity/" + capacity + "/cartype/" + cartype + "/provider/" + provider + "/transmission/" + transmission + "/sort/" + sort,
+                    type: "GET",
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
+    </script>
 
     <!-- <script>
         $(document).ready(function() {

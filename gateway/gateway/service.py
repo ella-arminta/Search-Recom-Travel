@@ -180,13 +180,20 @@ class GatewayService:
         result = self.carrental_rpc.get_all_carrental(driver, id_lokasi, startdate, enddate, capacity, cartype, provider,transmission, sort)
         return result['code'],self.header, json.dumps(result)
     # get all cartype
-    @http('GET','/carrental/cartype/lokasi/<int:id_lokasi>')
+    @http('GET','/carrental/cartype/lokasi/<string:id_lokasi>')
     def get_all_cartype(self,request, id_lokasi):
+        try :
+            id_lokasi = int(id_lokasi)
+        except:
+            return 400,self.header, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi parameter must be integer'
+            })
         result = self.carrental_rpc.get_all_cartype(id_lokasi)
         return result['code'],self.header, json.dumps(result)
     # get all provider
     @http('GET','/carrental/provider/lokasi/<int:id_lokasi>')
-    def get_all_cartype(self,request, id_lokasi):
+    def get_all_car_provider(self,request, id_lokasi):
         result = self.carrental_rpc.get_all_provider(id_lokasi)
         return result['code'],self.header, json.dumps(result)
     # get transport by id
@@ -288,8 +295,8 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
 
     # Get atraksi by id
-    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-', minprice='-', maxprice='-'):
+    @http('GET', '/atraksi/<string:id_atraksi>/attractioname/<string:attractioname>/attractiondate/<string:attractiondate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-',attractiondate ='-', minprice='-', maxprice='-'):
         try:
             if minprice != '-':
                 minprice = int(minprice)
@@ -301,7 +308,7 @@ class GatewayService:
                 'data': 'Invalid minprice/maxprice parameter. Must be integer'
             })
         
-        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname, minprice, maxprice)
+        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname,attractiondate, minprice, maxprice)
         return result['code'], self.header, json.dumps(result)
     
 # AIRLINES
