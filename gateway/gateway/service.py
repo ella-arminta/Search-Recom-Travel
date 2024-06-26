@@ -146,7 +146,7 @@ class GatewayService:
         }
         return result['code'],self.header, json.dumps(result)
     # get hotel by id
-    @http('GET','/hotel/<int:id_hotel>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    @http('GET','/hotel/<string:id_hotel>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>')
     def get_hotel_by_id(self,request,id_hotel, people='-', room='-', minprice='-', maxprice='-'):
         try:
             if people != '-':

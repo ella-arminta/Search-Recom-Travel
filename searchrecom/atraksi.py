@@ -132,31 +132,42 @@ class AtraksiService:
                     if maxprice != '-' and d['price'] > int(maxprice):
                         continue
 
-                    if atraksi_start_price is None or d['price'] < atraksi_start_price:
+                    if atraksi_start_price is None:
                         atraksi_start_price = d['price']
+                    else: 
+                        if d['price'] < atraksi_start_price:
+                            atraksi_start_price = d['price']
+              
+                    if temp_atraksi == {} :
+                        temp_atraksi = {
+                            'service_id': atraksi_service['id'],
+                            'atraksi_name': atraksi_service['nama'],
+                            'atraksi_tanggal': atraksi_service['tanggal'],
+                            'atraksi_city': atraksi_service['city'],
+                            'atraksi_price': atraksi_service['price'],
+                            'atraksi_url': atraksi_service['url'],
+                            'atraksi_popularity': random.randint(1, 10),
+                        }
 
-                    d['service_id'] = atraksi_service['id']
-                    d['atraksi_url'] = atraksi_service['url']
-                    d['atraksi_popularity'] = random.randint(1, 10)
-                    d['atraksi_city'] = atraksi_service['lokasi']['nama_kota']
                     temp_atraksi.append(d)
                 
-                atraksi.extend(temp_atraksi)
+                atraksi.append(temp_atraksi)
+                # Sorting based on sort parameter
+                if sort == 'lowestprice':
+                    atraksi = sorted(atraksi, key=lambda x: x['price'])
+                elif sort == 'highestprice':
+                    atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
+                elif sort == 'highestpopularity':
+                    atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
+                # elif sort == 'reviewscore':
+                #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
 
             except requests.exceptions.RequestException as e:
                 self.database.add_request_error(endpoint_booking + '/atraksi/tanggal/' + tanggal, str(e), endpoint_url, 5)
                 continue
 
-        # Sorting based on sort parameter
-        if sort == 'lowestprice':
-            atraksi = sorted(atraksi, key=lambda x: x['price'])
-        elif sort == 'highestprice':
-            atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
-        elif sort == 'highestpopularity':
-            atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
-        # elif sort == 'reviewscore':
-        #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
 
+        
         return {
             'code': 200,
             'data': atraksi
