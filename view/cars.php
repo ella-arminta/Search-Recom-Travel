@@ -300,7 +300,12 @@
     <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
     <script>
         $(document).ready(function() {
-            // get providers
+            var city_id = <?= $_GET['city'] ?>;
+            var checkin = "<?= $_GET['checkin'] ?>";
+            var checkout = "<?= $_GET['checkout'] ?>";
+            var withDriver = <?= $_GET['withDriver'] ?>;
+            
+            // get all providers
             function providerItemCard(provider_id, provider_name, rating ) {
                 return  `<li role="provideritem" class="flex gap-2 block m-auto w-full cursor-pointer text-md select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                         <input type="checkbox" id="`+provider_id+`" name="provider[]" value="`+provider_id+`">
@@ -329,21 +334,27 @@
                         </label><br>
                     </li>`
             }
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:8000/",
-                data: "data",
-                dataType: "dataType",
-                success: function (response) {
+            // $.ajax({
+            //     type: "GET",
+            //     url: "http://localhost:8000/carrental/provider/lokasi/" + city_id,
+            //     data: "data",
+            //     dataType: "dataType",
+            //     success: function (response) {
                     
-                }
-            });
+            //     }
+            // });
+            // /carrental/driver/<int:driver>/city/<int:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/capacity/<string:capacity>/cartype/<string:cartype>/provider/<string:provider>/transmission/<string:transmission>/sort/<string:sort>
+            function searchCar(driver, id_lokasi, startdate, enddate, capacity='-', cartype='-', provider='-', transmission='-', sort='-') {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8000/carrental/driver/" + driver + "/city/" + id_lokasi + "/startdate/" + startdate + "/enddate/" + enddate + "/capacity/" + capacity + "/cartype/" + cartype + "/provider/" + provider + "/transmission/" + transmission + "/sort/" + sort,
+                    success: function (response) {
+                        console.log(response);  
+                    }
+                });
+            }
             $('#providerForm').html()
-            var city_id = <?= $_GET['city'] ?>;
-            var checkin = "<?= $_GET['checkin'] ?>";
-            var checkout = "<?= $_GET['checkout'] ?>";
-            var withDriver = <?= $_GET['withDriver'] ?>;
-            
+
             var capacity = '-';
             $('input[name="capacity[]"]').change(function() {
                 let caps = [];
@@ -380,12 +391,77 @@
                     url: "http://localhost:8000/carrental/driver/" + driver + "/city/" + id_lokasi + "/startdate/" + startdate + "/enddate/" + enddate + "/capacity/" + capacity + "/cartype/" + cartype + "/provider/" + provider + "/transmission/" + transmission + "/sort/" + sort,
                     type: "GET",
                     success: function(data) {
+                        data = data.data
+                        hasil = ''
+                        //  javascript loop key,value for data
+                        for (const [key, value] of Object.entries(data)) {
+                            hasil += CarsItems(value.car_name, value.car_transmission, value.car_luggages,value.car_seats, value.providers,value.start_price, withDriver, key )
+                        }
                         console.log(data);
+                        $('.carsList').html(hasil);
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.responseText);
                     }
                 });
+            }
+
+            // buat change searchcar
+            $('#capacityForm').change(function() {
+                searchCar(withDriver, city_id, checkin, checkout, capacity, '-', '-', '-', '-');
+            });
+            $('#transmissionForm').change(function() {
+                searchCar(withDriver, city_id, checkin, checkout, capacity, '-', '-', transmission, '-');
+            });
+            searchCar(withDriver, city_id, checkin, checkout, capacity, '-', '-', '-', '-');
+
+            function CarsItems(car_name, transmission, car_luggages,car_seats, providers,start_price, withDriver, car_key ){
+                var driver;
+                if (withDriver == 0){
+                    driver = 'With Driver'
+                }else{
+                    driver = 'Without Driver'
+                }
+                return `<div class="carsCard cursor-pointer hover:shadow-sky-200 hover:shadow-lg w-full h-56 rounded-md flex custom-shadow-card overflow-hidden">
+                <div class="w-1/4 overflow-hidden	relative">
+                    <img class="object-contain h-56 w-full" importance="low" loading="lazy" src="https://ik.imagekit.io/tvlk/image/imageResource/2023/06/29/1688042794913-9ef77485d4831ee86faedff5521d77b6.jpeg?tr=q-75,w-140" srcset="https://ik.imagekit.io/tvlk/image/imageResource/2023/06/29/1688042794913-9ef77485d4831ee86faedff5521d77b6.jpeg?tr=q-75,w-140 1x, https://ik.imagekit.io/tvlk/image/imageResource/2023/06/29/1688042794913-9ef77485d4831ee86faedff5521d77b6.jpeg?tr=dpr-2,q-75,w-140 2x, https://ik.imagekit.io/tvlk/image/imageResource/2023/06/29/1688042794913-9ef77485d4831ee86faedff5521d77b6.jpeg?tr=dpr-3,q-75,w-140 3x" decoding="async">
+                </div>
+                <div class="w-3/4 flex">
+                    <!-- cars Description -->
+                    <div class="w-2/3 py-2 px-3">
+                        <div class="w-full">
+                            <h1 class="font-bold text-lg">`+car_name+`</h1>
+                        </div>
+                        <div class="flex mt-4 items-center justify-start gap-2">
+                            <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 0C2.6865 0 0 2.6865 0 6C0 9.3135 2.6865 12 6 12C9.3135 12 12 9.3135 12 6C12 2.6865 9.3135 0 6 0ZM6 1.5C7.9643 1.5 9.6234 2.75775 10.25 4.5H1.75C2.3766 2.75775 4.0357 1.5 6 1.5ZM5.25 6.25C5.25 6.66437 5.58563 7 6 7C6.41437 7 6.75 6.66437 6.75 6.25C6.75 5.83563 6.41437 5.5 6 5.5C5.58563 5.5 5.25 5.83563 5.25 6.25ZM1.5 6C3.55266 6 5.21507 8.00873 5.25 10.5C3.1256 10.1304 1.5 8.26049 1.5 6ZM6.75601 10.5C6.79094 8.00873 8.45335 6 10.506 6C10.506 8.26049 8.88041 10.1304 6.75601 10.5Z" fill="#687176"></path></svg>
+                            <p>`+transmission+`</p>
+                        </div>
+                        <div class="flex mt-2 items-center justify-start gap-2">
+                            <div class="flex gap-2 items-center">
+                                <svg width="16" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcBagBaggageFill"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 7C2.11929 7 1 8.11929 1 9.5V18.5C1 19.8807 2.11929 21 3.5 21H20.5C21.8807 21 23 19.8807 23 18.5V9.5C23 8.11929 21.8807 7 20.5 7H17V6C17 4.34315 15.6569 3 14 3H10C8.34315 3 7 4.34315 7 6V7H3.5ZM10 5C9.44772 5 9 5.44772 9 6V7H15V6C15 5.44772 14.5523 5 14 5H10ZM5 10C5 9.44772 5.44772 9 6 9C6.55228 9 7 9.44772 7 10V18C7 18.5523 6.55228 19 6 19C5.44772 19 5 18.5523 5 18V10ZM18 9C17.4477 9 17 9.44772 17 10V18C17 18.5523 17.4477 19 18 19C18.5523 19 19 18.5523 19 18V10C19 9.44772 18.5523 9 18 9Z" fill="#0194f3"></path></svg>
+                                <p>`+car_luggages+` baggages</p>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" data-id="IcTransportSeatClassFill16"><g fill="none" fill-rule="evenodd"><rect width="16" height="16"></rect><path fill="#0194F3" d="M5,13 L13,13 C13.5522847,13 14,13.4477153 14,14 C14,14.5522847 13.5522847,15 13,15 L5,15 C4.44771525,15 4,14.5522847 4,14 C4,13.4477153 4.44771525,13 5,13 Z M5.50372906,12 C4.05387063,12 2.81147789,10.9631284 2.55211933,9.53665631 L1.40249224,3.2137073 C1.38234043,3.10287235 1.3722032,2.99044883 1.3722032,2.8777968 C1.3722032,1.84071826 2.21292147,1 3.25,1 C4.57234041,1 5.7249905,1.89996199 6.04570516,3.18282063 L6.81063391,6.24253563 C6.92192566,6.68770263 7.32190876,7 7.78077641,7 L11.9586889,7 C12.6113165,7 13.2228954,7.31842196 13.5971527,7.85307531 L14.75,9.5 C14.936942,9.76705999 15.0372139,10.085159 15.0372139,10.4111472 C15.0372139,11.2886464 14.3258602,12 13.4483611,12 L5.50372906,12 Z"></path><rect width="5" height="2" x="8" y="4" fill="#0194f3" fill-rule="nonzero" rx="1"></rect></g></svg>
+                                <p>`+car_seats+` seats</p>
+                            </div>
+                        </div>
+                        <div class="flex mt-16 gap-2 items-center">
+                            <div>`+driver+`</div>
+                            <div class="text-blue-500">`+providers.length+` providers available</div>
+                        </div>
+                    </div>
+                    <div class="w-1/3 flex flex-col justify-center items-center gap-5 shadow">
+                        <div>
+                            <h2 class="text-sm text-end text-gray-400">From</h2>
+                            <h1 class="font-semibold text-xl text-orange-700">Rp. `+start_price+` <span class="text-sm text-gray-400 font-normal">/day</span></h1>
+                        </div>
+                        <a href="html?car_key=`+car_key +`">
+                            <button class="py-2 px-4 text-sm rounded bg-orange-600 hover:bg-orange-700 text-white font-semibold">Continue</button>
+                        </a>
+                    </div>
+                </div>
+            </div>`
             }
         });
     </script>
