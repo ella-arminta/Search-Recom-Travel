@@ -126,7 +126,7 @@ class AirlinesService:
                     if sort== 'lowestprice':
                         unique_flights.sort(key=lambda x: x['price'])
                     elif sort == 'earlydeparture':
-                        unique_flights.sort(key=lambda x: x['start_time'])   
+                        unique_flights.sort(key=lambda x: x['date'])
                
                     
             except requests.exceptions.RequestException as e:
