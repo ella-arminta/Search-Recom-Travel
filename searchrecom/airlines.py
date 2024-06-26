@@ -32,7 +32,7 @@ class AirlinesService:
                 data = [
                     {   
                         'service_id':flights_service['id'],
-                        'flight_code':'GA 208',
+                        'flight_code':'GA208',
                         'airport_origin_name':'Soekarno-Hatta Intl',
                         'airport_origin_location_code':'CGK',
                         'airport_origin_city_name':'Jakarta',
@@ -50,7 +50,7 @@ class AirlinesService:
                     },
                     {   
                         'service_id':flights_service['id'],
-                        'flight_code':'ID 123',
+                        'flight_code':'ID123',
                         'airport_origin_name':'Bandung Airport',
                         'airport_origin_location_code':'BDO',
                         'airport_origin_city_name':'Bandung',
@@ -69,7 +69,7 @@ class AirlinesService:
                     
                     {   
                         'service_id':flights_service['id'],
-                        'flight_code':'QR 1456',
+                        'flight_code':'QR1456',
                         'airport_origin_name':'New Yogyakarta Int.',
                         'airport_origin_location_code':'YIA',
                         'airport_origin_city_name':'Yogyakarta',
