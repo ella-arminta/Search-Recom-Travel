@@ -152,7 +152,7 @@
             atraksi = atraksi_ids[atraksi];
             var city = $('#city_id').val();
             city = city_ids[city];
-            var date = $('#tanggal').val();
+            var tanggal = $('#tanggal').val();
             window.location.href = `atraksi.php?city=${city}&attractioname=${atraksi}&tanggal=${tanggal}`;
         });
 
