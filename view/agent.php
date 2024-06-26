@@ -89,7 +89,7 @@
     </div>
     <!-- back button -->
     <div class="back-button absolute top-20 cursor-pointer text-gray-400 left-10">
-        <a href="searchagent.php">
+        <a href="searchpackage.php">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
     </div>
@@ -151,7 +151,8 @@
         </div>
         <br><br>
 
-        <div class="attractionList flex flex-wrap">
+        <!-- Agent Items -->
+        <div class="agentList flex flex-wrap">
             <!-- Gili Trawangan Tour -->
             <div class="w-full md:w-1/3 p-2">
                 <div class="relative overflow-hidden" style="padding-top: 100%;">
@@ -349,95 +350,83 @@
 
     <script>
         $(document).ready(function() {
-            // "atraksi_id": 1,
-            // "atraksi_name": "Jatim Park 1",
-            // "atraksi_location": "Batu, Malang",
-            // "atraksi_url": "http://107.2-.145.163.2",
-            // "atraksi_popularity": 2,
-            // "atraksi_start_price": 2
+            // "agent_id": 1,
+            // "agent_name": "Jatim Park 1",
+            // "agent_city": "Batu, Malang",
+            // "checkin" : "2024-06-27",
+            // "checkout" : "2024-06-29",
+            // "agent_url": "http://107.2-.145.163.2",
+            // "quota" : 10,
+            // "agent_start_price": 2
             function changeIntToRupiah(angka) {
                 var reverse = angka.toString().split('').reverse().join(''),
                     ribuan = reverse.match(/\d{1,3}/g);
                 ribuan = ribuan.join('.').split('').reverse().join('');
                 return 'Rp. '+ ribuan;
             }
-            function atraksiCard(service_id, atraksi_name, atraksi_location,atraksi_score, atraksi_start_price, atraksi_image=null){
+            function agentCard(service_id, agent_name, agent_city, agent_start_price, agent_image=null, checkin, checkout,quota){
                
-                atraksi_start_price = changeIntToRupiah(atraksi_start_price);
+                agent_start_price = changeIntToRupiah(agent_start_price);
                 return `<div class="w-full md:w-1/3 p-2">
                 <div class="relative overflow-hidden" style="padding-top: 100%;">
-                    <img class="absolute inset-0 w-full h-full object-cover" src="https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/8435154832259/Lombok-Tour-Package-6-days-5-nights-2342c1bf-20cc-4063-a4f4-0cf7c9932f87.jpeg?_src=imagekit&tr=dpr-2,c-at_max,h-750,q-100,w-1000" alt="Image 1" />
+                    <img class="absolute inset-0 w-full h-full object-cover" src="`+agent_image+`" alt="Image 1" />
                 </div>
-                <h2 class="text-lg font-bold mt-3 mb-2">Gili Trawangan, Meno, Air Package</h2>
+                <h2 class="text-lg font-bold mt-3 mb-2">`+agent_name+`</h2>
                 <div class="flex mt-3 mb-2 items-center justify-start gap-2">
                             <!-- Icon location -->
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSystemMapLocationFill">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M21 10C21 7.25554 20.0331 4.98482 18.3787 3.40236C16.7312 1.8265 14.4725 1 12 1C9.52754 1 7.26876 1.8265 5.62128 3.40236C3.96688 4.98482 3 7.25554 3 10C3 13.4069 5.24119 16.5278 7.2718 18.6854C8.31023 19.7887 9.34524 20.694 10.1194 21.323C10.5073 21.6381 10.8316 21.8855 11.0609 22.0554C11.0795 22.0692 11.0982 22.0831 11.1169 22.0971C11.3805 22.2937 11.6567 22.4998 12 22.4998C12.3432 22.4999 12.6194 22.2938 12.8829 22.0972C12.9017 22.0832 12.9205 22.0692 12.9391 22.0554C13.1684 21.8855 13.4927 21.6381 13.8806 21.323C14.6548 20.694 15.6898 19.7887 16.7282 18.6854C18.7588 16.5278 21 13.4069 21 10ZM15.5 9.5C15.5 11.433 13.933 13 12 13C10.067 13 8.5 11.433 8.5 9.5C8.5 7.567 10.067 6 12 6C13.933 6 15.5 7.567 15.5 9.5Z" fill="#687176"></path>
                             </svg>
-                            <p>Lombok Timur</p>
+                            <p>`+agent_city+`</p>
                         </div>
                 <div class="rounded w-full backdrop-blur-sm mt-3 bg-white/30  flex justify-start gap-2 text-sm font-semibold"><svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSystemCalendar">
                                 <path d="M7 2V5M17 2V5M3 8H21M11.5 11.5H12.5V12.5H11.5V11.5ZM11.5 16.5H12.5V17.5H11.5V16.5ZM16.5 11.5H17.5V12.5H16.5V11.5ZM6.5 16.5H7.5V17.5H6.5V16.5ZM6.5 11.5H7.5V12.5H6.5V11.5ZM16.5 16.5H17.5V17.5H16.5V16.5ZM3 22H21V8H3V22Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                    15 June - 21 June 2024
+                    `+checkin+ ` . ` +checkout+ `
                 </div>
                 <div class="rounded w-full mt-3 backdrop-blur-sm bg-white/30 flex justify-start gap-2 text-sm font-semibold">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSystemGroupOfPeople">
                     <path d="M8 8C9.65685 8 11 6.65685 11 5C11 3.34315 9.65685 2 8 2C6.34315 2 5 3.34315 5 5C5 6.65685 6.34315 8 8 8ZM8 9C5.87827 9 4.06849 10.0044 3 11.5147C3 13.5228 5.68629 14.5 8 14.5C10.3137 14.5 13 13.5228 13 11.5147C11.9315 10.0044 10.1217 9 8 9Z" fill="#000000"/>
                 </svg>
-                <p style="margin-left: -5px;">25 Quota Passengers</p></div>
+                <p style="margin-left: -5px;">`+quota+ `   Quota Passengers</p></div>
                 <div class="price-text">
                 <h2 class="text-sm text-end text-darkgray-400 mb-3">Starts From</h2>
                     <span class="original-price">Rp. 4.800.000</span><br>
-                    <span class="discounted-price">Rp. 4.600.000</span>
+                    <span class="discounted-price">`+agent_start_price+`</span>
                 </div>
-                <button class="py-2 px-4 mt-2 text-sm rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold ">Details</button>
+                <a href="/agentdetail?service_id=`+service_id+`">
+                    <button class="py-2 px-4 mt-2 text-sm rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold ">Details</button>
+                </a>
             </div>
                 `
             }
-            function searchAtraksi(city_id = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', rating = '-', sort = '-') {
+            function searchAgent(city_id = '-', startdate='-',enddate = '-',people ='-',minprice ='-', maxprice = '-',sort = '-') {
                 $.ajax({
-                    // url: 'http://localhost:8000/atraksi/city/' + city_id + '/attractioname/' + attractioname + '/tanggal/' + tanggal + '/minprice/' + minprice + '/maxprice/' + maxprice + '/rating/' + rating + '/sort/' + sort,
-                    url: 'http://107.20.145.163:8003/atraksi/city/' + city_id + '/attractioname/' + attractioname + '/tanggal/' + tanggal + '/minprice/' + minprice + '/maxprice/' + maxprice + '/rating/' + rating + '/sort/' + sort,
+                    // url: 'http://localhost:8000/agent/city/' + city_id + '/startdate/' + startdate + '/enddate/' + enddate + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice ,
+                    url: 'http://107.20.145.163:8003/agent/city/' + city_id + '/startdate/' + startdate + '/enddate/' + enddate + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice ,
                     type: 'GET',
                     success: function(response) {
                         data = response.data;
                         hasil = '';
                         for (var i = 0; i < data.length; i++) {
-                            // hasil += atraksiCard(
-                            //     data[i].service_id, data[i].atraksi_name, data[i].hotel_location, data[i].hotel_score, data[i].hotel_start_price)
+                            // hasil += agentCard(
+                            //     data[i].service_id, data[i].agent_name, data[i].agent_city,data[i].checkin, data[i].checkout, data[i].quota, data[i].agent_start_price, data[i].agent_image)
                             //     ;
-                            hasil += atraksiCard(
-                                data[i].service_id, data[i].atraksi_name, data[i].atraksi_location, data[i].atraksi_score, data[i].atraksi_start_price, data[i].atraksi_image)
+                            hasil += agentCard(
+                                data[i].service_id, data[i].agent_name, data[i].agent_city,data[i].checkin, data[i].checkout, data[i].quota, data[i].agent_start_price, data[i].agent_image)
                                 ;
                         }
-                        $('.atraksiList').html(hasil);
+                        $('.agentList').html(hasil);
                     }
                 });
             }
 
             var city = '<?php echo $_GET['city']; ?>';
-            var tanggal = '"<?php echo $_GET['tanggal']; ?>"';
-            var attractioname = '"<?php echo $_GET['attractioname']; ?>"';
+            var checkin = '"<?php echo $_GET['checkin']; ?>"';
+            var checkout = '"<?php echo $_GET['checkout']; ?>"';
+            var people = '<?php echo $_GET['people']; ?>';
 
-            searchHotel(city, tanggal,attractioname);
-
-            // get rating value
-            var rating = '-';
-            $('input[name="rating[]"]').change(function() {
-                temprating = [];
-                $('input[name="rating[]"]:checked').each(function() {
-                    temprating.push($(this).val());
-                });
-                rating = '';
-                for (var i = 1; i < 6; i++) {
-                    if (temprating.includes(i.toString())) {
-                        rating += '1';
-                    }else{
-                        rating += '0';
-                    }
-                }
-            });
+            searchAgent(city, checkin,checkout,people);
 
             // get sort value
             var sort = '-';
@@ -470,17 +459,14 @@
             });
 
             // if any of those change then searchAtraksi
-            $('input[name="rating[]"]').change(function() {
-                searchAtraksi(city, attractioname, tanggal, minprice, maxprice, rating, sort);
-            });
             $('input[name="sort"]').change(function() {
-                searchAtraksi(city, attractioname, tanggal, minprice, maxprice, rating, sort);
+                searchAgent(city, checkin,checkout,people, minprice, maxprice, sort);
             });
             $('#minprice').change(function() {
-                searchAtraksi(city, attractioname, tanggal, minprice, maxprice, rating, sort);
+                searchAgent(city, checkin,checkout,people, minprice, maxprice, sort);
             });
             $('#maxprice').change(function() {
-                searchAtraksi(city, attractioname, tanggal, minprice, maxprice, rating, sort);
+                searchAgent(city, checkin,checkout,people, minprice, maxprice, sort);
             });
         });
     </script>
