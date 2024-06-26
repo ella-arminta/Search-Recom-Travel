@@ -84,6 +84,7 @@ class AtraksiService:
             }
             #     # cth atraksi detail
             #     # {
+            #     # "service_id" : 5,
             #     # "id": 1,
             #     # "title": "Dufan",
             #     # "slug": "https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg",

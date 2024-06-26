@@ -205,7 +205,7 @@ class GatewayService:
     
         # Sorting Option
         sort = sort.lower()
-        allowed_sort = ['lowestprice', 'highestprice','quota','city','startdate','-']
+        allowed_sort = ['lowestprice', 'highestprice','quota','city','departuredate','-']
         if sort not in allowed_sort:
             return 400,self.header, json.dumps({
                 'code': 400,
@@ -214,11 +214,33 @@ class GatewayService:
         result = self.agent_rpc.get_all_agent(id_lokasi,startdate, enddate, people,minprice, maxprice, sort)
         return result['code'],self.header, json.dumps(result)
     
-    # GET ALL PACKAGE TOUR BY LOCATION
-    @http('GET', '/agent/city/<string:id_lokasi>')
-    def get_all_agent_by_location (self,request,id_lokasi='-'):
-        result = self.agent_rpc.get_all_by_location(id_lokasi)
+    @http('GET', '/agent/sort')
+    def get_all_agent_sort(self,request):
+        result = {
+            'code': 200,
+            'data': ['lowestprice', 'highestprice', 'quota','city','departuredate', '-']
+        }
         return result['code'],self.header, json.dumps(result)
+    
+    # GET PACKAGE BY ID
+    @http('GET', '/agent/<int:id_agent>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-'):
+        try:
+            if people != '-':
+                people = int(people)
+            if minprice != '-':
+                minprice = int(minprice)
+            if maxprice != '-':
+                maxprice = int(maxprice)
+        except:
+            return 400,self.header, json.dumps({
+                'code': 400,
+                'data': 'Invalid id_lokasi/people/minprice/maxprice parameter must be integer'
+            })
+        
+        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice)
+        return result['code'],self.header,json.dumps(result)
+    
 # ATRAKSI
 
     # GET ALL ATRAKSI
