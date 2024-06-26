@@ -315,3 +315,100 @@ class CarRentalService:
             'code':200,
             'data': providers
         }
+    
+    @rpc
+    def get_carrental_by_id(self, service_id, pickup, returncar, car_id):
+        carrental_service = self.database.get_service_by_id(service_id)
+        carrental_service['lokasi'] = self.database.get_lokasi_by_id(carrental_service['id_lokasi'])
+        carrental_service['service_type'] = self.database.get_service_type_by_id(carrental_service['id_service_type'])
+        if carrental_service is None:
+            return {
+                'code': 404,
+                'data': 'Hotel not found'
+            }
+        car_hasil = {
+            'id': carrental_service['id'],
+            'nama': carrental_service['nama'],
+            'lokasi': carrental_service['lokasi'],
+            'url': carrental_service['url'],
+            'service_type': carrental_service['service_type']['name'],
+            'cars' : {}
+        }
+        endpoint_url = carrental_service['url']
+        # try:
+        #     response = requests.get(endpoint_url + '/car')
+        #     response.raise_for_status()
+        #     cars = response.json()
+        # except requests.exceptions.RequestException as e:
+        #     self.database.add_request_error(endpoint_url + '/car', str(e), carrental_service['id'] , 4)
+        #     return {
+        #         'code': 500,
+        #         'data': 'Error fetching carrental'
+        #     }
+        cars = [
+            {
+                'car_id':4,
+                'car_brand': 'Daihatsu',
+                'car_name' : 'Ayla',
+                'car_type': 'Sedan',
+                'car_transmission': 'Automatic',
+                'car_year': 2019,
+                'car_seats': 4,
+                'car_luggages': 2,
+                'car_price': 300000,
+                'driver_id':2
+            },
+            {
+                'car_id':5,
+                'car_brand': 'Toyota',
+                'car_name' : 'Agya',
+                'car_type': 'Sedan',
+                'car_transmission': 'Manual',
+                'car_year': 2019,
+                'car_seats': 4,
+                'car_luggages': 2,
+                'car_price': 250000,
+                'driver_id':2
+            },
+            {
+                'car_id':6,
+                'car_brand': 'Toyota',
+                'car_name' : 'Innova',
+                'car_type': 'MPV',
+                'car_transmission': 'Automatic',
+                'car_year': 2019,
+                'car_seats': 7,
+                'car_luggages': 2,
+                'car_price': 500000,
+                'driver_id':2
+            },
+            {
+                'car_id':7,
+                'car_brand': 'Toyota',
+                'car_name' : 'Fortuner',
+                'car_type': 'SUV',
+                'car_transmission': 'Automatic',
+                'car_year': 2019,
+                'car_seats': 7,
+                'car_luggages': 2,
+                'car_price': 700000,
+                'driver_id':2
+            }
+        ]
+        if car_id != '-':
+            for c in cars:
+                thiscar_id = str(c['car_id'])
+                if thiscar_id ==  car_id:
+                    car_hasil['cars'] = c
+        else: 
+            car_hasil['cars'] = cars
+
+        return {
+            'code': 200,
+            'data': car_hasil
+        }
+
+
+
+
+

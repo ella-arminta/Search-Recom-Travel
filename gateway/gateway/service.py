@@ -189,6 +189,11 @@ class GatewayService:
     def get_all_cartype(self,request, id_lokasi):
         result = self.carrental_rpc.get_all_provider(id_lokasi)
         return result['code'],self.header, json.dumps(result)
+    # get transport by id
+    @http('GET','/carrental/service/<int:service_id>/pickup/<string:pickup>/returncar/<string:returncar>/car_id/<string:car_id>')
+    def get_carrental_by_id(self,request, service_id, pickup='-', returncar='-', car_id='-'):
+        result = self.carrental_rpc.get_carrental_by_id(service_id, pickup, returncar, car_id)
+        return result['code'], self.header, json.dumps(result)
     
 ## TRAVEL AGENT
 
