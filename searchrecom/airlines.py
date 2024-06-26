@@ -23,69 +23,69 @@ class AirlinesService:
             #get all flights
             try:
                  # /airlines
-                # response = requests.get(endpoint_url)
-                # response.raise_for_status()
-                # data = response.json()
+                response = requests.get(endpoint_url)
+                response.raise_for_status()
+                data = response.json()
                 # data yang diterima bentuknya : DUMMY
                 # PERTANYAAN apakah hotel masih menyimpan hotel detail
                 # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
-                data = [
-                    {   
-                        'id':1,
-                        'flight_code':'GA208',
-                        'airport_origin_name':'Soekarno-Hatta Intl',
-                        'airport_origin_location_code':'CGK',
-                        'airport_origin_city_name':'Jakarta',
-                        'airport_destination_name':'New Yogyakarta Int.',
-                        'airport_destination_location_code':'YIA',
-                        'airport_destination_city_name':'Yogyakarta',
-                        'start_time':'17:30:00',
-                        'end_time':'18:50:00',
-                        'class_name':'Business Class',
-                        'capacity':50,
-                        'price':3000000,
-                        'date':'2024-06-12',
-                        'weight':30,
-                        'delay':0,
-                    },
-                    {   
-                        'id':2, 
-                        'flight_code':'ID123',
-                        'airport_origin_name':'Bandung Airport',
-                        'airport_origin_location_code':'BDO',
-                        'airport_origin_city_name':'Bandung',
-                        'airport_destination_name':'Surabaya Airport',
-                        'airport_destination_location_code':'SUB',
-                        'airport_destination_city_name':'Surabaya',
-                        'start_time':'13:30:00',
-                        'end_time':'15:50:00',
-                        'class_name':'Economy',
-                        'capacity':100,
-                        'price':1000000,
-                        'date':'2024-08-12',
-                        'weight':50,
-                        'delay':0,
-                    },
+                # data = [
+                #     {   
+                #         'id':1,
+                #         'flight_code':'GA208',
+                #         'airport_origin_name':'Soekarno-Hatta Intl',
+                #         'airport_origin_location_code':'CGK',
+                #         'airport_origin_city_name':'Jakarta',
+                #         'airport_destination_name':'New Yogyakarta Int.',
+                #         'airport_destination_location_code':'YIA',
+                #         'airport_destination_city_name':'Yogyakarta',
+                #         'start_time':'17:30:00',
+                #         'end_time':'18:50:00',
+                #         'class_name':'Business Class',
+                #         'capacity':50,
+                #         'price':3000000,
+                #         'date':'2024-06-12',
+                #         'weight':30,
+                #         'delay':0,
+                #     },
+                #     {   
+                #         'id':2, 
+                #         'flight_code':'ID123',
+                #         'airport_origin_name':'Bandung Airport',
+                #         'airport_origin_location_code':'BDO',
+                #         'airport_origin_city_name':'Bandung',
+                #         'airport_destination_name':'Surabaya Airport',
+                #         'airport_destination_location_code':'SUB',
+                #         'airport_destination_city_name':'Surabaya',
+                #         'start_time':'13:30:00',
+                #         'end_time':'15:50:00',
+                #         'class_name':'Economy',
+                #         'capacity':100,
+                #         'price':1000000,
+                #         'date':'2024-08-12',
+                #         'weight':50,
+                #         'delay':0,
+                #     },
                     
-                    {   
-                        'id':3, 
-                        'flight_code':'QR1456',
-                        'airport_origin_name':'New Yogyakarta Int.',
-                        'airport_origin_location_code':'YIA',
-                        'airport_origin_city_name':'Yogyakarta',
-                        'airport_destination_name':'Bandung Airport',
-                        'airport_destination_location_code':'BDO',
-                        'airport_destination_city_name':'Bandung',
-                        'start_time':'14:30:00',
-                        'end_time':'15:50:00',
-                        'class_name':'Economy',
-                        'capacity':50,
-                        'price':5000000,
-                        'date':'2024-06-12',
-                        'weight':30,
-                        'delay':0,
-                    },
-                ]
+                #     {   
+                #         'id':3, 
+                #         'flight_code':'QR1456',
+                #         'airport_origin_name':'New Yogyakarta Int.',
+                #         'airport_origin_location_code':'YIA',
+                #         'airport_origin_city_name':'Yogyakarta',
+                #         'airport_destination_name':'Bandung Airport',
+                #         'airport_destination_location_code':'BDO',
+                #         'airport_destination_city_name':'Bandung',
+                #         'start_time':'14:30:00',
+                #         'end_time':'15:50:00',
+                #         'class_name':'Economy',
+                #         'capacity':50,
+                #         'price':5000000,
+                #         'date':'2024-06-12',
+                #         'weight':30,
+                #         'delay':0,
+                #     },
+                # ]
                 
                 for flight in data:  # Assuming `data` is a list of flight dictionaries
                 # Filter based on origin & destination

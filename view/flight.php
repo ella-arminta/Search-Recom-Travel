@@ -155,6 +155,7 @@
                                 <div class="flex flex-col p-2">
                                     <p class="font-bold" name="starttime" id="starttime">18:25</p>
                                     <p class="text-gray-500"><span class="font-bold" name="originlocationcode" id="originlocationcode">HRE</span></p>
+                                    <p class="text-gray-500" name="airportoriginname" id="airportoriginname">Zimbabwe airpot</p>
                                     <p class="text-gray-500" name="origincityname" id="origincityname">Zimbabwe</p>
                                 </div>
                                 <div class="line-container">
@@ -165,6 +166,7 @@
                                 <div class="flex flex-col flex-wrap p-2">
                                     <p class="font-bold"name="endtime" id="endtime">19:25</p>
                                     <p class="text-gray-500"><span class="font-bold" name="destinationlocationcode" id="destinationlocationcode">LUN</span></p>
+                                    <p class="text-gray-500" name="airportdestinationname" id="airportdestinationname">Zambia airport</p>
                                     <p class="text-gray-500"name="destinationcityname" id="destinationcityname">Zambia</p>
                                 </div>
                             </div>
@@ -199,7 +201,7 @@
                 return 'Rp. '+ ribuan;
             }
 
-            function flightCard(departure_date,seat_class,flight_code,weight,start_time,airport_origin_location_code,airport_origin_city_name,end_time,airport_destination_location_code,airport_destination_city_name,price){
+            function flightCard(departure_date,seat_class,flight_code,weight,start_time,airport_origin_location_code,airport_origin_name,airport_origin_city_name,end_time,airport_destination_location_code,airport_destination_name,airport_destination_city_name,price){
                 price = changeIntToRupiah(price)
                 return `<div class="flightCard w-full hover:shadow-sky-200 hover:shadow-lg ">
                     <div class="max-w-full  bg-white flex flex-col rounded overflow-hidden shadow-lg ">
@@ -241,6 +243,7 @@
                                 <div class="flex flex-col p-2">
                                     <p class="font-bold" name="starttime" id="starttime">`+start_time+`</p>
                                     <p class="text-gray-500"><span class="font-bold" name="originlocationcode" id="originlocationcode">`+airport_origin_location_code+`</span></p>
+                                    <p class="text-gray-500" name="airportoriginname" id="airportoriginname">`+airport_origin_name+`</p>
                                     <p class="text-gray-500" name="origincityname" id="origincityname">`+airport_origin_city_name+`</p>
                                 </div>
                                 <div class="line-container">
@@ -251,6 +254,7 @@
                                 <div class="flex flex-col flex-wrap p-2">
                                     <p class="font-bold"name="endtime" id="endtime">`+end_time+`</p>
                                     <p class="text-gray-500"><span class="font-bold" name="destinationlocationcode" id="destinationlocationcode">`+airport_destination_location_code+`</span></p>
+                                    <p class="text-gray-500" name="airportdestinationname" id="airportdestinationname">`+airport_destination_name+`</p>
                                     <p class="text-gray-500"name="destinationcityname" id="destinationcityname">`+airport_destination_city_name+`</p>
                                 </div>
                             </div>
@@ -282,7 +286,7 @@
                         hasil = '';
                         for (var i = 0; i < data.length; i++){
                             hasil+=flightCard(
-                                data[i].date, data[i].class_name, data[i].flight_code, data[i].weight, data[i].start_time, data[i].airport_origin_location_code, data[i].airport_origin_city_name, data[i].end_time, data[i].airport_destination_location_code, data[i].airport_destination_city_name, data[i].price);
+                                data[i].date, data[i].class_name, data[i].flight_code, data[i].weight, data[i].start_time, data[i].airport_origin_location_code, data[i].airport_origin_name, data[i].airport_origin_city_name, data[i].end_time, data[i].airport_destination_location_code, data[i].airport_destination_name ,data[i].airport_destination_city_name, data[i].price);
                         }
                         console.log(hasil);
                         $('.flightList').html(hasil);
