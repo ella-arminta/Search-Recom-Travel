@@ -65,10 +65,6 @@
                     </svg>
                     Bali (DPS)
                 </div>
-                <div class="rounded w-full font-semibold flex items-center justify-center backdrop-blur-sm bg-white/30 p-2 gap-3">
-                    <svg class="w-5 h-5"viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff4242"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22.5 20V22C22.5 22.5523 22.0523 23 21.5 23H7.59646C6.66266 23 5.85314 22.3538 5.64619 21.4432L1.27764 2.22162C1.13542 1.59586 1.61105 1 2.25277 1H5.70799C6.17204 1 6.57512 1.31925 6.6814 1.77096L10.5 18H20.5C21.6046 18 22.5 18.8954 22.5 20Z" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.96729 3H8.99999C9.55228 3 10 3.44772 10 4V6L8 7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M13.5 14.375H9.625H7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    Economy
-                </div>
             </div>
         </div>
         <div class="absolute cursor-pointer mt-10 pl-8">
@@ -264,7 +260,7 @@
                                 <div class="text-md mx-2 flex flex-row items-center justify-center font-bold  text-orange-400">
                                     <p name="flightprice" id="flightprice">`+price+`</p><span>/pax</span>
                                 </div>
-                                <a href="searchflight.php">
+                                <a href="bookingAirline.html?service_id=2&flight_date=2022-06-19&flight_code=GA208">
                                     <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
                                     <span class="relative z-10">Choose</span>
                                 </button>
@@ -275,9 +271,9 @@
                 </div>`
             }
             
-            function searchFlight(airport_origin_location_code = '-', airport_destination_location_code='-', minprice='-',maxprice='-', date='-',start_time='-',end_time='-',sort='-'){
+            function searchFlight(airport_origin_location_code = '-', airport_destination_location_code='-',date='-' ,sort='-',minprice='-',maxprice='-'){
                $.ajax({
-                url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/'+start_time+'/end_time/'+end_time+'/sort/'+sort,
+                url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
                     // url: 'http://107.20.145.163:8003/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/'+start_time+'/end_time/'+end_time+'/sort/'+sort,
                     type: 'GET',
                     success: function(response){
@@ -292,20 +288,50 @@
                     }
                });
             }
-
             var originplace = '<?php echo $_GET['originplace']; ?>';
             var destinationplace = '<?php echo $_GET['destinationplace']; ?>';
             var departuredate = '<?php echo $_GET['departuredate']; ?>';
-            
-            if (originplace == '' || destinationplace == '' || departuredate == ''){
-                searchFlight('-', '-','-','-','-','-','-','-');
-            }
-            if(originplace != '' && destinationplace != ''){
-                searchFlight(originplace, destinationplace,'-','-','-','-','-','-');
-            }
-            else if(originplace != '' && destinationplace != '' && departuredate != ''){
-                searchFlight(originplace, destinationplace,'-','-',departuredate,'-','-','-');
-            }
+            searchFlight(originplace,destinationplace,departuredate);
+
+            // SORT function and change event
+            var sort ='-';
+            $('input[name="sort"]').change(function() {
+                if ($(this).is(':checked')) {
+                    sort = $(this).val();
+                } else {
+                    sort = '-';
+                }
+            });
+
+            // get min price
+            var minprice = '-';
+            $('#minprice').change(function() {
+                if ($(this).val() != '') {
+                    minprice = $(this).val();
+                }else{
+                    minprice = '-';
+                }
+            });
+
+            // get max price
+            var maxprice = '-';
+            $('#maxprice').change(function() {
+                if ($(this).val() != '') {
+                    maxprice = $(this).val();
+                }else{
+                    maxprice = '-';
+                }
+            });
+
+            $('input[name="sort"]').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
+            $('#minprice').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
+            $('#maxprice').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
         });
     </script>
 </body>

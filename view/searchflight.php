@@ -37,7 +37,7 @@
                     <div class="relative mt-2">
                         <select name="originplace" id="originplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
-                            <option selected>Choose City</option>
+                            <option value="-" selected>Choose City</option>
                             <option value="CGK">Jakarta</option>
                             <option value="YIA">Yogyakarta</option>
                             <option value="SUB">Surabaya</option>
@@ -55,7 +55,7 @@
                     <div class="relative mt-2">
                         <select name="destinationplace" id="destinationplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
-                            <option selected>Choose City</option>
+                            <option value="-" selected>Choose City</option>
                             <option value="CGK">Jakarta</option>
                             <option value="YIA">Yogyakarta</option>
                             <option value="SUB">Surabaya</option>
@@ -105,6 +105,9 @@
                 var originplace = $('#originplace').val();
                 var destinationplace = $('#destinationplace').val();
                 var departuredate = $('#departuredate').val();
+                if (departuredate === null || departuredate === '') {
+                    departuredate = '-';
+                }
                 window.location.href = `flight.php?originplace=${originplace}&destinationplace=${destinationplace}&departuredate=${departuredate}`;
             });
         })
