@@ -400,10 +400,10 @@
             </div>
                 `
             }
-            function searchAgent(city_id = '-', startdate='-',enddate = '-',people ='-',minprice ='-', maxprice = '-',sort = '-') {
+            function searchAgent(city_id = '-', checkin='-',checkout = '-',people ='-',minprice ='-', maxprice = '-',sort = '-') {
                 $.ajax({
-                    // url: 'http://localhost:8000/agent/city/' + city_id + '/startdate/' + startdate + '/enddate/' + enddate + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice ,
-                    url: 'http://107.20.145.163:8003/agent/city/' + city_id + '/startdate/' + startdate + '/enddate/' + enddate + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice ,
+                    // url: 'http://localhost:8000/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort   ,
+                    url: 'http://107.20.145.163:8003/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort  ,
                     type: 'GET',
                     success: function(response) {
                         data = response.data;
