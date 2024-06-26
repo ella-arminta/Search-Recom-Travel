@@ -92,12 +92,25 @@
                 </div>
             </div>
             <div class="flex justify-end">
-                <a href="flight.php" class="w-1/2">
-                <button id="btnsearch"class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
-                </a>
+                <!-- <a href="flight.php" class="w-1/2"> -->
+                    <div class="w-1/2">
+                        <button id="gosearchflight"class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
+                    </div>
+                <!-- </a> -->
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#gosearchflight').on('click',function(){
+                var originplace = $('#originplace').val();
+                var destinationplace = $('#destinationplace').val();
+                var departuredate = $('#departuredate').val();
+                var seatclass = $('#seatclass').val();
+                window.location.href = `flight.php?originplace=${originplace}&destinationplace=${destinationplace}&departuredate=${departuredate}&seatclass=${seatclass}`;
+            });
+        })
+    </script>
 </body>
 </html>

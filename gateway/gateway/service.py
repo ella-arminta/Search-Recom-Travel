@@ -300,6 +300,16 @@ class GatewayService:
             'data':['lowestprice','earlydeparture','-']
         }
         return result['code'],self.header, json.dumps(result)
+    
+    #GET AIRLINES BY ID
+    # @http('GET','/airlines/<int:service_id>/flight_date/<string:date>/flight_code/<string:flight_code>')
+    # def get_airlines_by_id(self,request,id_flight,flight_date='-',flight_code='-'):
+    #     result = self.airlines_rpc.get_flight_by_id(id_flight,flight_date,flight_code)
+    #     return result['code'],self.header,json.dumps(result)
+    
+    
+    
+    
 # INSURANCE
     @http('GET', '/insurance')
     def get_all_insurance(self,request):

@@ -1,12 +1,13 @@
 from nameko.rpc import rpc
 import requests
-import searchrecom.dependencies as dependencies
+import dependencies
 
 class AirlinesService:
 
     name = 'airlines_service'
 
     database = dependencies.Database()
+
     # @rpc
     # def get_all_airline(self,nama_maskapai):
     #     airlines_service = self.database.get_service_by_type(2)
@@ -15,7 +16,6 @@ class AirlinesService:
     def get_all_airlines(self,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
         flights_services = self.database.get_service_by_type(2)
         flights=[]
-        unique_flights = []
         
         for flights_service in flights_services:
             endpoint_url = flights_service['url']
@@ -31,7 +31,6 @@ class AirlinesService:
                 # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
                 data = [
                     {   
-                        'service_id':flights_service['id'],
                         'flight_code':'GA 208',
                         'airport_origin_name':'Soekarno-Hatta Intl',
                         'airport_origin_location_code':'CGK',
@@ -49,7 +48,6 @@ class AirlinesService:
                         'delay':0,
                     },
                     {   
-                        'service_id':flights_service['id'],
                         'flight_code':'ID 123',
                         'airport_origin_name':'Bandung Airport',
                         'airport_origin_location_code':'BDO',
@@ -68,7 +66,6 @@ class AirlinesService:
                     },
                     
                     {   
-                        'service_id':flights_service['id'],
                         'flight_code':'QR 1456',
                         'airport_origin_name':'New Yogyakarta Int.',
                         'airport_origin_location_code':'YIA',
@@ -138,7 +135,3 @@ class AirlinesService:
             'code':200,
             'data':unique_flights
         }
-        
-    # def get_flight_by_id(self,id_flight,id_flight,flight_date,flight_code):
-    #     flights_services = self.database.get_service_by_id(id_flight)
-    #     endpoint_url = flights_services['url']
