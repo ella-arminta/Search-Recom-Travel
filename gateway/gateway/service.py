@@ -198,7 +198,7 @@ class GatewayService:
 ## TRAVEL AGENT
 
     # GET ALL PACKAGE + SORT BY PRICE
-    @http('GET', '/agent/city/<string:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
+    @http('GET', '/agent/city/<int:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
     def get_all_agent(self,request,id_lokasi='-', startdate='-',enddate = '-',people ='-',minprice ='-', maxprice = '-',sort = '-'):
         # all_agent = self.agent_rpc.get_all_agent()
         # return 200,self.header, json.dumps(all_agent)
@@ -244,7 +244,7 @@ class GatewayService:
 # ATRAKSI
 
     # GET ALL ATRAKSI
-    @http('GET', '/atraksi/city/<string:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
+    @http('GET', '/atraksi/city/<int:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
     def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', rating = '-', sort = '-'):
         
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
