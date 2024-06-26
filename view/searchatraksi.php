@@ -56,10 +56,10 @@
             <div class="flex w-full relative gap-4">
                 <!-- City List -->
                 <div class="w-1/3 text-gray-500">
-                    <label for="city_id" class="pb-3"> City</label>
+                    <label for="city" class="pb-3"> City</label>
                     <div class="relative w-full mt-2">
                         <!-- <input type="text" name="city" id="city" class="date-input w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" placeholder="Kota..." /> -->
-                        <select name="city_id" id="city_id" class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
+                        <select name="city" id="city" class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
                             <?php
                         
                                     echo "<option value='$Malang'>Batu, Malang</option>";
@@ -149,9 +149,7 @@
          // go to search atraksi
          $('#gosearchatraksi').on('click', function(){
             var atraksi = $('#attractioname').val();
-            atraksi = atraksi_ids[atraksi];
-            var city = $('#city_id').val();
-            city = city_ids[city];
+            var city = $('#city').val();
             var tanggal = $('#tanggal').val();
             window.location.href = `atraksi.php?city=${city}&attractioname=${atraksi}&tanggal=${tanggal}`;
         });
