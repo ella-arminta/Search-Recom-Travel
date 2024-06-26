@@ -1,12 +1,13 @@
 from nameko.rpc import rpc
 import requests
-import searchrecom.dependencies as dependencies
+import dependencies
 
 class AirlinesService:
 
     name = 'airlines_service'
 
     database = dependencies.Database()
+
     # @rpc
     # def get_all_airline(self,nama_maskapai):
     #     airlines_service = self.database.get_service_by_type(2)
@@ -15,11 +16,10 @@ class AirlinesService:
     def get_all_airlines(self,airport_origin_location_code,airport_destination_location_code,minprice,maxprice,date,start_time,end_time,sort):
         flights_services = self.database.get_service_by_type(2)
         flights=[]
-        unique_flights = []
         
         for flights_service in flights_services:
             endpoint_url = flights_service['url']
-            # url:http://34.200.80.155:8003/flight
+            
             #get all flights
             try:
                  # /airlines
@@ -31,8 +31,7 @@ class AirlinesService:
                 # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
                 data = [
                     {   
-                        'id':1,
-                        'flight_code':'GA208',
+                        'flight_code':'GA 208',
                         'airport_origin_name':'Soekarno-Hatta Intl',
                         'airport_origin_location_code':'CGK',
                         'airport_origin_city_name':'Jakarta',
@@ -49,8 +48,7 @@ class AirlinesService:
                         'delay':0,
                     },
                     {   
-                        'id':2, 
-                        'flight_code':'ID123',
+                        'flight_code':'ID 123',
                         'airport_origin_name':'Bandung Airport',
                         'airport_origin_location_code':'BDO',
                         'airport_origin_city_name':'Bandung',
@@ -68,8 +66,7 @@ class AirlinesService:
                     },
                     
                     {   
-                        'id':3, 
-                        'flight_code':'QR1456',
+                        'flight_code':'QR 1456',
                         'airport_origin_name':'New Yogyakarta Int.',
                         'airport_origin_location_code':'YIA',
                         'airport_origin_city_name':'Yogyakarta',
@@ -87,30 +84,32 @@ class AirlinesService:
                     },
                 ]
                 
-                for flight in data:  # Assuming `data` is a list of flight dictionaries
-                # Filter based on origin & destination
-                    if airport_origin_location_code != '-' and flight['airport_origin_location_code'] != airport_origin_location_code:
+                for d in data:
+                    # filter
+                    #     cek berdasarkan asal & tujuan
+                    if airport_origin_location_code != '-' and d['airport_origin_location_code'] != airport_origin_location_code:
                         continue
-                    if airport_destination_location_code != '-' and flight['airport_destination_location_code'] != airport_destination_location_code:
+                    if airport_destination_location_code != '-' and d['airport_destination_location_code'] != airport_destination_location_code:
                         continue
 
                     # Check price
-                    if minprice != '-' and flight['price'] < minprice:
+                    if minprice != '-' and d['price'] < minprice:
                         continue
-                    if maxprice != '-' and flight['price'] > maxprice:
+                    if maxprice != '-' and d['price'] > maxprice:
                         continue  
 
                     # Check date
-                    if date != '-' and flight['date'] != date:
+                    if date != '-' and d['date'] != date:
                         continue
 
                     # Check time
-                    if start_time != '-' and flight['start_time'] != start_time:
+                    if start_time != '-' and d['start_time'] != start_time:
                         continue
-                    if end_time != '-' and flight['end_time'] != end_time:
+                    if end_time != '-' and d['end_time'] != end_time:
                         continue
-
-                    flights.append(flight)
+                    # sort
+                    
+                    flights.append(d)
                 
                 unique_flights = []
                 seen = set()
@@ -124,67 +123,8 @@ class AirlinesService:
                     if sort== 'lowestprice':
                         unique_flights.sort(key=lambda x: x['price'])
                     elif sort == 'earlydeparture':
-                        unique_flights.sort(key=lambda x: x['date'])
+                        unique_flights.sort(key=lambda x: x['start_time'])   
                
-                    
-            except requests.exceptions.RequestException as e:
-                # Handle any exceptions that occur during the request
-                # TODO add error to database
-                continue
-            
-        return{
-            'code':200,
-            'data':unique_flights
-        }
-    
-    @rpc    
-    def get_airlines_by_id(self,service_id,airport_origin_location_code,airport_destination_location_code,flight_date,flight_code):
-        flights_services = self.database.get_service_by_id(service_id)
-        
-        flights=[]
-        unique_flights = []
-        
-        for flights_service in flights_services:
-            endpoint_url = flights_services['url']
-            #get all flights
-            try:
-                 # /airlines
-                # response = requests.get(endpoint_url)
-                # response.raise_for_status()
-                # data = response.json()
-                # data yang diterima bentuknya : DUMMY
-                # PERTANYAAN apakah hotel masih menyimpan hotel detail
-                # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
-                data = [
-                    {   
-                        'service_id':flights_services['id'],
-                        'airport_origin_location_code':airport_origin_location_code,
-                        'airport_destination_location_code':airport_destination_location_code,
-                        'flight_code':flight_code,
-                        'date':flight_date,
-                        'flight_url':flights_services['url'],
-                        'flight_url_full':flights_services['url']+'/'+airport_origin_location_code+'/'+airport_destination_location_code+'/'+flight_date
-                    },
-                ]
-                
-                for flight in data:
-                    if airport_origin_location_code != '-' and flight['airport_origin_location_code'] != airport_origin_location_code:
-                        continue
-                    if airport_destination_location_code != '-' and flight['airport_destination_location_code'] != airport_destination_location_code:
-                        continue
-                    if flight_date != '-' and flight['date'] != flight_date:
-                        continue
-                    if flight_code != '-' and flight['flight_code'] != flight_code:
-                        continue
-                    flights.append(flight)
-                
-                unique_flights = []
-                seen = set()
-                for flight in flights:
-                    flight_tuple = tuple(flight.items())
-                    if flight_tuple not in seen:
-                        seen.add(flight_tuple)
-                        unique_flights.append(flight)
                     
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request

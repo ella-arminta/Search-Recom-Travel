@@ -37,12 +37,11 @@
                     <div class="relative mt-2">
                         <select name="originplace" id="originplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
-                            <option selected>Choose City</option>
-                            <option value="JKTA">Jakarta</option>
-                            <option value="DPS">Bali</option>
+                            <option value="-" selected>Choose City</option>
+                            <option value="JKT">Jakarta</option>
+                            <option value="YIA">Yogyakarta</option>
                             <option value="SUB">Surabaya</option>
-                            <option value="BTH">Batam</option>
-
+                            <option value="BDO">Bandung</option>
                         </select>
                         <svg class="absolute top-2.5 left-2 w-6 h-6 text-gray-400" fill="#000000" viewBox="0 0 256 256"
                             xmlns="http://www.w3.org/2000/svg">
@@ -56,11 +55,11 @@
                     <div class="relative mt-2">
                         <select name="destinationplace" id="destinationplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
-                            <option selected>Choose City</option>
-                            <option value="JKTA">Jakarta</option>
-                            <option value="DPS">Bali</option>
+                            <option value="-" selected>Choose City</option>
+                            <option value="CGK">Jakarta</option>
+                            <option value="YIA">Yogyakarta</option>
                             <option value="SUB">Surabaya</option>
-                            <option value="BTH">Batam</option>
+                            <option value="BDO">Bandung</option>
                         </select>
                         <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                         <svg class="absolute top-2.5 left-2 w-6 h-6 text-gray-400" fill="#000000" viewBox="0 0 256 256"
@@ -79,7 +78,7 @@
                         <svg class="absolute top-2.5 left-2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-id="IcSystemCalendar"><path d="M7 2V5M17 2V5M3 8H21M11.5 11.5H12.5V12.5H11.5V11.5ZM11.5 16.5H12.5V17.5H11.5V16.5ZM16.5 11.5H17.5V12.5H16.5V11.5ZM6.5 16.5H7.5V17.5H6.5V16.5ZM5 21H19C20.1046 21 21 20.1046 21 19V6C21 4.89543 20.1046 4 19 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21Z" stroke="#687176" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7.5 11.5V12.5H6.5V11.5H7.5Z" stroke="#0194F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>    
                     </div>
                 </div>
-                <div class="w-1/2 relative">
+                <!-- <div class="w-1/2 relative">
                     <label for="departuredate">Seat Class</label>
                     <div class="relative mt-2">
                         <select name="seatclass" id="seatclass" class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
@@ -89,15 +88,29 @@
                         </select>
                         <svg class="absolute top-2.5 left-2.5 w-5 h-5"viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff4242"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22.5 20V22C22.5 22.5523 22.0523 23 21.5 23H7.59646C6.66266 23 5.85314 22.3538 5.64619 21.4432L1.27764 2.22162C1.13542 1.59586 1.61105 1 2.25277 1H5.70799C6.17204 1 6.57512 1.31925 6.6814 1.77096L10.5 18H20.5C21.6046 18 22.5 18.8954 22.5 20Z" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.96729 3H8.99999C9.55228 3 10 3.44772 10 4V6L8 7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M13.5 14.375H9.625H7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="flex justify-end">
-                <a href="flight.php" class="w-1/2">
-                <button id="btnsearch"class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
-                </a>
+                <!-- <a href="flight.php" class="w-1/2"> -->
+                    <button id="gosearchflight"class="w-full text-white p-2 mt-2 rounded bg-orange-600 hover:bg-orange-700	font-bold flex items-center justify-center gap-1"><img src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/6/68a17a4492b3b7647bb89a5a03b15de0.svg"> <div>Search Flight</div></button>
+                    
+                <!-- </a> -->
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#gosearchflight').on('click',function(){
+                var originplace = $('#originplace').val();
+                var destinationplace = $('#destinationplace').val();
+                var departuredate = $('#departuredate').val();
+                if (departuredate === null || departuredate === '') {
+                    departuredate = '-';
+                }
+                window.location.href = `flight.php?originplace=${originplace}&destinationplace=${destinationplace}&departuredate=${departuredate}`;
+            });
+        })
+    </script>
 </body>
 </html>

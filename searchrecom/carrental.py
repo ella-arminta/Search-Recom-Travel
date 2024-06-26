@@ -270,14 +270,21 @@ class CarRentalService:
                 response.raise_for_status()
                 cars = response.json()
                 for c in cars:
-                    if c['car_type'] not in cartype:
-                        cartype[c['car_type']] = [cr['id']]
+                    car_type_temp_name = c['car_type'].replace(' ', '_')
+                    if car_type_temp_name not in cartype:
+                        cartype[car_type_temp_name] = [cr['id']]
                     else:
-                        cartype[c['car_type']].append(cr['id'])
+                        cartype[car_type_temp_name].append(cr['id'])
             except requests.exceptions.RequestException as e:
                 self.database.add_request_error(endpoint_url + '/car', str(e), cr['id'] , 4)
                 pass
-
+        
+        # dummy cartype
+        cartype = {
+            'sedan' : [1,2,3],
+            'mpv' : [4,5,6],
+            'suv' : [7,8,9]
+        }
         return {
             'code':200,
             'data': cartype

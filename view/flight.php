@@ -65,10 +65,6 @@
                     </svg>
                     Bali (DPS)
                 </div>
-                <div class="rounded w-full font-semibold flex items-center justify-center backdrop-blur-sm bg-white/30 p-2 gap-3">
-                    <svg class="w-5 h-5"viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff4242"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M22.5 20V22C22.5 22.5523 22.0523 23 21.5 23H7.59646C6.66266 23 5.85314 22.3538 5.64619 21.4432L1.27764 2.22162C1.13542 1.59586 1.61105 1 2.25277 1H5.70799C6.17204 1 6.57512 1.31925 6.6814 1.77096L10.5 18H20.5C21.6046 18 22.5 18.8954 22.5 20Z" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.96729 3H8.99999C9.55228 3 10 3.44772 10 4V6L8 7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M13.5 14.375H9.625H7.5" stroke="#71717A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                    Economy
-                </div>
             </div>
         </div>
         <div class="absolute cursor-pointer mt-10 pl-8">
@@ -117,9 +113,9 @@
                 </div>
             </div>
             <br><br>
-            <div class="flightList">
+            <div class="flightList flex flex-col gap-6">
                 <!-- component -->
-                <div class="w-full hover:shadow-sky-200 hover:shadow-lg ">
+                <div class="flightCard w-full hover:shadow-sky-200 hover:shadow-lg ">
                     <div class="max-w-full  bg-white flex flex-col rounded overflow-hidden shadow-lg ">
                         <div class="flex flex-row items-baseline flex-nowrap p-2">
                             <svg viewBox="0 0 64 64" data-testid="tripDetails-bound-plane-icon" pointer-events="all" aria-hidden="true" class="mt-2 mr-1" role="presentation" style="fill: rgb(102, 102, 102); height: 0.9rem; width: 0.9rem;">
@@ -140,7 +136,6 @@
                             <div class="flex flex-row place-items-center p-2">
                                 <img alt="Qatar Airways" class="w-10 h-10" src="data:image/png;base64,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" style="opacity: 1; transform-origin: 0% 50% 0px; transform: none;" />
                                 <div class="flex flex-col ml-2">
-                                    <p class="text-sm text-gray-500 font-bold" name="flightname" id="flightname">Qatar Airways</p>
                                     <p class="text-sm text-gray-500" name="flightcode" id="flightcode">QR1456</p>
                                     <div class="flex flex-row ">
                                         <svg class="h-5 w-5"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -179,9 +174,11 @@
                                 <div class="text-md mx-2 flex flex-row items-center justify-center font-bold  text-orange-400">
                                     <p name="flightprice" id="flightprice">Rp3.000.000</p><span>/pax</span>
                                 </div>
-                                <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
-                                <span class="relative z-10">Choose</span>
+                                <a href="searchflight.php">
+                                    <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
+                                    <span class="relative z-10">Choose</span>
                                 </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -192,5 +189,151 @@
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/script-name.js"></script>
     <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            function changeIntToRupiah(angka) {
+                var reverse = angka.toString().split('').reverse().join(''),
+                    ribuan = reverse.match(/\d{1,3}/g);
+                ribuan = ribuan.join('.').split('').reverse().join('');
+                return 'Rp. '+ ribuan;
+            }
+
+            function flightCard(departure_date,seat_class,flight_code,weight,start_time,airport_origin_location_code,airport_origin_city_name,end_time,airport_destination_location_code,airport_destination_city_name,price){
+                price = changeIntToRupiah(price)
+                return `<div class="flightCard w-full hover:shadow-sky-200 hover:shadow-lg ">
+                    <div class="max-w-full  bg-white flex flex-col rounded overflow-hidden shadow-lg ">
+                        <div class="flex flex-row items-baseline flex-nowrap p-2">
+                            <svg viewBox="0 0 64 64" data-testid="tripDetails-bound-plane-icon" pointer-events="all" aria-hidden="true" class="mt-2 mr-1" role="presentation" style="fill: rgb(102, 102, 102); height: 0.9rem; width: 0.9rem;">
+                                <path d="M43.389 38.269L29.222 61.34a1.152 1.152 0 01-1.064.615H20.99a1.219 1.219 0 01-1.007-.5 1.324 1.324 0 01-.2-1.149L26.2 38.27H11.7l-3.947 6.919a1.209 1.209 0 01-1.092.644H1.285a1.234 1.234 0 01-.895-.392l-.057-.056a1.427 1.427 0 01-.308-1.036L1.789 32 .025 19.656a1.182 1.182 0 01.281-1.009 1.356 1.356 0 01.951-.448l5.4-.027a1.227 1.227 0 01.9.391.85.85 0 01.2.252L11.7 25.73h14.5L19.792 3.7a1.324 1.324 0 01.2-1.149A1.219 1.219 0 0121 2.045h7.168a1.152 1.152 0 011.064.615l14.162 23.071h8.959a17.287 17.287 0 017.839 1.791Q63.777 29.315 64 32q-.224 2.685-3.807 4.478a17.282 17.282 0 01-7.84 1.793h-9.016z"></path>
+                            </svg>
+                            <h1 class="ml-2 uppercase font-bold text-gray-500">departure</h1>
+                            <div class="ml-2 font-normal text-gray-500" name="departuredate" id="departuredate">`+departure_date+`</div>
+                        </div>
+                        <div class="mt-2 flex justify-start bg-white p-2">
+                            <div class="flex mx-2 ml-6 h8 px-2 flex-row items-baseline rounded-full bg-gray-100 p-1">
+                                <svg viewBox="0 0 64 64" pointer-events="all" aria-hidden="true" class="etiIcon css-jbc4oa" role="presentation" style="fill: rgb(102, 102, 102); height: 12px; width: 12px;">
+                                <path d="M43.389 38.269L29.222 61.34a1.152 1.152 0 01-1.064.615H20.99a1.219 1.219 0 01-1.007-.5 1.324 1.324 0 01-.2-1.149L26.2 38.27H11.7l-3.947 6.919a1.209 1.209 0 01-1.092.644H1.285a1.234 1.234 0 01-.895-.392l-.057-.056a1.427 1.427 0 01-.308-1.036L1.789 32 .025 19.656a1.182 1.182 0 01.281-1.009 1.356 1.356 0 01.951-.448l5.4-.027a1.227 1.227 0 01.9.391.85.85 0 01.2.252L11.7 25.73h14.5L19.792 3.7a1.324 1.324 0 01.2-1.149A1.219 1.219 0 0121 2.045h7.168a1.152 1.152 0 011.064.615l14.162 23.071h8.959a17.287 17.287 0 017.839 1.791Q63.777 29.315 64 32q-.224 2.685-3.807 4.478a17.282 17.282 0 01-7.84 1.793h-9.016z"></path>
+                                </svg>
+                                <p class="font-normal text-sm ml-1 text-gray-500" name="seatclass" id="seatclass">`+seat_class+`</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 flex sm:flex-row mx-6 sm:justify-between flex-wrap ">
+                            <div class="flex flex-row place-items-center p-2">
+                                <img alt="Qatar Airways" class="w-10 h-10" src="data:image/png;base64,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" style="opacity: 1; transform-origin: 0% 50% 0px; transform: none;" />
+                                <div class="flex flex-col ml-2">
+                                    <p class="text-sm text-gray-500" name="flightcode" id="flightcode">`+flight_code+`</p>
+                                    <div class="flex flex-row ">
+                                        <svg class="h-5 w-5"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                            viewBox="0 0 224.039 224.039" xml:space="preserve">
+                                        <path d="M216.539,52.26h-64.434V27.599c0-4.142-3.357-7.5-7.5-7.5H75.631c-4.143,0-7.5,3.358-7.5,7.5V52.26H7.5
+                                            c-4.143,0-7.5,3.358-7.5,7.5v136.68c0,4.142,3.357,7.5,7.5,7.5h209.039c4.143,0,7.5-3.358,7.5-7.5V59.76
+                                            C224.039,55.618,220.682,52.26,216.539,52.26z M75.631,67.26h68.975h21.852v121.68H57.582V67.26H75.631z M83.131,35.099h53.975
+                                            V52.26H83.131V35.099z M15,67.26h27.582v121.68H15V67.26z M209.039,188.94h-27.582V67.26h27.582V188.94z"/>
+                                        </svg>
+                                        <div class="pl-1 text-sm text-gray-500" name="flightcapacity" id="flightcapacity">
+                                            `+weight+`kg
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-3/4 flex flex-row">
+                                <div class="flex flex-col p-2">
+                                    <p class="font-bold" name="starttime" id="starttime">`+start_time+`</p>
+                                    <p class="text-gray-500"><span class="font-bold" name="originlocationcode" id="originlocationcode">`+airport_origin_location_code+`</span></p>
+                                    <p class="text-gray-500" name="origincityname" id="origincityname">`+airport_origin_city_name+`</p>
+                                </div>
+                                <div class="line-container">
+                                    <div class="circle"></div>
+                                    <div class="line"></div>
+                                    <div class="circle filled"></div>
+                                </div>
+                                <div class="flex flex-col flex-wrap p-2">
+                                    <p class="font-bold"name="endtime" id="endtime">`+end_time+`</p>
+                                    <p class="text-gray-500"><span class="font-bold" name="destinationlocationcode" id="destinationlocationcode">`+airport_destination_location_code+`</span></p>
+                                    <p class="text-gray-500"name="destinationcityname" id="destinationcityname">`+airport_destination_city_name+`</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex flex-row flex-wrap md:flex-nowrap justify-end items-baseline">
+                            <div class="md:border-l-2 mx-6 md:border-dotted flex flex-row py-4 mr-6 flex-wrap">
+                                <div class="text-md mx-2 flex flex-row items-center justify-center font-bold  text-orange-400">
+                                    <p name="flightprice" id="flightprice">`+price+`</p><span>/pax</span>
+                                </div>
+                                <a href="bookingAirline.html?service_id=2&flight_date=2022-06-19&flight_code=GA208">
+                                    <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
+                                    <span class="relative z-10">Choose</span>
+                                </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            }
+            
+            function searchFlight(airport_origin_location_code = '-', airport_destination_location_code='-',date='-' ,sort='-',minprice='-',maxprice='-'){
+                $.ajax({
+                    url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
+                    // url: 'http://107.20.145.163:8003/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/'+start_time+'/end_time/'+end_time+'/sort/'+sort,
+                    // url: 'http://localhost:8000/airlines/airport_origin_location_code/JKT/airport_destination_location_code/CGK/minprice/-/maxprice/-/date/-/start_time/-/end_time/-/sort/-',
+                    type: 'GET',
+                    success: function(response){
+                        var data = response.data;
+                        hasil = '';
+                        for (var i = 0; i < data.length; i++){
+                            hasil+=flightCard(
+                                data[i].date, data[i].class_name, data[i].flight_code, data[i].weight, data[i].start_time, data[i].airport_origin_location_code, data[i].airport_origin_city_name, data[i].end_time, data[i].airport_destination_location_code, data[i].airport_destination_city_name, data[i].price);
+                        }
+                        console.log(hasil);
+                        $('.flightList').html(hasil);
+                    }
+               });
+            }
+            var originplace = '<?php echo $_GET['originplace']; ?>';
+            var destinationplace = '<?php echo $_GET['destinationplace']; ?>';
+            var departuredate = '<?php echo $_GET['departuredate']; ?>';
+            searchFlight(originplace,destinationplace,departuredate);
+
+            // SORT function and change event
+            var sort ='-';
+            $('input[name="sort"]').change(function() {
+                if ($(this).is(':checked')) {
+                    sort = $(this).val();
+                } else {
+                    sort = '-';
+                }
+            });
+
+            // get min price
+            var minprice = '-';
+            $('#minprice').change(function() {
+                if ($(this).val() != '') {
+                    minprice = $(this).val();
+                }else{
+                    minprice = '-';
+                }
+            });
+
+            // get max price
+            var maxprice = '-';
+            $('#maxprice').change(function() {
+                if ($(this).val() != '') {
+                    maxprice = $(this).val();
+                }else{
+                    maxprice = '-';
+                }
+            });
+
+            $('input[name="sort"]').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
+            $('#minprice').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
+            $('#maxprice').change(function() {
+                searchFlight(originplace,destinationplace,departuredate,sort, minprice, maxprice);
+            });
+        });
+    </script>
 </body>
 </html>
