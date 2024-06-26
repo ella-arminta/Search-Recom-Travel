@@ -162,8 +162,9 @@ class AirlinesService:
                     {   
                         'service_id':flights_services['id'],
                         'flight_code':flight_code,
-                        'flight_url':flights_services['url']+'/airport_origin_location_code/'+flight_code+'/airport_destination_location_code/-/minprice/-/maxprice/-/date/'+flight_date+'/start_time/-/end_time/-/sort/-',
-                        'date':flight_date
+                        'date':flight_date,
+                        'flight_url_full':flights_services['url']+'/airport_origin_location_code/'+flight_code+'/airport_destination_location_code/-/minprice/-/maxprice/-/date/'+flight_date+'/start_time/-/end_time/-/sort/-',
+                        'flight_url':flights_services['url'],
                     },
                 ]
                 
