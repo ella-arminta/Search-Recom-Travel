@@ -277,8 +277,8 @@
             
             function searchFlight(airport_origin_location_code = '-', airport_destination_location_code='-',date='-' ,sort='-',minprice='-',maxprice='-'){
                 $.ajax({
-                    url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
-                    // url: 'http://107.20.145.163:8003/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/'+start_time+'/end_time/'+end_time+'/sort/'+sort,
+                    // url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
+                    url: 'http://107.20.145.163:8003/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
                     // url: 'http://localhost:8000/airlines/airport_origin_location_code/JKT/airport_destination_location_code/CGK/minprice/-/maxprice/-/date/-/start_time/-/end_time/-/sort/-',
                     type: 'GET',
                     success: function(response){
