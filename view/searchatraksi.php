@@ -146,14 +146,14 @@
             }
         });
 
-         // go to search hotel
+         // go to search atraksi
          $('#gosearchatraksi').on('click', function(){
             var atraksi = $('#attractioname').val();
             atraksi = atraksi_ids[atraksi];
             var city = $('#city_id').val();
             city = city_ids[city];
             var date = $('#tanggal').val();
-            window.location.href = `hotels.php?city=${city}&atraksi=${atraksi}&date=${tanggal}`;
+            window.location.href = `atraksi.php?city=${city}&attractioname=${atraksi}&tanggal=${tanggal}`;
         });
 
     })
