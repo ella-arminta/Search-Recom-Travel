@@ -96,6 +96,7 @@ class AtraksiService:
                 # Dummy data for testing
                 data = [
                     {
+                        'service_id':5,
                         'id': 1,
                         'nama': 'Jatim Park 1',
                         'tanggal': '2024-08-08',
@@ -104,6 +105,7 @@ class AtraksiService:
                         'popularity': 6,
                     },
                     {
+                        'service_id':5,
                         'id': 2,
                         'nama': 'Jatim Park 2',
                         'tanggal': '2024-12-25',
@@ -112,6 +114,7 @@ class AtraksiService:
                         'popularity': 8,
                     },
                     {
+                        'service_id':5,
                         'id': 3,
                         'nama': 'Taman Safari Indonesia II',
                         'tanggal': '2024-09-09',
@@ -149,9 +152,8 @@ class AtraksiService:
                             'atraksi_popularity': random.randint(1, 10),
                         }
 
-                    temp_atraksi.append(d)
+                    atraksi.append(d)
                 
-                atraksi.append(temp_atraksi)
                 # Sorting based on sort parameter
                 if sort == 'lowestprice':
                     atraksi = sorted(atraksi, key=lambda x: x['price'])
@@ -265,7 +267,7 @@ class AtraksiService:
                 for key, value in temp2_atraksi.items():
                     temp_atraksi[key] = value
             
-            temp_atraksi.setdefault('atraksi_list', []).append(d)
+            temp_atraksi.append(d)
             i += 1
 
         if temp_atraksi:
