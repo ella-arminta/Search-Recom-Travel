@@ -19,7 +19,7 @@ class AirlinesService:
         
         for flights_service in flights_services:
             endpoint_url = flights_service['url']
-            
+            # url:http://34.200.80.155:8003/flight
             #get all flights
             try:
                  # /airlines
@@ -31,7 +31,7 @@ class AirlinesService:
                 # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
                 data = [
                     {   
-                        'service_id':flights_service['id'],
+                        'id':1,
                         'flight_code':'GA208',
                         'airport_origin_name':'Soekarno-Hatta Intl',
                         'airport_origin_location_code':'CGK',
@@ -49,7 +49,7 @@ class AirlinesService:
                         'delay':0,
                     },
                     {   
-                        'service_id':flights_service['id'],
+                        'id':2, 
                         'flight_code':'ID123',
                         'airport_origin_name':'Bandung Airport',
                         'airport_origin_location_code':'BDO',
@@ -68,7 +68,7 @@ class AirlinesService:
                     },
                     
                     {   
-                        'service_id':flights_service['id'],
+                        'id':3, 
                         'flight_code':'QR1456',
                         'airport_origin_name':'New Yogyakarta Int.',
                         'airport_origin_location_code':'YIA',
@@ -87,32 +87,30 @@ class AirlinesService:
                     },
                 ]
                 
-                for d in data:
-                    # filter
-                    #     cek berdasarkan asal & tujuan
-                    if airport_origin_location_code != '-' and d['airport_origin_location_code'] != airport_origin_location_code:
+                for flight in data:  # Assuming `data` is a list of flight dictionaries
+                # Filter based on origin & destination
+                    if airport_origin_location_code != '-' and flight['airport_origin_location_code'] != airport_origin_location_code:
                         continue
-                    if airport_destination_location_code != '-' and d['airport_destination_location_code'] != airport_destination_location_code:
+                    if airport_destination_location_code != '-' and flight['airport_destination_location_code'] != airport_destination_location_code:
                         continue
 
                     # Check price
-                    if minprice != '-' and d['price'] < minprice:
+                    if minprice != '-' and flight['price'] < minprice:
                         continue
-                    if maxprice != '-' and d['price'] > maxprice:
+                    if maxprice != '-' and flight['price'] > maxprice:
                         continue  
 
                     # Check date
-                    if date != '-' and d['date'] != date:
+                    if date != '-' and flight['date'] != date:
                         continue
 
                     # Check time
-                    if start_time != '-' and d['start_time'] != start_time:
+                    if start_time != '-' and flight['start_time'] != start_time:
                         continue
-                    if end_time != '-' and d['end_time'] != end_time:
+                    if end_time != '-' and flight['end_time'] != end_time:
                         continue
-                    # sort
-                    
-                    flights.append(d)
+
+                    flights.append(flight)
                 
                 unique_flights = []
                 seen = set()
@@ -140,9 +138,8 @@ class AirlinesService:
         }
     
     @rpc    
-    def get_airlines_by_id(self,service_id,flight_date,flight_code):
+    def get_airlines_by_id(self,service_id,airport_origin_location_code,airport_destination_location_code,flight_date,flight_code):
         flights_services = self.database.get_service_by_id(service_id)
-        
         
         flights=[]
         unique_flights = []
@@ -161,22 +158,25 @@ class AirlinesService:
                 data = [
                     {   
                         'service_id':flights_services['id'],
+                        'airport_origin_location_code':airport_origin_location_code,
+                        'airport_destination_location_code':airport_destination_location_code,
                         'flight_code':flight_code,
                         'date':flight_date,
-                        'flight_url_full':flights_services['url']+'/airport_origin_location_code/'+flight_code+'/airport_destination_location_code/-/minprice/-/maxprice/-/date/'+flight_date+'/start_time/-/end_time/-/sort/-',
                         'flight_url':flights_services['url'],
+                        'flight_url_full':flights_services['url']+'/'+airport_origin_location_code+'/'+airport_destination_location_code+'/'+flight_date
                     },
                 ]
                 
-                for d in data:
-                    # filter
-                    #     cek berdasarkan asal & tujuan
-                    if flight_date != '-' and d['date'] != flight_date:
+                for flight in data:
+                    if airport_origin_location_code != '-' and flight['airport_origin_location_code'] != airport_origin_location_code:
                         continue
-                    if flight_code != '-' and d['flight_code'] != flight_code:
+                    if airport_destination_location_code != '-' and flight['airport_destination_location_code'] != airport_destination_location_code:
                         continue
-                    
-                    flights.append(d)
+                    if flight_date != '-' and flight['date'] != flight_date:
+                        continue
+                    if flight_code != '-' and flight['flight_code'] != flight_code:
+                        continue
+                    flights.append(flight)
                 
                 unique_flights = []
                 seen = set()

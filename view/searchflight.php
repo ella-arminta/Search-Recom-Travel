@@ -38,7 +38,7 @@
                         <select name="originplace" id="originplace"
                             class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent">
                             <option value="-" selected>Choose City</option>
-                            <option value="CGK">Jakarta</option>
+                            <option value="JKT">Jakarta</option>
                             <option value="YIA">Yogyakarta</option>
                             <option value="SUB">Surabaya</option>
                             <option value="BDO">Bandung</option>

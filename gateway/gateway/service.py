@@ -324,11 +324,11 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
     
     # GET AIRLINES BY ID
-    @http('GET','/airlines/<string:service_id>/flight_date/<string:flight_date>/flight_code/<string:flight_code>')
-    def get_airlines_by_id(self,request,service_id,flight_date,flight_code):
-        if service_id != '':
+    @http('GET','/airlines/service_id/<string:service_id>/airport_origin_location_code/<string:airport_origin_location_code>/airport_destination_location_code/<string:airport_destination_location_code>/flight_date/<string:flight_date>/flight_code/<string:flight_code>')
+    def get_airlines_by_id(self,request,service_id,airport_origin_location_code,airport_destination_location_code,flight_date,flight_code):
+        if service_id != '-':
             service_id = int(service_id)
-        result = self.airlines_rpc.get_airlines_by_id(service_id,flight_date,flight_code)
+        result = self.airlines_rpc.get_airlines_by_id(service_id,airport_origin_location_code,airport_destination_location_code,flight_date,flight_code)
         return result['code'],self.header,json.dumps(result)
     
     

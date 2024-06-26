@@ -199,7 +199,7 @@
                 return 'Rp. '+ ribuan;
             }
 
-            function flightCard(service_id,departure_date,seat_class,flight_code,weight,start_time,airport_origin_location_code,airport_origin_city_name,end_time,airport_destination_location_code,airport_destination_city_name,price){
+            function flightCard(departure_date,seat_class,flight_code,weight,start_time,airport_origin_location_code,airport_origin_city_name,end_time,airport_destination_location_code,airport_destination_city_name,price){
                 price = changeIntToRupiah(price)
                 return `<div class="flightCard w-full hover:shadow-sky-200 hover:shadow-lg ">
                     <div class="max-w-full  bg-white flex flex-col rounded overflow-hidden shadow-lg ">
@@ -272,16 +272,17 @@
             }
             
             function searchFlight(airport_origin_location_code = '-', airport_destination_location_code='-',date='-' ,sort='-',minprice='-',maxprice='-'){
-               $.ajax({
-                url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
+                $.ajax({
+                    url: 'http://localhost:8000/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/-/end_time/-/sort/'+sort,
                     // url: 'http://107.20.145.163:8003/airlines/airport_origin_location_code/'+airport_origin_location_code+'/airport_destination_location_code/'+airport_destination_location_code+'/minprice/'+minprice+'/maxprice/'+maxprice+'/date/'+date+'/start_time/'+start_time+'/end_time/'+end_time+'/sort/'+sort,
+                    // url: 'http://localhost:8000/airlines/airport_origin_location_code/JKT/airport_destination_location_code/CGK/minprice/-/maxprice/-/date/-/start_time/-/end_time/-/sort/-',
                     type: 'GET',
                     success: function(response){
                         var data = response.data;
                         hasil = '';
                         for (var i = 0; i < data.length; i++){
                             hasil+=flightCard(
-                                data[i].service_id, data[i].date, data[i].class_name, data[i].flight_code, data[i].weight, data[i].start_time, data[i].airport_origin_location_code, data[i].airport_origin_city_name, data[i].end_time, data[i].airport_destination_location_code, data[i].airport_destination_city_name, data[i].price);
+                                data[i].date, data[i].class_name, data[i].flight_code, data[i].weight, data[i].start_time, data[i].airport_origin_location_code, data[i].airport_origin_city_name, data[i].end_time, data[i].airport_destination_location_code, data[i].airport_destination_city_name, data[i].price);
                         }
                         console.log(hasil);
                         $('.flightList').html(hasil);
