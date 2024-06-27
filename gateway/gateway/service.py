@@ -256,8 +256,8 @@ class GatewayService:
 # ATRAKSI
 
     # GET ALL ATRAKSI
-    @http('GET', '/atraksi/city/<int:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')
-    def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', rating = '-', sort = '-'):
+    @http('GET', '/atraksi/city/<int:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
+    def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', sort = '-'):
         
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
         # min price -> room start from
@@ -285,7 +285,7 @@ class GatewayService:
                 'data': 'Invalid id_lokasi/minprice/maxprice parameter. must be integer'
             })
 
-        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,minprice,maxprice,rating,sort)
+        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,minprice,maxprice,sort)
 
         print("All Atraksi Response:", all_atraksi)
         return all_atraksi['code'], self.header, json.dumps(all_atraksi)
