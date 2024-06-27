@@ -175,7 +175,7 @@ class Database(DependencyProvider):
                 user='root',
                 password='password',
                 # password='',
-                port='3306'
+                port='3306',
             )
         except Error as e :
                     self.log.error(f"Error while connecting to MySQL using Connection pool: {e}")
