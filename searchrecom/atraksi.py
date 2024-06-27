@@ -1,6 +1,7 @@
 from nameko.rpc import rpc
 from decimal import Decimal
-import searchrecom.dependencies as dependencies
+# import searchrecom.dependencies as dependencies
+import dependencies
 import requests
 import random
 from datetime import datetime
@@ -50,7 +51,7 @@ class AtraksiService:
             }
 
         # Debugging log
-        print("Atraksi Services Initial Data:", atraksi_services)
+        # print("Atraksi Services Initial Data:", atraksi_services)
 
         # Fetch review data if rating filter is applied
         review = {}
@@ -106,64 +107,78 @@ class AtraksiService:
 
             atraksi_start_price = None
 
+
+            data = []
+            urls = self.database.get_service_by_type(5)
+            for item in urls:
+                # print(i)
+                response = requests.get(item['url']+"/api/atraksi")
+                data.append(response.content)
+
+            # print('data nih')
+            # print(data)
+            
+
             try:
+                
+
                 # Dummy data for testing
-                data = [
-                    {
-                        'service_id':atraksi_service['id'],
-                        'id': 1,
-                        'nama': 'Jatim Park 1',
-                        'tanggal': '2024-08-08',
-                        'price': 30000,
-                        'city': 'Batu, Malang',
-                        'popularity': 6,
-                    },
-                    {
-                        'service_id':atraksi_service['id'],
-                        'id': 2,
-                        'nama': 'Jatim Park 2',
-                        'tanggal': '2024-12-25',
-                        'price': 25000,
-                        'city': 'Batu, Malang',
-                        'popularity': 8,
-                    },
-                    {
-                        'service_id':atraksi_service['id'],
-                        'id': 3,
-                        'nama': 'Taman Safari Indonesia II',
-                        'tanggal': '2024-09-09',
-                        'price': 50000,
-                        'city': 'Prigen, Pasuruan',
-                        'popularity': 9,
-                    },
-                ]
+                # data = [
+                #     {
+                #         'service_id':atraksi_service['id'],
+                #         'id': 1,
+                #         'nama': 'Jatim Park 1',
+                #         'tanggal': '2024-08-08',
+                #         'price': 30000,
+                #         'city': 'Batu, Malang',
+                #         'popularity': 6,
+                #     },
+                #     {
+                #         'service_id':atraksi_service['id'],
+                #         'id': 2,
+                #         'nama': 'Jatim Park 2',
+                #         'tanggal': '2024-12-25',
+                #         'price': 25000,
+                #         'city': 'Batu, Malang',
+                #         'popularity': 8,
+                #     },
+                #     {
+                #         'service_id':atraksi_service['id'],
+                #         'id': 3,
+                #         'nama': 'Taman Safari Indonesia II',
+                #         'tanggal': '2024-09-09',
+                #         'price': 50000,
+                #         'city': 'Prigen, Pasuruan',
+                #         'popularity': 9,
+                #     },
+                # ]
 
                 for d in data:
                     # Check nama atraksi
-                    if attractioname != '-' and d['nama'] != attractioname:
+                    if attractioname != '-' and d['title'] != attractioname:
                         continue
                     
-                    # Check harga
-                    if minprice != '-' and d['price'] < int(minprice):
-                        continue
-                    if maxprice != '-' and d['price'] > int(maxprice):
-                        continue
+                    # # Check harga
+                    # if minprice != '-' and d['lowest_price'] < int(minprice):
+                    #     continue
+                    # if maxprice != '-' and d['lowest_price'] > int(maxprice):
+                    #     continue
 
-                    if atraksi_start_price is None:
-                        atraksi_start_price = d['price']
-                    else: 
-                        if d['price'] < atraksi_start_price:
-                            atraksi_start_price = d['price']
+                    # if atraksi_start_price is None:
+                    #     atraksi_start_price = d['lowest_price']
+                    # else: 
+                    #     if d['lowest_price'] < atraksi_start_price:
+                    #         atraksi_start_price = d['lowest_price']
 
                     atraksi.append(d)
                 
                 # Sorting based on sort parameter
-                if sort == 'lowestprice':
-                    atraksi = sorted(atraksi, key=lambda x: x['price'])
-                elif sort == 'highestprice':
-                    atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
-                elif sort == 'highestpopularity':
-                    atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
+                # if sort == 'lowestprice':
+                #     atraksi = sorted(atraksi, key=lambda x: x['price'])
+                # elif sort == 'highestprice':
+                #     atraksi = sorted(atraksi, key=lambda x: x['price'], reverse=True)
+                # elif sort == 'highestpopularity':
+                #     atraksi = sorted(atraksi, key=lambda x: x['popularity'], reverse=True)
                 # elif sort == 'reviewscore':
                 #     atraksi = sorted(atraksi, key=lambda x: x['atraksi_score'], reverse=True)
 
@@ -252,7 +267,7 @@ class AtraksiService:
         try:
             data = [
                 {
-                    'service_id': 5,
+                    'service_id': '',
                     'id': 1,
                     'nama': 'Jatim Park 1',
                     'tanggal': '2024-08-08',

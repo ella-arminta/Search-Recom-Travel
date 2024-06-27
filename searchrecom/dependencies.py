@@ -5,6 +5,9 @@ from mysql.connector import Error
 from mysql.connector import pooling
 from mysql.connector.pooling import MySQLConnectionPool
 
+# import eventlet
+# eventlet.monkey_patch()
+
 
 class DatabaseWrapper:
 
@@ -176,13 +179,13 @@ class Database(DependencyProvider):
                 # host='localhost',
                 database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
-                password='password',
+                password='password'
                 # password='',
-                port='3306',
+                port='3306'
             )
         except Error as e :
-                    self.log.error(f"Error while connecting to MySQL using Connection pool: {e}")
-                    raise
+                    print("Error while connecting to MySQL using Connection pool: ", e)
+                
         
     def stop(self):
         # Called when the container is stopped
@@ -191,6 +194,6 @@ class Database(DependencyProvider):
             print("MySQL Connection Pool closed")
     
     def get_dependency(self, worker_ctx):
-        if self.connection_pool is None:
-            raise Exception("Connection pool is not initialized")
+        # if self.connection_pool is None:
+        #     raise Exception("Connection pool is not initialized")
         return DatabaseWrapper(self.connection_pool.get_connection())
