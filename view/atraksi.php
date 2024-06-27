@@ -477,7 +477,7 @@
             var tanggal = '"<?php echo $_GET['tanggal']; ?>"';
             var attractioname = '"<?php echo $_GET['attractioname']; ?>"';
 
-            searchHotel(city, tanggal,attractioname);
+            searchAtraksi(city, tanggal,attractioname);
 
             // get rating value
             var rating = '-';

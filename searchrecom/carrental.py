@@ -123,11 +123,11 @@ class CarRentalService:
         endpoint_booking = self.database.get_service_by_name('booking')['url']
         try: 
             # TODO testing review service
-            response = requests.get(endpoint_booking + '/review/carrental')
+            response = requests.get(endpoint_booking + '/reviews/carrental')
             response.raise_for_status()
             review = response.json()
         except requests.exceptions.RequestException as e:
-            self.database.add_request_error(endpoint_booking + '/review/carrental', str(e), self.database.get_service_by_name('booking')['id'], 7)
+            self.database.add_request_error(endpoint_booking + '/reviews/carrental', str(e), self.database.get_service_by_name('booking')['id'], 7)
             pass
             # return {
             #     'code': 500,
@@ -142,31 +142,36 @@ class CarRentalService:
             if provider != '-' and cr['nama'].lower() not in provider:
                 continue
             try: 
-                # response = requests.get(endpoint_url + '/available_cars/' + startdate + '/'+ enddate)
-                # response.raise_for_status()
-                # cars = response.json()
+                response = requests.get(endpoint_url + '/available_cars/' + startdate + '/'+ enddate)
+                response.raise_for_status()
+                cars = response.json()
                 # id cars
                 cars = [4,5,6,7]
                 cars_detail = []
 
                 for car_id in cars: 
                     try: 
-                        # response = requests.get(endpoint_url + '/car/' + car_id )
-                        # response.raise_for_status()
-                        # car = response.json()
-                        car = {
-                            'car_id':car_id,
-                            'car_brand': random.choice(['toyota','daihatsu','suzuki','bmw']),
-                            'car_name' : random.choice(['ayla','agya','xenia','innova','fortuner','x5']),
-                            'car_type': random.choice(['sedan','mpv','suv']),
-                            'car_transmission': random.choice(['automatic','manual']),
-                            'car_year': 2019,
-                            'car_seats': random.randint(1, 10),
-                            'car_luggages': 2,
-                            'car_price':random.randint(100000, 1000000),
-                            'driver_id':2
-                        }
+                        response = requests.get(endpoint_url + '/car/' + str(car_id) )
+                        response.raise_for_status()
+                        car = response.json()
+                        car = car['data']
+                        # car = {
+                        #     'car_id':car_id,
+                        #     'car_brand': random.choice(['toyota','daihatsu','suzuki','bmw']),
+                        #     'car_name' : random.choice(['ayla','agya','xenia','innova','fortuner','x5']),
+                        #     'car_type': random.choice(['sedan','mpv','suv']),
+                        #     'car_transmission': random.choice(['automatic','manual']),
+                        #     'car_year': 2019,
+                        #     'car_seats': random.randint(1, 10),
+                        #     'car_luggages': 2,
+                        #     'car_price':random.randint(100000, 1000000),
+                        #     'driver_id':2
+                        # }
                         # FILTER
+                        # return {
+                        #     'code': 200,
+                        #     'data': car
+                        # }
                         if capacity != '-':
                             if car['car_seats'] not in capacity:
                                 if 7 in capacity:
@@ -414,6 +419,40 @@ class CarRentalService:
             'code': 200,
             'data': car_hasil
         }
+    
+    @rpc
+    def get_carrental_by_key(self, car_key):
+        car_key = car_key.split('_')
+        car_brand = car_key[0]
+        car_name = car_key[1]
+        car_transmission = car_key[2]
+        carrental_services = self.database.get_service_by_type(4)
+        carrental_service = []
+        for cr in carrental_services:
+            endpoint_url = cr['url']
+            try:
+                response = requests.get(endpoint_url + '/car')
+                response.raise_for_status()
+                cars = response.json()
+                for c in cars:
+                    if c['car_brand'].lower() == car_brand and c['car_name'].lower() == car_name and c['car_transmission'].lower() == car_transmission:
+                        carrental_service.append(cr)
+
+            except requests.exceptions.RequestException as e:
+                self.database.add_request_error(endpoint_url + '/car', str(e), cr['id'] , 4)
+                continue
+        if carrental_service is None:
+            return {
+                'code': 404,
+                'data': 'Car not found'
+            }
+        carrental_service['lokasi'] = self.database.get_lokasi_by_id(carrental_service['id_lokasi'])
+        carrental_service['service_type'] = self.database.get_service_type_by_id(carrental_service['id_service_type'])
+        return {
+            'code': 200,
+            'data': carrental_service
+        }
+
 
 
 

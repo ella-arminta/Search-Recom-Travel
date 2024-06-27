@@ -202,10 +202,10 @@ class GatewayService:
         result = self.carrental_rpc.get_carrental_by_id(service_id, pickup, returncar, car_id)
         return result['code'], self.header, json.dumps(result)
     # get carrental by car_key example suzuki_xenia_automatic
-    # @http('GET','/carrental/<string:car_key>')
-    # def get_carrental_by_key(self,request, car_key):
-    #     result = self.carrental_rpc.get_carrental_by_key(car_key)
-    #     return result['code'], self.header, json.dumps(result)
+    @http('GET','/carrental/<string:car_key>')
+    def get_carrental_by_key(self,request, car_key):
+        result = self.carrental_rpc.get_carrental_by_key(car_key)
+        return result['code'], self.header, json.dumps(result)
     
 ## TRAVEL AGENT
 
