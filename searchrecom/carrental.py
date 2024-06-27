@@ -45,9 +45,9 @@ class CarRentalService:
         if validate_date_format(enddate) == False:
             error = True
             data_error.append('Invalid enddate parameter. must be in format YYYY-MM-DD')
-        if validate_date_format(startdate) and datetime.strptime(startdate, '%Y-%m-%d') < datetime.now():
-            error = True
-            data_error.append('Invalid startdate parameter. must be after today')
+        # if validate_date_format(startdate) and datetime.strptime(startdate, '%Y-%m-%d') < datetime.now():
+        #     error = True
+        #     data_error.append('Invalid startdate parameter. must be after today')
         if validate_date_format(startdate) and validate_date_format(enddate) and datetime.strptime(startdate, '%Y-%m-%d') > datetime.strptime(enddate, '%Y-%m-%d'):
             error = True
             data_error.append('Invalid startdate parameter. must be before enddate')

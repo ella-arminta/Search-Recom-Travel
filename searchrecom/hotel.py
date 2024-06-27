@@ -73,16 +73,16 @@ class HotelService:
             #     # "city": "Jakarta",
             #     # "post_code": "10130"
             #     # }
-            # try:
-            #     #cth endpoint_url:  http://localhost:8000/merlynn_park_hotel/
-            #     response = requests.get(endpoint_url)
-            #     response.raise_for_status()
-            #     hotel_detail = response.json()
-            # except requests.exceptions.RequestException as e:
-            #     # Handle any exceptions that occur during the request
-            #     self.database.add_request_error(endpoint_url, str(e), hotel_service['id'], 1)
-            #     continue
-
+            try:
+                #cth endpoint_url:  http://localhost:8000/merlynn_park_hotel/
+                response = requests.get(endpoint_url + '/hotel')
+                response.raise_for_status()
+                hotel_detail = response.json()
+            except requests.exceptions.RequestException as e:
+                # Handle any exceptions that occur during the request
+                self.database.add_request_error(endpoint_url, str(e), hotel_service['id'], 1)
+                continue
+            
             # Get Hotel Price start from (for sort by price)
             hotel_start_price = None
             
@@ -97,36 +97,36 @@ class HotelService:
                 # TODO uncomment
                 # /rooms
                 # cth path : http://localhost:8000/merlynn_park_hotel/room_type/"2024-06-24"&"2024-06-26"
-                # response = requests.get(endpoint_url + '/room_type/'+checkin+'&'+checkout)
-                # response.raise_for_status()
-                # data = response.json()
+                response = requests.get(endpoint_url + '/hotel' + '/room_type/'+checkin+'&'+checkout)
+                response.raise_for_status()
+                data = response.json()
                 # availability dicek kel hotel
-                data = [
-                    {   
-                        'total_room' : 2,
-                        'id': 1,
-                        'type' : 'Suite',
-                        'detail' : 'asdfasdf',
-                        'capacity': 3,
-                        'price' : random.randint(1, 10)
-                    },
-                    {   
-                        'id' : 2, 
-                        'total_room' : 3,
-                        'type' : 'Master',
-                        'detail' : 'asdfasdf',
-                        'capacity': 6,
-                        'price' : random.randint(1, 10)
-                    },
-                    {   
-                        'id' : 3,
-                        'total_room' : 3,
-                        'type' : 'Master',
-                        'detail' : 'asdfasdf',
-                        'capacity': 6,
-                        'price' : random.randint(1, 10)
-                    },
-                ]
+                # data = [
+                #     {   
+                #         'total_room' : 2,
+                #         'id': 1,
+                #         'type' : 'Suite',
+                #         'detail' : 'asdfasdf',
+                #         'capacity': 3,
+                #         'price' : random.randint(1, 10)
+                #     },
+                #     {   
+                #         'id' : 2, 
+                #         'total_room' : 3,
+                #         'type' : 'Master',
+                #         'detail' : 'asdfasdf',
+                #         'capacity': 6,
+                #         'price' : random.randint(1, 10)
+                #     },
+                #     {   
+                #         'id' : 3,
+                #         'total_room' : 3,
+                #         'type' : 'Master',
+                #         'detail' : 'asdfasdf',
+                #         'capacity': 6,
+                #         'price' : random.randint(1, 10)
+                #     },
+                # ]
 
                 # Filter hotels
                 for d in data:
@@ -253,7 +253,7 @@ class HotelService:
 
             except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
-                self.database.add_request_error(endpoint_booking+'/rooms/checkin/'+checkin+'/checkout'+checkout, str(e), endpoint_url, 1)
+                # self.database.add_request_error(endpoint_url + 'hotel/room_type', str(e), endpoint_url, 1)
 
                 continue
 
@@ -335,33 +335,33 @@ class HotelService:
             # TODO uncomment
             # /rooms
             # cth path : http://localhost:8000/merlynn_park_hotel/room_type/"2024-06-24"&"2024-06-26"
-            # response = requests.get(endpoint_url + '/room_type/'+checkin+'&'+checkout)
-            # response.raise_for_status()
-            # data = response.json()
+            response = requests.get(endpoint_url + '/hotel' + '/room_type')
+            response.raise_for_status()
+            data = response.json()
             # availability dicek kel hotel
-            data = [
-                {   
-                    'total_room' : 2,
-                    'type' : 'Suite',
-                    'detail' : 'asdfasdf',
-                    'capacity': 3,
-                    'price' : random.randint(1, 10)
-                },
-                {   
-                    'total_room' : 3,
-                    'type' : 'Master',
-                    'detail' : 'asdfasdf',
-                    'capacity': 6,
-                    'price' : random.randint(1, 10)
-                },
-                {   
-                    'total_room' : 3,
-                    'type' : 'Master',
-                    'detail' : 'asdfasdf',
-                    'capacity': 6,
-                    'price' : random.randint(1, 10)
-                },
-            ]
+            # data = [
+            #     {   
+            #         'total_room' : 2,
+            #         'type' : 'Suite',
+            #         'detail' : 'asdfasdf',
+            #         'capacity': 3,
+            #         'price' : random.randint(1, 10)
+            #     },
+            #     {   
+            #         'total_room' : 3,
+            #         'type' : 'Master',
+            #         'detail' : 'asdfasdf',
+            #         'capacity': 6,
+            #         'price' : random.randint(1, 10)
+            #     },
+            #     {   
+            #         'total_room' : 3,
+            #         'type' : 'Master',
+            #         'detail' : 'asdfasdf',
+            #         'capacity': 6,
+            #         'price' : random.randint(1, 10)
+            #     },
+            # ]
 
             # Filter hotels
             i = 0
@@ -414,6 +414,7 @@ class HotelService:
         except requests.exceptions.RequestException as e:
                 # Handle any exceptions that occur during the request
                 # self.database.add_request_error(endpoint_booking+'/rooms/checkin/'+checkin+'/checkout'+checkout, str(e), endpoint_url, 1)
+                self.database.add_request_error(endpoint_url + 'hotel/room_type', str(e), endpoint_url, 1)
                 pass
         
         return {
