@@ -264,7 +264,7 @@
                                 <div class="text-md mx-2 flex flex-row items-center justify-center font-bold  text-orange-400">
                                     <p name="flightprice" id="flightprice">`+price+`</p><span>/pax</span>
                                 </div>
-                                <a href="bookingAirline.html?service_id=2&flight_date=2022-06-19&flight_code=GA208">
+                                <a href="bookingAirline.html?service_id=2&flight_date=`+departure_date+`&flight_code=`+flight_code+`">
                                     <button id="btnchoose" class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden border border-cyan-400 bg-sky-400 text-white transition-all before:absolute before:h-0 before:w-0 before:rounded-full  before:bg-white before:duration-500 before:ease-out hover:text-cyan-400 hover:before:h-56 hover:before:w-56">
                                     <span class="relative z-10">Choose</span>
                                 </button>
