@@ -247,37 +247,49 @@ class AtraksiService:
             #     continue
 
 
-            # Get atraksi start price (for sort by price)
-            atraksi_start_price = None
-            try:
-                # Dummy data for testing
-                data = [
-                            {
-                                'service_id':atraksi_service['id'],
-                                'lokasi' : atraksi_service['id_lokasi'],
-                                'nama': atraksi_service['nama'],
-                                'tanggal': attractiondate,
-                                'price': minprice,
-                                'city': 'Batu, Malang',
-                                'popularity': 6,
-                                'atraksi_url' : atraksi_service['url'],
-                                # 'atraksi_url_full' : atraksi_services['url']+'/atraksi/city/<int:id_lokasi>/attractioname/attractioname/tanggal/attractiondate/minprice/minprice/maxprice/maxprice/rating/<string:rating>/sort/<string:sort>',
-                            },
-                        ]
+        # Get atraksi start price (for sort by price)
+        atraksi_start_price = None
+        try:
+            data = [
+                {
+                    'service_id': 5,
+                    'id': 1,
+                    'nama': 'Jatim Park 1',
+                    'tanggal': '2024-08-08',
+                    'price': 30000,
+                    'city': 'Batu, Malang',
+                    'popularity': 6,
+                },
+                {
+                    'service_id': 5,
+                    'id': 2,
+                    'nama': 'Jatim Park 2',
+                    'tanggal': '2024-12-25',
+                    'price': 25000,
+                    'city': 'Batu, Malang',
+                    'popularity': 8,
+                },
+                {
+                    'service_id': 5,
+                    'id': 3,
+                    'nama': 'Taman Safari Indonesia II',
+                    'tanggal': '2024-09-09',
+                    'price': 50000,
+                    'city': 'Prigen, Pasuruan',
+                    'popularity': 9,
+                },
+            ]
 
-                for d in data:
-                        # Check nama atraksi
-                        atraksiname = d['nama']
-
-                        # cek nama atraksi
-                        if atraksiname != '-' and d['nama'] != atraksiname:
-                            continue
-                        
-                        # Check harga
-                        if minprice != '-' and d['price'] < int(minprice):
-                            continue
-                        if maxprice != '-' and d['price'] > int(maxprice):
-                            continue
+            for d in data:
+                # Check nama atraksi
+                if attractioname != '-' and d['nama'] != attractioname:
+                    continue
+                
+                # Check harga
+                if minprice != '-' and d['price'] < int(minprice):
+                    continue
+                if maxprice != '-' and d['price'] > int(maxprice):
+                    continue
 
                         if atraksi_start_price is None:
                             atraksi_start_price = d['price']

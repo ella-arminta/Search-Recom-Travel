@@ -300,8 +300,8 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
 
     # Get atraksi by id
-    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/attractiondate/<string:attractiondate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-',attractiondate ='-', minprice='-', maxprice='-'):
+    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-', minprice='-', maxprice='-'):
         try:
             if minprice != '-':
                 minprice = int(minprice)
