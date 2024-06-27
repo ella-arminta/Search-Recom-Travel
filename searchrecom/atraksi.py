@@ -254,19 +254,23 @@ class AtraksiService:
                 data = [
                             {
                                 'service_id':atraksi_service['id'],
-                                'nama': attractioname,
+                                'lokasi' : atraksi_service['id_lokasi'],
+                                'nama': atraksi_service['nama'],
                                 'tanggal': attractiondate,
                                 'price': minprice,
                                 'city': 'Batu, Malang',
                                 'popularity': 6,
                                 'atraksi_url' : atraksi_service['url'],
-                                'atraksi_url_full' : atraksi_services['url']+'/atraksi/city/<int:id_lokasi>/attractioname/'+attractioname+'/tanggal/'+attractiondate+'/minprice/minprice/maxprice/maxprice/rating/<string:rating>/sort/<string:sort>',
+                                # 'atraksi_url_full' : atraksi_services['url']+'/atraksi/city/<int:id_lokasi>/attractioname/attractioname/tanggal/attractiondate/minprice/minprice/maxprice/maxprice/rating/<string:rating>/sort/<string:sort>',
                             },
                         ]
 
                 for d in data:
                         # Check nama atraksi
-                        if attractioname != '-' and d['nama'] != attractioname:
+                        atraksiname = d['nama']
+
+                        # cek nama atraksi
+                        if atraksiname != '-' and d['nama'] != atraksiname:
                             continue
                         
                         # Check harga
