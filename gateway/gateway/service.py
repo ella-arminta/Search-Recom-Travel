@@ -235,8 +235,8 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
     
     # GET PACKAGE BY ID
-    @http('GET', '/agent/<int:id_agent>/people/<string:people>/quota/<string:quota>/city/<string:city>/description/<string:description>/departuredate/<string:departuredate>/returndate/<string:returndate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-',departuredate='-',returndate='-',quota='-',city='-',description='-'):
+    @http('GET', '/agent/<string:id_agent>/people/<string:people>/city/<string:city>/departuredate/<string:departuredate>/returndate/<string:returndate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-',departuredate='-',returndate='-',city='-'):
         try:
             if people != '-':
                 people = int(people)
@@ -250,7 +250,7 @@ class GatewayService:
                 'data': 'Invalid id_lokasi/people/minprice/maxprice parameter must be integer'
             })
         
-        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice,departuredate,returndate,quota,city,description)
+        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice,departuredate,returndate,city)
         return result['code'],self.header,json.dumps(result)
     
 # ATRAKSI

@@ -409,9 +409,6 @@
                         data = response.data;
                         hasil = '';
                         for (var i = 0; i < data.length; i++) {
-                            // hasil += agentCard(
-                            //     data[i].service_id, data[i].agent_name, data[i].agent_city,data[i].checkin, data[i].checkout, data[i].quota, data[i].agent_start_price, data[i].agent_image)
-                            //     ;
                             hasil += agentCard(
                                 data[i].service_id, data[i].agent_name, data[i].agent_city,data[i].checkin, data[i].checkout, data[i].quota, data[i].agent_start_price, data[i].agent_image)
                                 ;
