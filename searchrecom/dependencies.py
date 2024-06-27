@@ -173,8 +173,8 @@ class Database(DependencyProvider):
                 host='localhost',
                 database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
-                # password='password'
-                password='',
+                password='password'
+                # password='',
                 port='3306'
             )
         except Error as e :

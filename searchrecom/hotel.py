@@ -32,7 +32,7 @@ class HotelService:
         endpoint_booking = self.database.get_service_by_name('booking')['url']
         try: 
             # TODO testing review service
-            response = requests.get(endpoint_booking + '/review/hotel')
+            response = requests.get(endpoint_booking + '/reviews/hotel')
             response.raise_for_status()
             review = response.json()
         except requests.exceptions.RequestException as e:
@@ -140,7 +140,7 @@ class HotelService:
 
                     # set hotel start price
                     if hotel_start_price is None:
-                        hotel_start_price = d['price']
+                        hotel_start_price = int(d['price'])
                     else: 
                         if d['price'] < hotel_start_price:
                             hotel_start_price = d['price']
