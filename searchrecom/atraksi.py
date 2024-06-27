@@ -110,7 +110,7 @@ class AtraksiService:
                 # Dummy data for testing
                 data = [
                     {
-                        'service_id':5,
+                        'service_id':atraksi_service['id'],
                         'id': 1,
                         'nama': 'Jatim Park 1',
                         'tanggal': '2024-08-08',
@@ -119,7 +119,7 @@ class AtraksiService:
                         'popularity': 6,
                     },
                     {
-                        'service_id':5,
+                        'service_id':atraksi_service['id'],
                         'id': 2,
                         'nama': 'Jatim Park 2',
                         'tanggal': '2024-12-25',
@@ -128,7 +128,7 @@ class AtraksiService:
                         'popularity': 8,
                     },
                     {
-                        'service_id':5,
+                        'service_id':atraksi_service['id'],
                         'id': 3,
                         'nama': 'Taman Safari Indonesia II',
                         'tanggal': '2024-09-09',
@@ -154,17 +154,6 @@ class AtraksiService:
                     else: 
                         if d['price'] < atraksi_start_price:
                             atraksi_start_price = d['price']
-              
-                    if temp_atraksi == {} :
-                        temp_atraksi = {
-                            'service_id': atraksi_service['id'],
-                            'atraksi_name': atraksi_service['nama'],
-                            'atraksi_tanggal': atraksi_service['tanggal'],
-                            'atraksi_city': atraksi_service['city'],
-                            'atraksi_price': atraksi_service['price'],
-                            'atraksi_url': atraksi_service['url'],
-                            'atraksi_popularity': random.randint(1, 10),
-                        }
 
                     atraksi.append(d)
                 
@@ -190,106 +179,117 @@ class AtraksiService:
         }
 
     @rpc
-    def get_atraksi_by_id(self, id, attractioname, minprice, maxprice):
-        atraksi_service = self.database.get_service_by_id(id)
-        
-        if atraksi_service is None:
+    def get_atraksi_by_id(self, service_id, attractioname,attractiondate, minprice, maxprice):
+        # Validate attraction name
+        if attractioname != '-':
+            atraksi_services = [service for service in self.database.get_service_by_type_lokasi(5, service_id)
+                                if attractioname.lower() in service['nama'].lower()]
+            if not atraksi_services:
+                return {
+                    'code': 404,
+                    'data': 'Input nama attraction not found'
+                }
+        else:
+            atraksi_services = self.database.get_service_by_type(5)
+
+        # Validate date
+        error = False
+        data_error = []
+
+        if attractiondate != '-' and not self.validate_date_format(attractiondate):
+            error = True
+            data_error.append('Invalid startdate parameter. must be in format YYYY-MM-DD')
+        elif attractiondate != '-' and datetime.strptime(attractiondate, '%Y-%m-%d') < datetime.now():
+            error = True
+            data_error.append('Invalid startdate parameter. must be after today')
+
+        if error:
             return {
-                'code': 404,
-                'data': 'Atraksi not found'
+                'code': 400,
+                'data': data_error
             }
-        
-        atraksi_service['lokasi'] = self.database.get_lokasi_by_id(atraksi_service['id_lokasi'])
+
         atraksi = []
 
-        endpoint_url = atraksi_service['url']
+        for atraksi_service in atraksi_services:
+            atraksi_service['lokasi'] = self.database.get_lokasi_by_id(atraksi_service['id_lokasi'])
+            endpoint_url = atraksi_service['url']
+            temp_atraksi = []
 
-        # Get atraksi score from review (for sort by reviewscore/countBooked and popularity)
-        review = {}
-        booking_service = self.database.get_service_by_name('booking')
-    
-        if booking_service is None:
-            return {
-                'code': 500,
-                'data': 'Booking service not found'
+            # TODO uncomment
+            # get atraksi detail
+            atraksi_detail = {}
+            # Dummy data for testing
+            atraksi_detail = {
+                'id': 1,
+                'image': 'https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg'
             }
-        
-        endpoint_booking = booking_service['url']
-    
-        try:
-            response = requests.get(endpoint_booking + '/review/atraksi')
-            response.raise_for_status()
-            review = response.json()
-            if review is None:
-                review = {}
-        except requests.exceptions.RequestException as e:
-            self.database.add_request_error(endpoint_booking + '/review/atraksi', str(e), self.database.get_service_by_name('booking')['id'], 5)
-        
-        # Get atraksi detail (dummy data)
-        atraksi_detail = {
-            'id': 5,
-            'image': 'https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg'
-        }
+            #     # cth atraksi detail
+            #     # {
+            #     # "service_id" : 5,
+            #     # "id": 1,
+            #     # "title": "Dufan",
+            #     # "slug": "https://hotel-images-soa.s3.amazonaws.com/merlynn_park_hotel.jpg",
+            #     # "deskripsi": "Dufan",
+            #     # "info_penting": "<ul>\n                                <li>Tidak termasuk tiket masuk Pintu Gerbang Utama Ancol. Beli tiket Pintu Gerbang Utama Ancol di sini untuk pengalaman liburan yang tak terlupakan.</li>\n                                <li>Pengunjung dilarang membawa makanan dan minuman ke dalam area Dufan.</li>\n                                <li>Loket Dufan dan Pintu Gerbang Dunia Fantasi ditutup 1 jam lebih awal dari jam operasional yang berlaku.</li>\n                            </ul>",
+            #     # "highlight": "<ul>\n                                <li>Dufan adalah wahana yang menghadirkan tempat bermain asyik yang terbagi menjadi empat kategori, yakni Children Rides, Family Ride, Water Ride, dan Thrill Ride.</li>\n                                <li>Bawa anak-anakmu ke wahana Dufan khusus anak, seperti Ontang-Anting yang riuh dan Istana Boneka yang penuh pesona.</li>\n                                <li>Sekaranglah waktunya untuk membuat kenangan berharga bersama keluarga dan teman-teman. Cek harga tiket Dufan 2024 di bawah, pilih tiketnya, dan nikmati petualangan yang seru!</li>\n                                <li>Cocok untuk: Keluarga Asyik, Bersama Pasangan, dan Geng Asyik.</li>\n                            </ul>",
+            #     # "alamat": "Jl. Lodan Timur No.7, Ancol, Kec. Pademangan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14430",
+            #     # "negara": "Indonesia",
+            #     # "kota": "Jakarta",
+            #     # "lowest_price": "100000"
+            #     # }
+            # try:
+            #     response = requests.get(endpoint_url)
+            #     response.raise_for_status()
+            #     atraksi_detail = response.json()
+            # except requests.exceptions.RequestException as e:
+            #     self.database.add_request_error(endpoint_url, str(e), atraksi_service['id'], 5)
+            #     continue
 
-        # Get atraksi start price (for sort by price)
-        atraksi_start_price = None
-        try:
-            data = [
-                {
-                    'service_id': 5,
-                    'id': 1,
-                    'nama': 'Jatim Park 1',
-                    'tanggal': '2024-08-08',
-                    'price': 30000,
-                    'city': 'Batu, Malang',
-                    'popularity': 6,
-                },
-                {
-                    'service_id': 5,
-                    'id': 2,
-                    'nama': 'Jatim Park 2',
-                    'tanggal': '2024-12-25',
-                    'price': 25000,
-                    'city': 'Batu, Malang',
-                    'popularity': 8,
-                },
-                {
-                    'service_id': 5,
-                    'id': 3,
-                    'nama': 'Taman Safari Indonesia II',
-                    'tanggal': '2024-09-09',
-                    'price': 50000,
-                    'city': 'Prigen, Pasuruan',
-                    'popularity': 9,
-                },
-            ]
 
-            for d in data:
-                # Check nama atraksi
-                if attractioname != '-' and d['nama'] != attractioname:
-                    continue
-                
-                # Check harga
-                if minprice != '-' and d['price'] < int(minprice):
-                    continue
-                if maxprice != '-' and d['price'] > int(maxprice):
-                    continue
+            # Get atraksi start price (for sort by price)
+            atraksi_start_price = None
+            try:
+                # Dummy data for testing
+                data = [
+                            {
+                                'service_id':atraksi_service['id'],
+                                'lokasi' : atraksi_service['id_lokasi'],
+                                'nama': atraksi_service['nama'],
+                                'tanggal': attractiondate,
+                                'price': minprice,
+                                'city': 'Batu, Malang',
+                                'popularity': 6,
+                                'atraksi_url' : atraksi_service['url'],
+                                # 'atraksi_url_full' : atraksi_services['url']+'/atraksi/city/<int:id_lokasi>/attractioname/attractioname/tanggal/attractiondate/minprice/minprice/maxprice/maxprice/rating/<string:rating>/sort/<string:sort>',
+                            },
+                        ]
 
-                if atraksi_start_price is None:
-                    atraksi_start_price = d['price']
-                else:
-                    if d['price'] < atraksi_start_price:
-                        atraksi_start_price = d['price']
+                for d in data:
+                        # Check nama atraksi
+                        atraksiname = d['nama']
 
-                atraksi.append(d)
+                        # cek nama atraksi
+                        if atraksiname != '-' and d['nama'] != atraksiname:
+                            continue
+                        
+                        # Check harga
+                        if minprice != '-' and d['price'] < int(minprice):
+                            continue
+                        if maxprice != '-' and d['price'] > int(maxprice):
+                            continue
 
-            if atraksi:
-                for a in atraksi:
-                    a['atraksi_start_price'] = atraksi_start_price
+                        if atraksi_start_price is None:
+                            atraksi_start_price = d['price']
+                        else: 
+                            if d['price'] < atraksi_start_price:
+                                atraksi_start_price = d['price']
 
-        except requests.exceptions.RequestException as e:
-            # self.database.add_request_error(endpoint_booking + '/atraksi/' + attractioname, str(e), endpoint_url, 5)
-            pass
+                        atraksi.append(d)
+
+            except requests.exceptions.RequestException as e:
+                # self.database.add_request_error(endpoint_booking + '/atraksi/' + attractioname, str(e), endpoint_url, 5)
+                pass
         
         return {
             'code': 200,

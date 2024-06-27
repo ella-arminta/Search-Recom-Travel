@@ -235,8 +235,8 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
     
     # GET PACKAGE BY ID
-    @http('GET', '/agent/<int:id_agent>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-'):
+    @http('GET', '/agent/<int:id_agent>/people/<string:people>/quota/<string:quota>/city/<string:city>/description/<string:description>/departuredate/<string:departuredate>/returndate/<string:returndate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-',departuredate='-',returndate='-',quota='-',city='-',description='-'):
         try:
             if people != '-':
                 people = int(people)
@@ -250,7 +250,7 @@ class GatewayService:
                 'data': 'Invalid id_lokasi/people/minprice/maxprice parameter must be integer'
             })
         
-        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice)
+        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice,departuredate,returndate,quota,city,description)
         return result['code'],self.header,json.dumps(result)
     
 # ATRAKSI
@@ -300,8 +300,8 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
 
     # Get atraksi by id
-    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-', minprice='-', maxprice='-'):
+    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/attractiondate/<string:attractiondate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
+    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-',attractiondate ='-', minprice='-', maxprice='-'):
         try:
             if minprice != '-':
                 minprice = int(minprice)
@@ -313,7 +313,7 @@ class GatewayService:
                 'data': 'Invalid minprice/maxprice parameter. Must be integer'
             })
         
-        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname, minprice, maxprice)
+        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname,attractiondate, minprice, maxprice)
         return result['code'], self.header, json.dumps(result)
     
 # AIRLINES
