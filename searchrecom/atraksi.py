@@ -291,17 +291,17 @@ class AtraksiService:
                 if maxprice != '-' and d['price'] > int(maxprice):
                     continue
 
-                        if atraksi_start_price is None:
-                            atraksi_start_price = d['price']
-                        else: 
-                            if d['price'] < atraksi_start_price:
-                                atraksi_start_price = d['price']
+                if atraksi_start_price is None:
+                    atraksi_start_price = d['price']
+                else: 
+                    if d['price'] < atraksi_start_price:
+                        atraksi_start_price = d['price']
 
-                        atraksi.append(d)
+                atraksi.append(d)
 
-            except requests.exceptions.RequestException as e:
-                # self.database.add_request_error(endpoint_booking + '/atraksi/' + attractioname, str(e), endpoint_url, 5)
-                pass
+        except requests.exceptions.RequestException as e:
+            # self.database.add_request_error(endpoint_booking + '/atraksi/' + attractioname, str(e), endpoint_url, 5)
+            pass
         
         return {
             'code': 200,
