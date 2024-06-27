@@ -169,12 +169,12 @@ class Database(DependencyProvider):
                 pool_name="database_pool",
                 pool_size=10,
                 pool_reset_session=True,
-                host='nameko-example-mysql',
-                # host='localhost',
+                # host='nameko-example-mysql',
+                host='localhost',
                 database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
-                password='password'
-                # password='',
+                # password='password'
+                password='',
                 port='3306'
             )
         except Error as e :
