@@ -210,21 +210,23 @@ class GatewayService:
 ## TRAVEL AGENT
 
     # GET ALL PACKAGE + SORT BY PRICE
-    @http('GET', '/agent/city/<int:id_lokasi>/startdate/<string:startdate>/enddate/<string:enddate>/people/<string:people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
-    def get_all_agent(self,request,id_lokasi='-', startdate='-',enddate = '-',people ='-',minprice ='-', maxprice = '-',sort = '-'):
-        # all_agent = self.agent_rpc.get_all_agent()
-        # return 200,self.header, json.dumps(all_agent)
-    
-        # Sorting Option
+    @http('GET', '/agent/name/<string:name>/departure_date/<string:departure_date>/return_date/<string:return_date>/number_of_people/<string:number_of_people>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
+    def get_all_agent(self, request, name, departure_date, return_date, number_of_people, minprice, maxprice, sort):
         sort = sort.lower()
-        allowed_sort = ['lowestprice', 'highestprice','quota','city','departuredate','-']
+        allowed_sort = ['lowestprice', 'highestprice', 'quota', 'city', 'departuredate', '-']
         if sort not in allowed_sort:
-            return 400,self.header, json.dumps({
+            return 400, self.header, json.dumps({
                 'code': 400,
-                'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
+                'data': 'Invalid sort parameter. Available sort: ' + str(allowed_sort)
             })
-        result = self.agent_rpc.get_all_agent(id_lokasi,startdate, enddate, people,minprice, maxprice, sort)
-        return result['code'],self.header, json.dumps(result)
+        try:
+            result = self.agent_rpc.get_all_agent(name, departure_date, return_date, number_of_people, minprice, maxprice, sort)
+            return result['code'], self.header, json.dumps(result)
+        except Exception as e:
+            return 500, self.header, json.dumps({
+                'code': 500,
+                'data': f"Internal server error: {str(e)}"
+            })
     
     @http('GET', '/agent/sort')
     def get_all_agent_sort(self,request):
@@ -235,29 +237,24 @@ class GatewayService:
         return result['code'],self.header, json.dumps(result)
     
     # GET PACKAGE BY ID
-    @http('GET', '/agent/<string:id_agent>/people/<string:people>/city/<string:city>/departuredate/<string:departuredate>/returndate/<string:returndate>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_agent_by_id (self,request,id_agent,people = '-',minprice = '-',maxprice = '-',departuredate='-',returndate='-',city='-'):
+    @http('GET', '/agent/<int:service_id>/packagename/<string:packagename>/departuredate/<string:departuredate>/returndate/<string:returndate>/people/<string:people>/price/<string:price>/images/<string:images>')
+    def get_agent_by_id (self,request,service_id,packagename,departuredate,returndate,people,price,images):
         try:
-            if people != '-':
-                people = int(people)
-            if minprice != '-':
-                minprice = int(minprice)
-            if maxprice != '-':
-                maxprice = int(maxprice)
+            if price != '-':
+                price = int(price)
         except:
             return 400,self.header, json.dumps({
                 'code': 400,
-                'data': 'Invalid id_lokasi/people/minprice/maxprice parameter must be integer'
+                'data': 'Invalid service_id/people/price parameter must be integer'
             })
-        
-        result = self.agent_rpc.get_agent_by_id(id_agent, people, minprice, maxprice,departuredate,returndate,city)
+        result = self.agent_rpc.get_agent_by_id(service_id,packagename,departuredate,returndate,people,price,images)
         return result['code'],self.header,json.dumps(result)
     
 # ATRAKSI
 
     # GET ALL ATRAKSI
-    @http('GET', '/atraksi/city/<int:id_lokasi>/attractioname/<string:attractioname>/tanggal/<string:tanggal>/minprice/<string:minprice>/maxprice/<string:maxprice>/sort/<string:sort>')
-    def get_all_atraksi(self,request, id_lokasi = '-', attractioname = '-', tanggal = '-', minprice = '-', maxprice = '-', sort = '-'):
+    @http('GET', '/atraksi/city/title/<string:title>/alamat/<string:alamat>/kota_name/<string:kota_name>/lowest_price/<string:lowest_price>/sort/<string:sort>')
+    def get_all_atraksi(self,request, title,alamat,kota_name,lowest_price,sort):
         
         # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
         # min price -> room start from
@@ -270,26 +267,34 @@ class GatewayService:
                 'code': 400,
                 'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
             })
-        
-        # cek id_lokasi angka atau bukan
-        try:
-            if id_lokasi != '-':
-              id_lokasi = int(id_lokasi)
-            if minprice != '-':
-              minprice = int(minprice)
-            if maxprice != '-':
-              maxprice = int(maxprice)
-        except:
-            return 400, self.header, json.dumps({
-                'code': 400,
-                'data': 'Invalid id_lokasi/minprice/maxprice parameter. must be integer'
-            })
 
-        all_atraksi = self.atraksi_rpc.get_all_atraksi(id_lokasi,attractioname,tanggal,minprice,maxprice,sort)
+        all_atraksi = self.atraksi_rpc.get_all_atraksi(title,alamat,kota_name,lowest_price,sort)
 
         print("All Atraksi Response:", all_atraksi)
         return all_atraksi['code'], self.header, json.dumps(all_atraksi)
     
+
+    # GET ALL ATRAKSI
+    @http('GET', '/atraksi/city/title/<string:title>/alamat/<string:alamat>/kota_name/<string:kota_name>/lowest_price/<string:lowest_price>/sort/<string:sort>')
+    def get_all_atraksi(self,request, title,alamat,kota_name,lowest_price,sort):
+        
+        # rating : 00000 -> no rating, 10000 -> 1 star, 11000 -> 1 and 2 star, 11100 -> 1,2,3 star, 11110 -> 1,2,3,4 star, 11111 -> 1,2,3,4,5 star
+        # min price -> room start from
+        # max price -> room start from
+        
+        sort = sort.lower()
+        allowed_sort = ['lowestprice', 'highestprice', 'highestpopularity','-']
+        if sort not in allowed_sort:
+            return 400, self.header, json.dumps({
+                'code': 400,
+                'data': 'Invalid sort parameter. Available sort : ' + str(allowed_sort)
+            })
+
+        all_atraksi = self.atraksi_rpc.get_all_atraksi(title,alamat,kota_name,lowest_price,sort)
+
+        print("All Atraksi Response:", all_atraksi)
+        return all_atraksi['code'], self.header, json.dumps(all_atraksi)
+        
     # GET ALL ATRAKSI SORT
     @http('GET', '/atraksi/sort')
     def get_all_atraksi_sort(self,request):
@@ -299,21 +304,26 @@ class GatewayService:
         }
         return result['code'],self.header, json.dumps(result)
 
-    # Get atraksi by id
-    @http('GET', '/atraksi/<int:id_atraksi>/attractioname/<string:attractioname>/minprice/<string:minprice>/maxprice/<string:maxprice>')
-    def get_atraksi_by_id(self, request, id_atraksi, attractioname='-', minprice='-', maxprice='-'):
+    # GET ALL PAKET
+    @http('GET', '/atraksi/paket/title/<string:title>/type_name/<string:type_name>/deskripsi/<string:deskripsi>/fasilitas/<string:fasilitas>')
+    def get_all_paket(self, request, title,type_name,deskripsi,fasilitas):
+
+        result = self.atraksi_rpc.get_all_paket(title,type_name,deskripsi,fasilitas)
+        return result['code'], self.header, json.dumps(result)
+
+    # Get paket by id
+    @http('GET', '/paket/<int:id_paket>/title/<string:title>/alamat/<string:alamat>/kota_name/<string:kota_name>/lowest_price/<string:lowest_price>')
+    def get_paket_by_id(self, request, id_paket, title, alamat, kota_name, lowest_price):
         try:
-            if minprice != '-':
-                minprice = int(minprice)
-            if maxprice != '-':
-                maxprice = int(maxprice)
+            if lowest_price != '-':
+                lowest_price = int(lowest_price)
         except ValueError:
             return 400, self.header, json.dumps({
                 'code': 400,
-                'data': 'Invalid minprice/maxprice parameter. Must be integer'
+                'data': 'Invalid lowest_price parameter. Must be integer'
             })
         
-        result = self.atraksi_rpc.get_atraksi_by_id(id_atraksi, attractioname,attractiondate, minprice, maxprice)
+        result = self.atraksi_rpc.get_paket_by_id(id_paket, title, alamat, kota_name, lowest_price)
         return result['code'], self.header, json.dumps(result)
     
 # AIRLINES

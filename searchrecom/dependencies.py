@@ -179,6 +179,7 @@ class Database(DependencyProvider):
                 password='',
                 port='3306'
             )
+            print("Database connected successfully")  # Debugging log
         except Error as e :
                     print("Error while connecting to MySQL using Connection pool: ", e)
                 
@@ -190,6 +191,6 @@ class Database(DependencyProvider):
             print("MySQL Connection Pool closed")
     
     def get_dependency(self, worker_ctx):
-        # if self.connection_pool is None:
-        #     raise Exception("Connection pool is not initialized")
+        if self.connection_pool is None:
+            raise Exception("Connection pool is not initialized")
         return DatabaseWrapper(self.connection_pool.get_connection())

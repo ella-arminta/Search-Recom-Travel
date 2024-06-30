@@ -4,195 +4,145 @@ import searchrecom.dependencies as dependencies
 import requests
 import random
 from datetime import datetime
-
 class TravelAgentService:
     name = 'travel_agent_service'
-
     database = dependencies.Database()
 
     @rpc
-    def get_all_agent(self, id_lokasi, departuredate, returndate, people, minprice, maxprice, sort):
-        agent_services = self.database.get_service_by_type(3)
-        agent=[]
-        package=[]
-        
-        for agent_service in agent_services:
-            endpoint_url = agent_service['url']
-            # url:http://3.210.234.45:8003/travel-agent --> travel agent 1. kalo mau lihat package tour, tinggal ditambahi /packages
-            # url:http://174.129.21.218:8005//travel-agent --> travel agent 2. kalo mau lihat package tour, tinggal ditambahi /packages
-            # url:http://100.29.145.3:8007/travel-agent --> travel agent 3. kalo mau lihat package tour, tinggal ditambahi /packages
-            #get all package
+    def get_all_agent(self,name,departure_date, return_date, number_of_people,minprice,maxprice, sort):
+        package_services = self.database.get_service_by_type(3)
+        packages = []
+
+        for package_service in package_services:
+            endpoint_url = package_service['url']
             try:
-                 # /agent
                 response = requests.get(endpoint_url)
                 response.raise_for_status()
                 data = response.json()
-                
-                # Ensure that data is a list of dictionaries
+
+                print("Data received from endpoint:")
+                print(data)
+
                 if not isinstance(data, list):
+                    print(f"Unexpected data type: {type(data)}, content: {data}")
                     continue
 
-                # data = [
-                #     {   
-                #         'service_id' : 3,
-                #         'package_id' : 1,
-                #         'package_name' : 'Bromo & Semeru Mountain',
-                #         'description' : 'asdfasdf',
-                #         'city' : 'Probolinggo',
-                #         'departure_date' : '2024-09-09',
-                #         'return_date' : '2024-09-14',
-                #         'people': 2,
-                #         'quota' : 10,
-                #         'price' : random.randint(1, 10)
-                #     },
-                #     {   
-                #         'service_id' : 3,
-                #         'package_id' : 2,
-                #         'package_name' : 'Nusa Lembongan Bali',
-                #         'description' : 'asdfasdf',
-                #         'city' : 'Nusa Dua, Bali',
-                #         'departure_date' : '2024-10-10',
-                #         'return_date' : '2024-10-16',
-                #         'people': 4,
-                #         'quota' : 5,
-                #         'price' : random.randint(1, 10)
-                #     },
-                #     {   
-                #         'service_id' : 3,
-                #         'package_id' : 3,
-                #         'package_name' : 'Gili Trawangan Lombok',
-                #         'description' : 'asdfasdf',
-                #         'city' : 'Lombok',
-                #         'departure_date' : '2024-11-03',
-                #         'return_date' : '2024-11-09',
-                #         'people': 3,
-                #         'quota' : 6,
-                #         'price' : random.randint(1, 10)
-                #     },
-                # ]
-                
-                # Filter Package Tour
+                filtered_data = []
+
                 for d in data:
                     if not isinstance(d, dict):
+                        print(f"Unexpected item type in data: {type(d)}, content: {d}")
                         continue
 
-                    packagename = d['package_name']
+                    print(f"Processing item: {d}")
 
-                    # cek nama atraksi
-                    if packagename != '-' and d['package_name'] != packagename:
-                        continue
+                    if name != '-' and d.get('name') != name:
+                        print(f"Filtered out by name: {d.get('name')}")
+                        pass
 
-                    if d['price'] < minprice: 
-                        continue
-                    if d['price'] > maxprice:
-                        continue
+                    if number_of_people != '-':
+                        print(f"Checking number_of_people: {d.get('number_of_people')} vs {number_of_people}")
+                        if d.get('number_of_people', -1) < int(number_of_people):
+                            print(f"Filtered out by number of people: {d.get('number_of_people')}")
+                            pass
 
-                    if people != '-' and int(people) > d['quota']:
-                        continue
+                    if departure_date != '-' and d.get('departure_date') != departure_date:
+                        print(f"Filtered out by departure_date: {d.get('departure_date')} != {departure_date}")
+                        pass
 
+                    if return_date != '-' and d.get('return_date') != return_date:
+                        print(f"Filtered out by return_date: {d.get('return_date')} != {return_date}")
+                        pass
 
-                    agent.append(d)
-                    
-                package = []
-                seen = set()
-                for d in agent:
-                    d_tuple = tuple(d.items())
-                    if d_tuple not in seen:
-                        seen.add(d_tuple)
-                        package.append(d)
+                    filtered_data.append(d)
 
-                # Sorting based on sort parameter
-                if sort == 'lowestprice':
-                    package = sorted(package, key=lambda x: x['price'])
-                elif sort == 'highestprice':
-                    package = sorted(package, key=lambda x: x['price'], reverse=True)
-                elif sort == 'city':
-                    package = sorted(package, key=lambda x: x['city'])
-                elif sort == 'quota' :
-                    package = sorted(package,  key=lambda x: x['quota'], reverse=True)
-                elif sort == 'departuredate' :
-                    package = sorted(package,  key=lambda x: x['departure_date'])
+                print("Filtered data:")
+                print(filtered_data)
+                packages.extend(filtered_data)
 
             except requests.exceptions.RequestException as e:
-                # Handle any exceptions that occur during the request
-                # self.database.add_request_error(endpoint_url+'/package/returndate/'+departuredate+'/returndate'+returndate, str(e), package_service['id'], 3)
+                print(f"Request failed for {endpoint_url}: {e}")
                 continue
 
+        print("Final packages before sorting:")
+        print(packages)
+
+        if sort != '-':
+            if sort == 'lowestprice':
+                packages.sort(key=lambda x: x['price'])
+            elif sort == 'highestprice':
+                packages.sort(key=lambda x: x['price'], reverse=True)
+            elif sort == 'departure_date':
+                packages.sort(key=lambda x: x['departure_date'])
+            elif sort == 'city':
+                packages.sort(key=lambda x: x['name'])
+            elif sort == 'quota':
+                packages.sort(key=lambda x: x['quota'])
+
+        print("Final packages after sorting:")
+        print(packages)
         return {
             'code': 200,
-            'data': package
+            'data': packages
         }
-    
+        
     @rpc
-    def get_agent_by_id(self, service_id,people,minprice,maxprice,departuredate,returndate,city):
-        agent_services = self.database.get_service_by_id(service_id)
+    def get_agent_by_id(self, service_id,packagename,departuredate,returndate,people,price,images):
+        agents_services = self.database.get_service_by_id(service_id)
         
-        agent=[]
-        package=[]
+        agents=[]
+        unique_agents = []
         
-        for agent_service in agent_services:
-            if not isinstance(agent_service, dict):
-                continue
-
-
-            endpoint_url = agent_services['url']
-
-            # Get Hotel Price start from (for sort by price)
-            package_start_price = None
-
-            # Get Package Tour
-            try: 
-                # TODO uncomment
-                # /agent
-                # cth path : http://localhost:8000/merlynn_park_hotel/room_type/"2024-06-24"&"2024-06-26"
-                # response = requests.get(endpoint_url + '/agent/'+departure_date+'&'+return_date)
+        for agent_service in agents_services:
+            endpoint_url = agents_services['url']
+            #get all flights
+            try:
+                 # /airlines
+                # response = requests.get(endpoint_url)
                 # response.raise_for_status()
                 # data = response.json()
-                # availability dicek kel hotel
-
+                # data yang diterima bentuknya : DUMMY
+                # PERTANYAAN apakah hotel masih menyimpan hotel detail
+                # yang ngecek apakah roomnya avail atau gk itu dari function hotel, atau function search&Recom
                 data = [
                     {   
-                        'service_id' : agent_service['id'],
-                        'city' : city,
-                        'departure_date' : departuredate,
-                        'return_date' : returndate,
-                        'people': people,
-                        'price' : agent_services['price'],
-                        'agent_url' : agent_service['url'],
-                        'agent_url_full' : agent_services['url']+'/'+city+'/'+departuredate+'/'+returndate+'/'+people
+                        'service_id':agents_services['id'],
+                        'name':packagename,
+                        'departure_date':departuredate,
+                        'return_date':returndate,
+                        'number_of_people':people,
+                        'price' : price,
+                        'images' : images,
+                        'agent_url':agents_services['url'],
+                        'agent_url_full':agents_services['url']+'/'+packagename+'/'+departuredate+'/'+returndate+'/'+people
                     },
                 ]
                 
-                # Filter Package Tour
-                for d in data:
-                    if not isinstance(agent_service, dict):
+                for agent in data:
+                    if packagename != '-' and agent['name'] != packagename:
                         continue
-
-                    if d['price'] < minprice: 
+                    if departuredate != '-' and agent['departure_date'] != departuredate:
                         continue
-                    if d['price'] > maxprice:
+                    if returndate != '-' and agent['return_date'] != returndate:
                         continue
-
-                    if people != '-' and int(people) > d['quota']:
+                    if people != '-' and agent['number_of_people'] != people:
                         continue
+                    
+                    agents.append(agent)
 
-
-                    agent.append(d)
-
-                package = []
+                unique_agents = []
                 seen = set()
-                for d in agent:
-                    d_tuple = tuple(d.items())
-                    if d_tuple not in seen:
-                        seen.add(d_tuple)
-                        package.append(d)
-
+                for agent in agents:
+                    agent_tuple = tuple(agent.items())
+                    if agent_tuple not in seen:
+                        seen.add(agent_tuple)
+                        unique_agents.append(agent)
             except requests.exceptions.RequestException as e:
-                # Handle any exceptions that occur during the request
-                # self.database.add_request_error(endpoint_url+'/package/returndate/'+departuredate+'/returndate'+returndate, str(e), package_service['id'], 3)
-                continue
+                    # Handle any exceptions that occur during the request
+                    # self.database.add_request_error(endpoint_url+'/package/returndate/'+departuredate+'/returndate'+returndate, str(e), package_service['id'], 3)
+                    pass
 
         return {
-            'code': 200,
-            'data': package
-        }
+                    'code': 200,
+                    'data': unique_agents
+                }

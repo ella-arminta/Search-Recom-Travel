@@ -402,15 +402,15 @@
             }
             function searchAgent(city_id = '-', checkin='-',checkout = '-',people ='-',minprice ='-', maxprice = '-',sort = '-') {
                 $.ajax({
-                    // url: 'http://localhost:8000/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort   ,
-                    url: 'http://107.20.145.163:8003/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort  ,
+                    url: 'http://localhost:8000/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort   ,
+                    // url: 'http://107.20.145.163:8003/agent/city/' + city_id + '/checkin/' + checkin + '/checkout/' + checkout + '/people/' + people + '/minprice/' + minprice + '/maxprice/' + maxprice + '/sort/' + sort  ,
                     type: 'GET',
                     success: function(response) {
                         data = response.data;
                         hasil = '';
                         for (var i = 0; i < data.length; i++) {
                             hasil += agentCard(
-                                data[i].service_id, data[i].agent_name, data[i].agent_city,data[i].checkin, data[i].checkout, data[i].quota, data[i].agent_start_price, data[i].agent_image)
+                                data[i].service_id, data[i].agent_name, data[i].agent_city, data[i].agent_start_price, data[i].agent_image, data[i].checkin, data[i].checkout, data[i].quota)
                                 ;
                         }
                         $('.agentList').html(hasil);

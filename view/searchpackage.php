@@ -31,29 +31,29 @@
             <!-- City -->
             <div class="w-full">
                 <div class="inline-flex flex-col justify-center relative text-gray-500 w-full">
-                    <label for="city" class="pb-2">City</label>
+                    <label for="city" class="pb-2">Package Name</label>
                     <div class="relative">
                         <input type="text" name="city" id="city" class="w-full p-2 pl-10 rounded border border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent" placeholder="search..."  />
                         <img class="w-6 h-6 absolute left-2 top-2" src="https://d1785e74lyxkqq.cloudfront.net/_next/static/v2/7/7f57d24fd3db681418a3694bd71cb93b.svg" width="24" height="24">
                     </div>
                     <ul id="cityList" class="bg-white border border-gray-100 w-full mt-2 rounded top-16 absolute shadow-md hidden z-10">
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Jogjakarta
+                        Tokyo Delight
                         </li>
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Bali
+                        Ancient Egypt Tour
                         </li>
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Malang
+                        Discover the hidden gems of Jordan
                         </li>
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Jakarta
+                        Mystical India
                         </li>
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Surabaya
+                        Guilin Trip
                         </li>
                         <li class="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                            Bandung
+                        Walk through the historic sites of China
                         </li>
                     </ul>
                 </div>
