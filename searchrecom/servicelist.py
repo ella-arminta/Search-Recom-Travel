@@ -115,3 +115,11 @@ class ServiceService:
             }
         result = self.database.delete_service(id_service)
         return result
+    
+    @rpc 
+    def get_all_requests_error(self):
+        errors = self.database.get_all_requests_error()
+        return {
+            'code' : 200,
+            'data': errors
+        }

@@ -102,6 +102,11 @@ class GatewayService:
     def get_service_by_id(self,request,id_service):
         result = self.service_rpc.get_service_by_id(id_service)
         return result['code'],self.header,json.dumps(result)
+    # get all request_errors
+    @http('GET','/requests_error')
+    def get_all_requests_error(self,request):
+        result = self.service_rpc.get_all_requests_error()
+        return result['code'],self.header,json.dumps(result)
 
 # HOTEL
     @http('GET', '/hotel/city/<string:id_lokasi>/checkin/<string:checkin>/checkout/<string:checkout>/people/<string:people>/room/<string:room>/minprice/<string:minprice>/maxprice/<string:maxprice>/rating/<string:rating>/sort/<string:sort>')

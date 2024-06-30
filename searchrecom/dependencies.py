@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 from mysql.connector import pooling
 from mysql.connector.pooling import MySQLConnectionPool
+from datetime import datetime
 
 class DatabaseWrapper:
 
@@ -158,6 +159,18 @@ class DatabaseWrapper:
             }
         }
     
+    def get_all_requests_error(self):
+        cursor = self.connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM requests_error ORDER BY id desc")
+        result = cursor.fetchall()
+        cursor.close()
+        # Convert datetime objects to timestamps
+        for row in result:
+            for key, value in row.items():
+                if isinstance(value, datetime):
+                    row[key] = int(value.timestamp())
+        return result
+    
     def __del__(self):
         self.connection.close()
 
@@ -171,13 +184,13 @@ class Database(DependencyProvider):
                 pool_name="database_pool",
                 pool_size=10,
                 pool_reset_session=True,
-                # host='nameko-example-mysql',
-                host='localhost',
+                host='nameko-example-mysql',
+                # host='localhost',
                 database='soa_searchrecom',# nama database nya diganti sesuai dengan services
                 user='root',
-                # password='password'
-                password='',
-                port='3306'
+                password='password',
+                # password='',
+                port='3306',
             )
             print("Database connected successfully")  # Debugging log
         except Error as e :
